@@ -1,0 +1,5 @@
+# Py-Cache files
+__pycache__/
+.venv/
+.idea/
+misc.xml
