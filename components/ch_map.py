@@ -5,6 +5,9 @@ import plotly.express as px
 import pandas as pd
 import json
 
+# setup data
+import helper.setup_data as dat
+
 # definitions
 # varialbles
 texts = {'title':'Einwohnerzahlen CH',
@@ -66,3 +69,9 @@ with open("./data/swiss-cantons.geojson", encoding="utf-8") as f:
 
 # get statistical data from file or database
 df = pd.read_csv('./data/bevoelkerung-1990_2024.csv', delimiter=';')
+# df_ivs = dat.get_df_ivs()
+# print(df_ivs.head())
+# df_bestand = dat.get_df_bestand()
+# print(df_bestand.head())
+# df_volk = dat.get_df_volk()
+# print(df_volk.head())

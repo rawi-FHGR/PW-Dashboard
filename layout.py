@@ -4,7 +4,7 @@ import dash.dcc as dcc
 from helper.general import available_years, default_year
 
 # variables
-texts = {'page.title':'Winter Weather Data',
+texts = {'page.title':'Personenwagen-Dashboard',
          'title_colorbar':'Anzahl'}
 
 # functions
