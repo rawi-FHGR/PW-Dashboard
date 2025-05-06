@@ -6,15 +6,17 @@ import pandas as pd
 import json
 
 # setup data
-import helper.setup_data as dat
+#import helper.setup_data as dat
 
 # definitions
 # varialbles
-texts = {'title':'Einwohnerzahlen CH',
+texts = {'title':'Fahrzeugbestand CH',
          'title_colorbar':'Anzahl',
-         'inhabitant':'Einwohner',}
+         'inhabitant':'Einwohner',
+         'stock':'DATA_Bestand',
+         'cars':'Personenwagen'}
 
-data_columns = ['Einwohner', 'Kanton_Kurz']
+data_columns = ['DATA_Bestand', 'Kanton']
 
 # functions
 def generate_ch_map(year: int):
@@ -22,14 +24,17 @@ def generate_ch_map(year: int):
     data_column = data_columns[0]
     hovertemplate = (
         "<b>%{location}</b><br>"
-        "%{z:.0f} " + texts['inhabitant'] + "<br>"
+        "%{z:.0f} " + texts['cars'] + "<br>"
         "<extra></extra>")
 
     # Filtere das df_ivs auf das gewünschte Jahr
     df_year = df[df['Jahr'] == year]
+    # sum car stock per canton
+    df_grouped = df_year.groupby(['Jahr', 'Kanton'])['DATA_Bestand'].sum().reset_index()
+
     # prepare map
     fig = px.choropleth(
-        df_year,
+        df_grouped,
         geojson=geojson_data,
         locations=data_columns[1],
         featureidkey="properties.NAME_KURZ",
@@ -68,10 +73,6 @@ with open("./data/swiss-cantons.geojson", encoding="utf-8") as f:
     geojson_data = json.load(f)
 
 # get statistical data from file or database
-df = pd.read_csv('./data/bevoelkerung-1990_2024.csv', delimiter=';')
-# df_ivs = dat.get_df_ivs()
-# print(df_ivs.head())
-# df_bestand = dat.get_df_bestand()
-# print(df_bestand.head())
-# df_volk = dat.get_df_volk()
-# print(df_volk.head())
+#df = pd.read_csv('./data/bevoelkerung-1990_2024.csv', delimiter=';')
+df_csv= pd.read_csv('data/Autodaten_Kantone.csv', delimiter=',')
+df = df_csv.fillna(0)
