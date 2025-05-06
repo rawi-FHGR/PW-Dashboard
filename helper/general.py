@@ -12,7 +12,7 @@ def hex_to_rgba_value(hex_color, alpha=0.4):
     return f"rgba({r}, {g}, {b}, {alpha})"
 
 # settings
-available_years = list(range(1990,2025,1))
+available_years = list(range(2010,2025,1))
 default_year = available_years[int(len(available_years)/2)]
 
 colors = {
