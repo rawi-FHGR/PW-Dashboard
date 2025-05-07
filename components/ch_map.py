@@ -22,7 +22,7 @@ def generate_ch_map(year: int):
     :return: figure object
     '''
 
-    title = f'<b>{texts['title']} {year}</b>'
+    title = f'<b>{texts["title"]} {year}</b>'
     data_column = data_columns[0]
 
     # tooltip content
