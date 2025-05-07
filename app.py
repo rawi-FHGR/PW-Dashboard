@@ -16,4 +16,5 @@ register_callbacks(app)
 
 # execute the app
 if __name__ == '__main__':
+    # setup debug to False in production environment
     app.run(debug=True)

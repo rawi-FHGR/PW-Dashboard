@@ -62,7 +62,7 @@ def generate_ch_map(year: int):
         # format colorbar
         coloraxis_colorbar={"title": texts['title_colorbar'],
                             "len": 0.75,
-                            "x": 0.8,
+                            "x": 0.85,
                             "ticks":"outside",
                             "tickformat":"~s",
                             "xpad": 0,
