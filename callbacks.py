@@ -27,31 +27,25 @@ def register_callbacks(app):
         fig = map.generate_ch_map(year=selected_year)
         return fig
 
-    '''
-    callback for choropleth map municipality
-    '''
     @app.callback(
         Output('choropleth-map-municipality', 'figure'),
         [Input('year-slider', 'value'),
-         Input('choropleth-map', 'clickData')]
+         Input('selected-canton', 'data')]
     )
-    def update_map(selected_year, clickData):
+    def update_map(selected_year, canton):
         '''
-        Callback to draw the ch  municipality with data points of the selected year and clicked canton
+        Callback to draw the ch municipality with data points of the selected year and clicked canton
         :param selected_year
         :param clickData clicked data on the ch map
         :returns a figure object
         '''
 
-        # if nothing was clicked return an empty map
-        if not clickData:
+        # if nothing was clicked (canton=CH) return an empty map
+        if canton == 'CH':
             return px.scatter_mapbox()
 
-        # get canton based on clicked position on the CH map
-        canton = clickData["points"][0]["location"]
-
-        fig = m_map.generate_map_municipality(year=selected_year, canton=canton)
-        return fig
+        # generate map of the selected canton
+        return m_map.generate_map_municipality(year=selected_year, canton=canton)
 
     '''
     callback for stackedbar fuel (ivs: Inverkehrsetzungen)
@@ -69,30 +63,76 @@ def register_callbacks(app):
         stackedbar = fl.generate_stacked_bar_fuel_ivs(fl.df_fuel, selected_year)
         return stackedbar
 
+    # @app.callback(
+    #     Output('stackedbar-fuel-stock', 'figure'),
+    #     Input('year-slider', 'value')
+    # )
+    # def update_charts_fuel_stock(selected_year):
+    #     '''
+    #     Callback to draw the stackedbar fuel with data points of the selected year
+    #     :param selected_year:
+    #     :return: figure object
+    #     '''
+    #     stackedbar = fl.generate_stacked_bar_fuel_stock(fl.df_fuel, selected_year)
+    #     return stackedbar
+    #
+    # @app.callback(
+    #     Output('multiline-total', 'figure'),
+    #     Input('year-slider', 'value')
+    # )
+    # def update_charts_fuel_stock(selected_year):
+    #     '''
+    #     Callback to draw the multiline chart (ivs, stock)
+    #     :param selected_year:
+    #     :return:
+    #     '''
+    #     multiline = fl.generate_multiline_total(fl.df_fuel, selected_year)
+    #     return multiline
+
     @app.callback(
-        Output('stackedbar-fuel-stock', 'figure'),
-        Input('year-slider', 'value')
+        Output('stackedbar-fuel-stock-canton', 'figure'),
+        [Input('year-slider', 'value'),
+        Input('selected-canton', 'data')]
     )
-    def update_charts_fuel_stock(selected_year):
+    def update_charts_fuel_stock_canton(selected_year, canton):
         '''
         Callback to draw the stackedbar fuel with data points of the selected year
         :param selected_year:
         :return: figure object
         '''
-        stackedbar = fl.generate_stacked_bar_fuel_stock(fl.df_fuel, selected_year)
-        return stackedbar
+
+        # if nothing was clicked (canton=CH) return an empty map
+        if canton == 'CH':
+            return fl.generate_stacked_bar_fuel_stock(fl.df_fuel, selected_year)
+
+        # generate and return stacked bar chart for the selected canton
+        return fl.generate_stacked_bar_fuel_stock_canton(fl.df_fuel, selected_year, canton)
 
     @app.callback(
-        Output('multiline-total', 'figure'),
-        Input('year-slider', 'value')
+        Output('pie-fuel-stock', 'figure'),
+        [Input('year-slider', 'value'),
+        Input('selected-canton', 'data')]
     )
-    def update_charts_fuel_stock(selected_year):
-        '''
-        Callback to draw the multiline chart (ivs, stock)
-        :param selected_year:
-        :return:
-        '''
-        multiline = fl.generate_multiline_total(fl.df_fuel, selected_year)
-        return multiline
+    def update_pie_fuel(selected_year, canton):
+        df_jahr = fl.df_fuel[fl.df_fuel["Jahr"] == selected_year]
 
+        # if nothing was clicked (canton=CH) return an empty map
+        if canton == 'CH':
+            return fl.generate_pie_fuel_stock(df_jahr, selected_year)
+
+        # generate and return pie chart for the selected canton
+        return fl.generate_pie_fuel_stock_canton(df_jahr, selected_year, canton)
+
+    # hidden callbacks
+    # Callback 1: clickData → Store
+    @app.callback(
+        Output("selected-canton", "data"),
+        Input("choropleth-map", "clickData")
+    )
+    def extract_kanton(clickData):
+        # if nothing was clicked return CH for different handling
+        if clickData is None:
+            return "CH"
+        # get canton based on clicked position on the CH map and return it
+        return clickData['points'][0]['location']
 

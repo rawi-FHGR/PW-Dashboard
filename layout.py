@@ -50,8 +50,8 @@ def create_layout():
             # additional graphs (3 side-by-side)
             html.Div([
                 html.Div(dcc.Graph(id='stackedbar-fuel-ivs', style={'height': '100%'}), style={'width': '33%'}),
-                html.Div(dcc.Graph(id='stackedbar-fuel-stock', style={'height': '100%'}), style={'width': '33%'}),
-                html.Div(dcc.Graph(id='multiline-total', style={'height': '100%'}), style={'width': '33%'})
+                html.Div(dcc.Graph(id='pie-fuel-stock', style={'height': '100%'}), style={'width': '33%'}),
+                html.Div(dcc.Graph(id='stackedbar-fuel-stock-canton', style={'height': '100%'}), style={'width': '33%'})
             ], style={
                 'display': 'flex',
                 'flexDirection': 'row',
@@ -60,5 +60,11 @@ def create_layout():
                 'width': '100%',
                 'gap': '10px',
                 'padding': '10px'
-            })
+            }),
+
+            # define stores (callback chaining)
+            html.Div([
+                dcc.Store(id="selected-canton"),
+                dcc.Store(id="selected-municipality")
+            ], id="hidden-stores", style={"display": "none"})
         ])

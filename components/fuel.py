@@ -83,7 +83,7 @@ def generate_stacked_bar_fuel_stock(df, jahr):
 
     # create the stacked bar chart using Plotly Express
     fig = px.bar(df_grouped, x='Jahr', y='DATA_Bestand', color='Treibstoff', color_discrete_map=farben_fuel)
-    fig.update_layout(title_text=f"<b>Verteilung der Treibstoffarten</b>",
+    fig.update_layout(title_text=f"<b>Verteilung der Treibstoffarten (CH)</b>",
                       font_size=12,
                       xaxis_title="",
                       yaxis_title="Anzahl Bestand")
@@ -116,6 +116,57 @@ def generate_stacked_bar_fuel_stock(df, jahr):
     #                          marker=dict(color='Red', size=10, symbol='circle'),
     #                 showlegend=False))
     return fig
+
+def generate_stacked_bar_fuel_stock_canton(df, jahr, canton):
+    '''
+    WORK IN PROGRESS!
+    Generates a stacked bar chart from dataframe with fuel data
+    :param df:
+    :param jahr: selected year
+    :return: returns a stacked bar chart with fuel data as fig (px.bar)
+    '''
+
+    df_canton = df[df['Kanton'] == canton]
+
+    # group data by year and fuel and sum the values
+    df_grouped = df_canton.groupby(['Jahr', 'Treibstoff'])['DATA_Bestand'].sum().reset_index()
+
+    # create the stacked bar chart using Plotly Express
+    fig = px.bar(df_grouped, x='Jahr', y='DATA_Bestand', color='Treibstoff', color_discrete_map=farben_fuel)
+    fig.update_layout(title_text=f"<b>Verteilung der Treibstoffarten {canton}</b>",
+                      font_size=12,
+                      xaxis_title="",
+                      yaxis_title="Anzahl Bestand")
+
+    fig.update_layout(xaxis={'type': 'category'})
+
+    # # group by year and sum up the values (Anzahl)
+    # yearly_sum = df.groupby('Jahr')['Anzahl'].sum()
+    #
+    # # get the max value for the sum
+    # max_sum = yearly_sum[yearly_sum.idxmax()]
+
+    # place the legend
+    fig.update_layout(
+        legend=dict(orientation="h",
+                    yanchor="top",
+                    y=-0.05,
+                    xanchor="center",
+                    x=0.5,
+                    title=None))
+
+    # # add a red line to indicate the selected year
+    # fig.add_shape(type="line",
+    #               x0=jahr, y0=0,
+    #               x1=jahr, y1=int(max_sum),
+    #               line=dict(color=gen.colors['rot'], width=3))
+    #
+    # # add a red circle on the x-axis to indicate the selected year
+    # fig.add_trace(go.Scatter(x=[jahr], y=[0], mode='markers',
+    #                          marker=dict(color='Red', size=10, symbol='circle'),
+    #                 showlegend=False))
+    return fig
+
 
 
 def generate_multiline_total(df, jahr):
@@ -169,4 +220,38 @@ def generate_multiline_total(df, jahr):
         margin=dict(l=40, r=20, t=40, b=40)
     )
 
+    return fig
+
+def generate_pie_fuel_stock(df_jahr, jahr):
+    df_grouped = df_jahr.groupby(['Jahr', 'Treibstoff'])['DATA_Bestand'].sum().reset_index()
+
+    fig = px.pie(
+        df_grouped,
+        names="Treibstoff",
+        values="DATA_Bestand",
+        title=f"<b>Anteil Treibstoffarten CH ({jahr})</b>",
+        color="Treibstoff",
+        color_discrete_map=farben_fuel
+    )
+    fig.update_layout(margin=dict(t=52))
+    fig.update_traces(textposition='inside', textinfo='percent+label', showlegend=False )
+    return fig
+
+def generate_pie_fuel_stock_canton(df, jahr, canton):
+
+    df_canton = df[df['Kanton'] == canton]
+
+    # group data by year and fuel and sum the values
+    df_grouped = df_canton.groupby(['Jahr', 'Treibstoff'])['DATA_Bestand'].sum().reset_index()
+
+    fig = px.pie(
+        df_grouped,
+        names="Treibstoff",
+        values="DATA_Bestand",
+        title=f"<b>Anteil Treibstoffarten {canton} ({jahr})</b>",
+        color="Treibstoff",
+        color_discrete_map=farben_fuel
+    )
+    fig.update_layout(margin=dict(t=52))
+    fig.update_traces(textposition='inside', textinfo='percent+label', showlegend=False )
     return fig
