@@ -17,24 +17,29 @@ data_columns = ['DATA_Bestand', 'Kanton']
 # functions
 def generate_ch_map(year: int):
     '''
-    Draws a choropleth map of switzerland with canton specific data
-    :param year:
-    :return: figure object
+    Draws a choropleth map of Switzerland with canton-specific data
+    :param year: selected year
+    :return: Plotly figure object
     '''
 
     title = f'<b>{texts['title']} {year}</b>'
     data_column = data_columns[0]
 
-    # tooltip content
-    hovertemplate = (
-        "<b>%{location}</b><br>"
-        "%{z:.0f} " + texts['cars'] + "<br>"
-        "<extra></extra>")
-
     # get only data for the selected year
     df_year = df[df['Jahr'] == year]
 
-    # sum car stock per canton
+    # 🛑 Check for empty data
+    if df_year.empty:
+        fig = go.Figure()
+        fig.update_layout(
+            title=f"<b>Keine Daten für Jahr {year} verfügbar</b>",
+            title_x=0.5,
+            title_font_size=16,
+            margin={"r": 0, "t": 30, "l": 0, "b": 0}
+        )
+        return fig
+
+    # Daten aggregieren
     df_grouped = df_year.groupby(['Jahr', 'Kanton'])['DATA_Bestand'].sum().reset_index()
 
     # prepare map
@@ -59,20 +64,27 @@ def generate_ch_map(year: int):
     fig.update_layout(
         title=title,
         margin={"r": 0, "t": 0, "l": 0, "b": 0},
-        # format colorbar
-        coloraxis_colorbar={"title": texts['title_colorbar'],
-                            "len": 0.75,
-                            "x": 0.85,
-                            "ticks":"outside",
-                            "tickformat":"~s",
-                            "xpad": 0,
-                            "yanchor": "middle",
-                            "xanchor": "left"},
+        coloraxis_colorbar={
+            "title": texts['title_colorbar'],
+            "len": 0.75,
+            "x": 0.85,
+            "ticks": "outside",
+            "tickformat": "~s",
+            "xpad": 0,
+            "yanchor": "middle",
+            "xanchor": "left"
+        },
         title_x=0.5,
         title_y=0.97,
-        uirevision="constant")
+        uirevision="constant"
+    )
 
-    # put the tooltip
+    # tooltip setzen
+    hovertemplate = (
+        "<b>%{location}</b><br>"
+        "%{z:.0f} " + texts['cars'] + "<br>"
+        "<extra></extra>"
+    )
     fig.update_traces(hovertemplate=hovertemplate)
 
     return fig
