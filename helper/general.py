@@ -66,9 +66,5 @@ colors = {
     "grey": "#7f7f7f"
 }
 
-
-
-
-
 if __name__ == "__main__":
     print(colors)
