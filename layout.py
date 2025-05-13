@@ -51,7 +51,7 @@ def create_layout():
             html.Div([
                 html.Div(dcc.Graph(id='stackedbar-fuel-stock-canton', style={'height': '100%'}), style={'width': '33%'}),
                 html.Div(dcc.Graph(id='pie-fuel-stock', style={'height': '100%'}), style={'width': '33%'}),
-                html.Div(dcc.Graph(id='stackedbar-fuel-ivs', style={'height': '100%'}), style={'width': '33%'})
+                html.Div(id='summary-container', style={'width': '33%'})
             ], style={
                 'display': 'flex',
                 'flexDirection': 'row',
