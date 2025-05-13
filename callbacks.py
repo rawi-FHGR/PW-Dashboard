@@ -47,21 +47,19 @@ def register_callbacks(app):
         # generate map of the selected canton
         return m_map.generate_map_municipality(year=selected_year, canton=canton)
 
-    '''
-    callback for stackedbar fuel (ivs: Inverkehrsetzungen)
-    '''
-    @app.callback(
-        Output('stackedbar-fuel-ivs', 'figure'),
-        Input('year-slider', 'value')
-    )
-    def update_charts_fuel_ivs(selected_year):
-        '''
-        Callback to draw the stackedbar fuel with data points of the selected year
-        :param selected_year:
-        :return: figure object
-        '''
-        stackedbar = fl.generate_stacked_bar_fuel_ivs(fl.df_fuel, selected_year)
-        return stackedbar
+
+    # @app.callback(
+    #     Output('stackedbar-fuel-ivs', 'figure'),
+    #     Input('year-slider', 'value')
+    # )
+    # def update_charts_fuel_ivs(selected_year):
+    #     '''
+    #     Callback to draw the stackedbar fuel with data points of the selected year
+    #     :param selected_year:
+    #     :return: figure object
+    #     '''
+    #     stackedbar = fl.generate_stacked_bar_fuel_ivs(fl.df_fuel, selected_year)
+    #     return stackedbar
 
     # @app.callback(
     #     Output('stackedbar-fuel-stock', 'figure'),
@@ -122,6 +120,27 @@ def register_callbacks(app):
 
         # generate and return pie chart for the selected canton
         return fl.generate_pie_fuel_stock_canton(df_jahr, selected_year, canton)
+
+
+    @app.callback(
+        Output('summary-container', 'children'),
+        [Input('year-slider', 'value'),
+        Input('selected-canton', 'data')]
+    )
+    def update_summary(selected_year, canton):
+        '''
+        Callback to display the data summary of the selected year and canton
+        :param year: selected year
+        :param canton: selected canton
+        :return:
+        '''
+        df_year = fl.df_fuel[fl.df_fuel["Jahr"] == selected_year]
+
+        if canton == 'CH':
+            return fl.generate_fuel_summary_text_CH(df_year, selected_year)
+
+
+        return fl.generate_fuel_summary_text_canton(df_year, selected_year, canton)
 
     # hidden callbacks
     # Callback 1: clickData → Store
