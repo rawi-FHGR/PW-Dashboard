@@ -63,13 +63,12 @@ def generate_stacked_bar_fuel_ivs(df, jahr):
     #                 showlegend=False))
     return fig
 
-
-def generate_stacked_bar_fuel_stock(df, jahr):
+def generate_stacked_bar_fuel_stock(df, year):
     '''
-    WORK IN PROGRESS!
-    Generates a stacked bar chart from dataframe with fuel data
+    Generates a stacked bar chart from dataframe with fuel data.
+    The selected year is emphasized with a colored marker
     :param df:
-    :param jahr: selected year
+    :param year: selected year
     :return: returns a stacked bar chart with fuel data as fig (px.bar)
     '''
 
@@ -78,7 +77,7 @@ def generate_stacked_bar_fuel_stock(df, jahr):
 
     # create the stacked bar chart using Plotly Express
     fig = px.bar(df_grouped, x='Jahr', y='DATA_Bestand', color='Treibstoff', color_discrete_map=color_fuel)
-    fig.update_layout(title_text=f"<b>Verteilung der Treibstoffarten (CH)</b>",
+    fig.update_layout(title_text=f"<b>Verteilung der Treibstoffarten CH</b>",
                       font_size=12,
                       xaxis_title="",
                       yaxis_title="Anzahl Bestand")
@@ -99,44 +98,41 @@ def generate_stacked_bar_fuel_stock(df, jahr):
                     x=0.5,
                     title=None))
 
-    # # add a red line to indicate the selected year
-    # fig.add_shape(type="line",
-    #               x0=str(jahr), y0=0,
-    #               x1=str(jahr), y1=int(max_sum),
-    #               line=dict(color=gen.colors['red'], width=3),
-    #               xref="x", yref="y")
-
-    # add a red circle on the x-axis to indicate the selected year
-    fig.add_trace(go.Scatter(x=[str(jahr)], y=[0], mode='markers',
-                             marker=dict(color=gen.colors['red'], size=10, symbol='circle'),
-                             showlegend=False))
+    # add year marker
+    add_year_marker(fig, year, max_sum, color=gen.colors['red'])
 
     return fig
 
-def generate_stacked_bar_fuel_stock_canton(df, jahr, canton):
+def generate_stacked_bar_fuel_stock_canton(df, year, canton):
     '''
-    WORK IN PROGRESS!
     Generates a stacked bar chart from dataframe with fuel data
     :param df:
-    :param jahr: selected year
+    :param year: selected year
     :return: returns a stacked bar chart with fuel data as fig (px.bar)
     '''
 
+    # only selected canton
     df_canton = df[df['Kanton'] == canton].copy()
 
     # group data by year and fuel and sum the values
     df_grouped = df_canton.groupby(['Jahr', 'Treibstoff'])['DATA_Bestand'].sum().reset_index()
 
+    # convert year to str
+    df_grouped['Jahr'] = df_grouped['Jahr'].astype(int)
+    year = int(year)
+
     # create the stacked bar chart using Plotly Express
-    fig = px.bar(df_grouped, x='Jahr', y='DATA_Bestand', color='Treibstoff', color_discrete_map=color_fuel)
+    fig = px.bar(df_grouped, x='Jahr',
+                 y='DATA_Bestand',
+                 color='Treibstoff',
+                 color_discrete_map=color_fuel,
+                 category_orders={'Jahr': sorted(df_grouped['Jahr'].unique())})
+
     fig.update_layout(title_text=f"<b>Verteilung der Treibstoffarten {canton}</b>",
                       font_size=12,
                       xaxis_title="",
                       yaxis_title="Anzahl Bestand",
                       xaxis={'type': 'category'})
-
-    fig.update_layout(
-    )
 
     # place the legend
     fig.update_layout(
@@ -150,19 +146,13 @@ def generate_stacked_bar_fuel_stock_canton(df, jahr, canton):
 
     # group by year and sum up the values (Anzahl)
     yearly_sum = df_grouped.groupby('Jahr')['DATA_Bestand'].sum()
+
     # get the max value for the sum
     max_sum = yearly_sum.max()
 
-    # add a red line to indicate the selected year
-    # fig.add_shape(type="line",
-    #               x0=str(jahr), y0=0,
-    #               x1=str(jahr), y1=int(max_sum),
-    #               line=dict(color=gen.colors['red'], width=3))
+    # add year marker
+    add_year_marker(fig, year, max_sum, color=gen.colors['red'])
 
-    # add a red circle on the x-axis to indicate the selected year
-    fig.add_trace(go.Scatter(x=[str(jahr)], y=[0], mode='markers',
-                             marker=dict(color=gen.colors['red'], size=10, symbol='circle'),
-                    showlegend=False))
     return fig
 
 def generate_multiline_total(df, jahr):
@@ -252,8 +242,129 @@ def generate_pie_fuel_stock_canton(df, jahr, canton):
     fig.update_traces(textposition='inside', textinfo='percent+label', showlegend=False )
     return fig
 
-# get statistical data from cvs files
-# carbody data (Karosserie)
+import dash.html as html
+
+def generate_fuel_summary_text_CH(df, jahr):
+    # Filterung
+    df_canton = df[(df['Jahr'] == jahr)]
+
+    # Gruppierung und Sortierung nach DATA_Bestand (absteigend)
+    df_grouped = df_canton.groupby('Treibstoff')['DATA_Bestand'].sum().reset_index()
+    df_grouped = df_grouped.sort_values(by='DATA_Bestand', ascending=False)
+
+    # Gesamttotal berechnen
+    total = df_grouped['DATA_Bestand'].sum()
+
+    # Einheitlicher Textstil (analog Plotly)
+    text_style = {
+        'fontFamily': 'Arial, sans-serif',  # oder die gleiche wie in deinem Plotly-Layout
+        'fontSize': '18px',
+        'color': '#000000'
+    }
+
+    # Inhalt der Textbox
+    text_block = [
+        html.P(f"Bestand nach Treibstoffarten CH {jahr}", style={**text_style, 'fontWeight': 'bold', 'marginTop': '10px', 'fontSize': '20px'}),
+        html.Ul([
+            html.Li(
+                f"{row['Treibstoff']}: {int(row['DATA_Bestand']):,}".replace(',', "'"),
+                style=text_style
+            )
+            for _, row in df_grouped.iterrows()
+        ]),
+        html.P(
+            f"Total: {int(total):,}".replace(',', "'"),
+            style={**text_style, 'fontWeight': 'bold', 'marginTop': '10px'}
+        )
+    ]
+
+    return html.Div(text_block, style={
+        'padding': '0px',  # kein Innenabstand nötig
+        'border': 'none',  # keine Umrandung
+        'backgroundColor': 'transparent'
+    })
+
+
+def generate_fuel_summary_text_canton(df, jahr, canton):
+    import dash.html as html
+
+    # Filterung
+    df_canton = df[(df['Kanton'] == canton) & (df['Jahr'] == jahr)]
+
+    # Gruppierung und Sortierung nach DATA_Bestand (absteigend)
+    df_grouped = df_canton.groupby('Treibstoff')['DATA_Bestand'].sum().reset_index()
+    df_grouped = df_grouped.sort_values(by='DATA_Bestand', ascending=False)
+
+    # Gesamttotal berechnen
+    total = df_grouped['DATA_Bestand'].sum()
+
+    # Einheitlicher Textstil (analog Plotly)
+    text_style = {
+        'fontFamily': 'Arial, sans-serif',  # oder die gleiche wie in deinem Plotly-Layout
+        'fontSize': '18px',
+        'color': '#000000'
+    }
+
+    # Inhalt der Textbox
+    text_block = [
+        html.P(f"Bestand nach Treibstoffarten {canton} {jahr}", style={**text_style, 'fontWeight': 'bold', 'marginTop': '10px', 'fontSize': '20px'}),
+        html.Ul([
+            html.Li(
+                f"{row['Treibstoff']}: {int(row['DATA_Bestand']):,}".replace(',', "'"),
+                style=text_style
+            )
+            for _, row in df_grouped.iterrows()
+        ]),
+        html.P(
+            f"Total: {int(total):,}".replace(',', "'"),
+            style={**text_style, 'fontWeight': 'bold', 'marginTop': '10px'}
+        )
+    ]
+
+    return html.Div(text_block, style={
+        'padding': '0px',  # kein Innenabstand nötig
+        'border': 'none',  # keine Umrandung
+        'backgroundColor': 'transparent'
+    })
+
+
+#################################################
+### helper functions
+#################################################
+def add_year_marker(figure, year, y_max, color='red'):
+    """
+    Adds a vertical marker (line and point) to a chart (given as figure object).
+    Works also with categorical x-axis (strings).
+
+    :param figure: Plotly figure object (e.g. px.bar)
+    :param year: year, which will be marked (int or str)
+    :param y_max: max y-size (for the vertical line)
+    :param color: color of the marker
+    """
+    # handle year as string
+    year_str = str(year)
+
+    # add marker circle
+    figure.add_trace(go.Scatter(
+        x=[year_str], y=[0],
+        mode='markers',
+        marker=dict(color=color, size=10, symbol='circle'),
+        showlegend=False
+    ))
+
+    # add vertical marker line
+    figure.add_trace(go.Scatter(
+        x=[year_str, year_str],
+        y=[0, y_max],
+        mode='lines',
+        line=dict(color=color, width=3),
+        showlegend=False,
+        hoverinfo='skip'
+    ))
+
+#################################################
+### get and setup data
+#################################################
 df_csv= pd.read_csv('data/Autodaten_Kantone.csv', delimiter=',')
 df_fuel = df_csv.fillna(0)
 df_fuel = gen.normalize_fuel_categories(df_fuel)
