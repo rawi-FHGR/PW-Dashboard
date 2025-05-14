@@ -1,5 +1,6 @@
 import dash.html as html
 import dash.dcc as dcc
+import dash_daq as daq
 
 from components.municipality_map import generate_map_municipality
 from helper.general import available_years, default_year
@@ -16,9 +17,8 @@ def create_layout():
 
             # 1st line: CH map and canton / municipality map
             html.Div([
-                dcc.Graph(id='choropleth-map', style={'width': '50%'}),
-                dcc.Graph(id='choropleth-map-municipality',
-                          figure=generate_map_municipality(2023, 'ZH'), style={'width': '50%'})
+                dcc.Graph(id='choropleth-map', style={'width': '67%'}),
+                html.Div(id='right-panel', style={'width': '33%'})
             ], style={
                 'display': 'flex',
                 'flexDirection': 'row',  # nebeneinander
@@ -30,22 +30,40 @@ def create_layout():
             }),
 
             # 2nd line: year slider
-            html.Div(
-                dcc.Slider(
-                    id='year-slider',
-                    min=int(min(available_years)),
-                    max=int(max(available_years)),
-                    step=1,
-                    value=int(default_year),
-                    marks={
-                        int(min(available_years)): str(int(min(available_years))),
-                        int(max(available_years)): str(int(max(available_years)))
-                    },
-                    tooltip={"placement": "bottom", "always_visible": True},
-                    className='custom-slider'
+            html.Div([
+                html.Div(
+                    dcc.Slider(
+                        id='year-slider',
+                        min=int(min(available_years)),
+                        max=int(max(available_years)),
+                        step=1,
+                        value=int(default_year),
+                        marks={
+                            int(min(available_years)): str(int(min(available_years))),
+                            int(max(available_years)): str(int(max(available_years)))
+                        },
+                        tooltip={"placement": "bottom", "always_visible": True},
+                        className='custom-slider'
+                    ),
+                    style={'width': '60%'}
                 ),
-                style={'width': '25%', 'margin': '20px auto'}
-            ),
+                html.Div(
+                    daq.ToggleSwitch(
+                        id='value-mode-toggle',
+                        label='Relativ',
+                        labelPosition='top',
+                        value=False  # False = Absolut, True = Relativ
+                    ),
+                    style={'width': '10%', 'textAlign': 'center', 'marginLeft': 'auto'}
+                )
+            ], style={
+                'display': 'flex',
+                'flexDirection': 'row',
+                'alignItems': 'center',
+                'justifyContent': 'space-between',
+                'width': '80%',
+                'margin': '20px auto'
+            }),
 
             # additional graphs (3 side-by-side)
             html.Div([
