@@ -12,23 +12,34 @@ texts = {'title':'Fahrzeugbestand pro Gemeinde',
          'stock':'DATA_Bestand',
          'cars':'Personenwagen'}
 
-data_columns = ['DATA_Bestand', 'Gemeindename']
+data_columns = ['Gemeindename', 'DATA_Bestand', 'DATA_Bestand pro 1000']
 
 # functions
 
 
-def generate_map_municipality(year: int, canton: str):
+def generate_map_municipality(year: int, canton: str, is_relative: bool=False):
     '''
     Draws a canton outline with municipality data
     :param year:
     :param canton:
     :return: figure object
     '''
+
+    # use the right data depending on the data mode
+    if is_relative:
+        title = f'<b>{canton}: {texts.get('title')} pro 1000 Einwohner ({year})</b>'
+        data_column = data_columns[2]
+    else:
+        title = f'<b>{canton}: {texts.get('title')} ({year})</b>'
+        data_column = data_columns[1]
+
+    print(f'******* title: {title}, data_column: {data_column}')
+
     # aggregate municipality data for the given year and canton
     df_cant = (
         df[(df['Kanton'] == canton) & (df['Jahr'] == year)]
         .groupby(['ID_Gemeinde', 'Gemeindename'], as_index=False)
-        .agg({'DATA_Bestand': 'sum'})
+        .agg({data_column: 'sum'})
     )
 
     # prevent application crash due to missing data
@@ -70,7 +81,7 @@ def generate_map_municipality(year: int, canton: str):
         geojson=canton_geojson,
         locations="ID_Gemeinde",
         featureidkey="properties.ID_Gemeinde",
-        color="DATA_Bestand",
+        color=data_column,
         color_continuous_scale="Viridis",
         mapbox_style="white-bg",
         zoom=zoom,
@@ -80,7 +91,7 @@ def generate_map_municipality(year: int, canton: str):
     )
     # add dynamic title
     fig.update_layout(
-        title=f"<b>{canton}: {texts.get('title')} ({year})</b>",
+        title=title,
         title_x=0.5,
         margin={"r": 0, "t": 50, "l": 0, "b": 0},
         coloraxis_colorbar = {

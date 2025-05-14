@@ -1,9 +1,13 @@
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+import logging
 
 # import project specific settings and functions
 import helper.general as gen
+from helper.misc import log_current_function
+
+logger = logging.getLogger(__name__)
 
 color_fuel= {
     "Benzin": gen.colors['blue'],
@@ -14,6 +18,8 @@ color_fuel= {
     "Gas": gen.colors['brown'],
     "Wasserstoff": gen.colors['grey']
 }
+
+data_columns = ['Gemeindename', 'DATA_Bestand', 'DATA_Bestand pro 1000']
 
 def generate_stacked_bar_fuel_ivs(df, jahr):
     '''
@@ -63,7 +69,7 @@ def generate_stacked_bar_fuel_ivs(df, jahr):
     #                 showlegend=False))
     return fig
 
-def generate_stacked_bar_fuel_stock(df, year):
+def generate_stacked_bar_fuel_stock(df, year, is_relative: bool=False):
     '''
     Generates a stacked bar chart from dataframe with fuel data.
     The selected year is emphasized with a colored marker
@@ -71,13 +77,28 @@ def generate_stacked_bar_fuel_stock(df, year):
     :param year: selected year
     :return: returns a stacked bar chart with fuel data as fig (px.bar)
     '''
+    log_current_function(level=logging.DEBUG, msg=f"{year} {is_relative}")
+
+    texts = {'title': 'Verteilung der Treibstoffarten CH',
+             'title_colorbar': 'Anzahl',
+             'inhabitant': 'Einwohner',
+             'stock': 'DATA_Bestand',
+             'cars': 'Personenwagen'}
+
+    # use the right data depending on the data mode
+    if is_relative:
+        title = f'<b>{texts.get('title')} pro 1000 Einwohner ({year})</b>'
+        data_column = data_columns[2]
+    else:
+        title = f'<b>{texts.get('title')} ({year})</b>'
+        data_column = data_columns[1]
 
     # group data by year and fuel and sum the values
-    df_grouped = df.groupby(['Jahr', 'Treibstoff'])['DATA_Bestand'].sum().reset_index()
+    df_grouped = df.groupby(['Jahr', 'Treibstoff'])[data_column].sum().reset_index()
 
     # create the stacked bar chart using Plotly Express
-    fig = px.bar(df_grouped, x='Jahr', y='DATA_Bestand', color='Treibstoff', color_discrete_map=color_fuel)
-    fig.update_layout(title_text=f"<b>Verteilung der Treibstoffarten CH</b>",
+    fig = px.bar(df_grouped, x='Jahr', y=data_column, color='Treibstoff', color_discrete_map=color_fuel)
+    fig.update_layout(title_text=title,
                       font_size=12,
                       xaxis_title="",
                       yaxis_title="Anzahl Bestand")
@@ -85,7 +106,7 @@ def generate_stacked_bar_fuel_stock(df, year):
     fig.update_layout(xaxis={'type': 'category'})
 
     # # group by year and sum up the values (Anzahl)
-    yearly_sum = df_grouped.groupby('Jahr')['DATA_Bestand'].sum()
+    yearly_sum = df_grouped.groupby('Jahr')[data_column].sum()
     # get the max value for the sum
     max_sum = yearly_sum.max()
 
@@ -103,19 +124,34 @@ def generate_stacked_bar_fuel_stock(df, year):
 
     return fig
 
-def generate_stacked_bar_fuel_stock_canton(df, year, canton):
+def generate_stacked_bar_fuel_stock_canton(df, year, canton, is_relative: bool=False):
     '''
     Generates a stacked bar chart from dataframe with fuel data
     :param df:
     :param year: selected year
     :return: returns a stacked bar chart with fuel data as fig (px.bar)
     '''
+    log_current_function(level=logging.DEBUG, msg=f"{year} {canton} {is_relative}")
+
+    texts = {'title': 'Fahrzeugbestand',
+             'title_colorbar': 'Anzahl',
+             'inhabitant': 'Einwohner',
+             'stock': 'DATA_Bestand',
+             'cars': 'Personenwagen'}
+
+    # use the right data depending on the data mode
+    if is_relative:
+        title = f'<b>{canton}: {texts.get('title')} pro 1000 Einwohner ({year})</b>'
+        data_column = data_columns[2]
+    else:
+        title = f'<b>{canton}: {texts.get('title')} ({year})</b>'
+        data_column = data_columns[1]
 
     # only selected canton
     df_canton = df[df['Kanton'] == canton].copy()
 
     # group data by year and fuel and sum the values
-    df_grouped = df_canton.groupby(['Jahr', 'Treibstoff'])['DATA_Bestand'].sum().reset_index()
+    df_grouped = df_canton.groupby(['Jahr', 'Treibstoff'])[data_column].sum().reset_index()
 
     # convert year to str
     df_grouped['Jahr'] = df_grouped['Jahr'].astype(int)
@@ -123,12 +159,12 @@ def generate_stacked_bar_fuel_stock_canton(df, year, canton):
 
     # create the stacked bar chart using Plotly Express
     fig = px.bar(df_grouped, x='Jahr',
-                 y='DATA_Bestand',
+                 y=data_column,
                  color='Treibstoff',
                  color_discrete_map=color_fuel,
                  category_orders={'Jahr': sorted(df_grouped['Jahr'].unique())})
 
-    fig.update_layout(title_text=f"<b>Verteilung der Treibstoffarten {canton}</b>",
+    fig.update_layout(title_text=title,
                       font_size=12,
                       xaxis_title="",
                       yaxis_title="Anzahl Bestand",
@@ -145,7 +181,7 @@ def generate_stacked_bar_fuel_stock_canton(df, year, canton):
     )
 
     # group by year and sum up the values (Anzahl)
-    yearly_sum = df_grouped.groupby('Jahr')['DATA_Bestand'].sum()
+    yearly_sum = df_grouped.groupby('Jahr')[data_column].sum()
 
     # get the max value for the sum
     max_sum = yearly_sum.max()
@@ -208,14 +244,30 @@ def generate_multiline_total(df, jahr):
 
     return fig
 
-def generate_pie_fuel_stock(df_jahr, jahr):
-    df_grouped = df_jahr.groupby(['Jahr', 'Treibstoff'])['DATA_Bestand'].sum().reset_index()
+def generate_pie_fuel_stock(df_jahr, year, is_relative: bool=False):
+    log_current_function(level=logging.DEBUG, msg=f"{year} {is_relative}")
+
+    texts = {'title': 'Anteil Treibstoffarten CH',
+             'title_colorbar': 'Anzahl',
+             'inhabitant': 'Einwohner',
+             'stock': 'DATA_Bestand',
+             'cars': 'Personenwagen'}
+
+    # use the right data depending on the data mode
+    if is_relative:
+        title = f'<b>{texts.get('title')} pro 1000 Einwohner ({year})</b>'
+        data_column = data_columns[2]
+    else:
+        title = f'<b>{texts.get('title')} ({year})</b>'
+        data_column = data_columns[1]
+
+    df_grouped = df_jahr.groupby(['Jahr', 'Treibstoff'])[data_column].sum().reset_index()
 
     fig = px.pie(
         df_grouped,
         names="Treibstoff",
-        values="DATA_Bestand",
-        title=f"<b>Anteil Treibstoffarten CH ({jahr})</b>",
+        values=data_column,
+        title=title,
         color="Treibstoff",
         color_discrete_map=color_fuel
     )
@@ -223,18 +275,33 @@ def generate_pie_fuel_stock(df_jahr, jahr):
     fig.update_traces(textposition='inside', textinfo='percent+label', showlegend=False )
     return fig
 
-def generate_pie_fuel_stock_canton(df, jahr, canton):
+def generate_pie_fuel_stock_canton(df, year, canton, is_relative: bool=False):
+    log_current_function(level=logging.DEBUG, msg=f"{year} {canton} {is_relative}")
+
+    texts = {'title': 'Anteil Treibstoffarten',
+             'title_colorbar': 'Anzahl',
+             'inhabitant': 'Einwohner',
+             'stock': 'DATA_Bestand',
+             'cars': 'Personenwagen'}
+
+    # use the right data depending on the data mode
+    if is_relative:
+        title = f'<b>{canton}: {texts.get('title')} pro 1000 Einwohner ({year})</b>'
+        data_column = data_columns[2]
+    else:
+        title = f'<b>{canton}: {texts.get('title')} ({year})</b>'
+        data_column = data_columns[1]
 
     df_canton = df[df['Kanton'] == canton]
 
     # group data by year and fuel and sum the values
-    df_grouped = df_canton.groupby(['Jahr', 'Treibstoff'])['DATA_Bestand'].sum().reset_index()
+    df_grouped = df_canton.groupby(['Jahr', 'Treibstoff'])[data_column].sum().reset_index()
 
     fig = px.pie(
         df_grouped,
         names="Treibstoff",
-        values="DATA_Bestand",
-        title=f"<b>Anteil Treibstoffarten {canton} ({jahr})</b>",
+        values=data_column,
+        title=title,
         color="Treibstoff",
         color_discrete_map=color_fuel
     )
@@ -242,18 +309,35 @@ def generate_pie_fuel_stock_canton(df, jahr, canton):
     fig.update_traces(textposition='inside', textinfo='percent+label', showlegend=False )
     return fig
 
-import dash.html as html
 
-def generate_fuel_summary_text_CH(df, jahr):
+def generate_fuel_summary_text_CH(df, year, is_relative: bool=False):
+    log_current_function(level=logging.DEBUG, msg=f"{year} {is_relative}")
+
+    import dash.html as html
+
+    texts = {'title': 'Bestand nach Treibstoffarten CH',
+             'title_colorbar': 'Anzahl',
+             'inhabitant': 'Einwohner',
+             'stock': 'DATA_Bestand',
+             'cars': 'Personenwagen'}
+
+    # use the right data depending on the data mode
+    if is_relative:
+        title = f'{texts.get('title')} pro 1000 Einwohner ({year})'
+        data_column = data_columns[2]
+    else:
+        title = f'{texts.get('title')} ({year})'
+        data_column = data_columns[1]
+
     # Filterung
-    df_canton = df[(df['Jahr'] == jahr)]
+    df_canton = df[(df['Jahr'] == year)]
 
     # Gruppierung und Sortierung nach DATA_Bestand (absteigend)
-    df_grouped = df_canton.groupby('Treibstoff')['DATA_Bestand'].sum().reset_index()
-    df_grouped = df_grouped.sort_values(by='DATA_Bestand', ascending=False)
+    df_grouped = df_canton.groupby('Treibstoff')[data_column].sum().reset_index()
+    df_grouped = df_grouped.sort_values(by=data_column, ascending=False)
 
     # Gesamttotal berechnen
-    total = df_grouped['DATA_Bestand'].sum()
+    total = df_grouped[data_column].sum()
 
     # Einheitlicher Textstil (analog Plotly)
     text_style = {
@@ -264,10 +348,10 @@ def generate_fuel_summary_text_CH(df, jahr):
 
     # Inhalt der Textbox
     text_block = [
-        html.P(f"Bestand nach Treibstoffarten CH {jahr}", style={**text_style, 'fontWeight': 'bold', 'marginTop': '10px', 'fontSize': '20px'}),
+        html.P(f"{title}", style={**text_style, 'fontWeight': 'bold', 'marginTop': '10px', 'fontSize': '20px'}),
         html.Ul([
             html.Li(
-                f"{row['Treibstoff']}: {int(row['DATA_Bestand']):,}".replace(',', "'"),
+                f"{row['Treibstoff']}: {int(row[data_column]):,}".replace(',', "'"),
                 style=text_style
             )
             for _, row in df_grouped.iterrows()
@@ -285,18 +369,34 @@ def generate_fuel_summary_text_CH(df, jahr):
     })
 
 
-def generate_fuel_summary_text_canton(df, jahr, canton):
+def generate_fuel_summary_text_canton(df, year, canton, is_relative: bool=False):
+    log_current_function(level=logging.DEBUG, msg=f"{year} {canton} {is_relative}")
+
     import dash.html as html
 
+    texts = {'title': 'Bestand nach Treibstoffarten ',
+             'title_colorbar': 'Anzahl',
+             'inhabitant': 'Einwohner',
+             'stock': 'DATA_Bestand',
+             'cars': 'Personenwagen'}
+
+    # use the right data depending on the data mode
+    if is_relative:
+        title = f'{canton}: {texts.get('title')} pro 1000 Einwohner ({year})'
+        data_column = data_columns[2]
+    else:
+        title = f'{canton}: {texts.get('title')} ({year})'
+        data_column = data_columns[1]
+
     # Filterung
-    df_canton = df[(df['Kanton'] == canton) & (df['Jahr'] == jahr)]
+    df_canton = df[(df['Kanton'] == canton) & (df['Jahr'] == year)]
 
     # Gruppierung und Sortierung nach DATA_Bestand (absteigend)
-    df_grouped = df_canton.groupby('Treibstoff')['DATA_Bestand'].sum().reset_index()
-    df_grouped = df_grouped.sort_values(by='DATA_Bestand', ascending=False)
+    df_grouped = df_canton.groupby('Treibstoff')[data_column].sum().reset_index()
+    df_grouped = df_grouped.sort_values(by=data_column, ascending=False)
 
     # Gesamttotal berechnen
-    total = df_grouped['DATA_Bestand'].sum()
+    total = df_grouped[data_column].sum()
 
     # Einheitlicher Textstil (analog Plotly)
     text_style = {
@@ -307,10 +407,10 @@ def generate_fuel_summary_text_canton(df, jahr, canton):
 
     # Inhalt der Textbox
     text_block = [
-        html.P(f"Bestand nach Treibstoffarten {canton} {jahr}", style={**text_style, 'fontWeight': 'bold', 'marginTop': '10px', 'fontSize': '20px'}),
+        html.P(f"{title}", style={**text_style, 'fontWeight': 'bold', 'marginTop': '10px', 'fontSize': '20px'}),
         html.Ul([
             html.Li(
-                f"{row['Treibstoff']}: {int(row['DATA_Bestand']):,}".replace(',', "'"),
+                f"{row['Treibstoff']}: {int(row[data_column]):,}".replace(',', "'"),
                 style=text_style
             )
             for _, row in df_grouped.iterrows()
@@ -341,6 +441,8 @@ def add_year_marker(figure, year, y_max, color='red'):
     :param y_max: max y-size (for the vertical line)
     :param color: color of the marker
     """
+    log_current_function(level=logging.DEBUG, msg=f"{year}")
+
     # handle year as string
     year_str = str(year)
 

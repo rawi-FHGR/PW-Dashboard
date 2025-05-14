@@ -1,3 +1,4 @@
+import logging
 import dash
 import dash_bootstrap_components as dbc
 
@@ -5,30 +6,41 @@ import plotly.express as px
 import pandas as pd
 import json
 
-# varialbles
+from helper.misc import log_current_function
+logger = logging.getLogger(__name__)
+
+# variables
 texts = {'title':'Fahrzeugbestand CH',
          'title_colorbar':'Bestand',
          'inhabitant':'Einwohner',
          'stock':'DATA_Bestand',
-         'cars':'Personenwagen'}
+         'cars':'Personenwagen',
+         'relative':'pro 1000'}
 
-data_columns = ['DATA_Bestand', 'Kanton']
+data_columns = ['Kanton', 'DATA_Bestand', 'DATA_Bestand pro 1000']
 
 # functions
-def generate_ch_map(year: int):
+def generate_ch_map(year: int, is_relative: bool=False):
     '''
     Draws a choropleth map of Switzerland with canton-specific data
     :param year: selected year
     :return: Plotly figure object
     '''
+    log_current_function(level=logging.DEBUG, msg=f"{year} {is_relative}")
 
-    title = f'<b>{texts['title']} {year}</b>'
-    data_column = data_columns[0]
+    if is_relative:
+        title = f'<b>{texts['title']} pro 1000 Einwohner ({year})</b>'
+        data_column = data_columns[2]
+        hover_text = f'{texts['cars']} {texts['relative']} {texts["inhabitant"]}'
+    else:
+        title = f'<b>{texts['title']} ({year})</b>'
+        data_column = data_columns[1]
+        hover_text = f'{texts['cars']}'
 
     # get only data for the selected year
     df_year = df[df['Jahr'] == year]
 
-    # 🛑 Check for empty data
+    # Check for empty data
     if df_year.empty:
         fig = go.Figure()
         fig.update_layout(
@@ -40,13 +52,13 @@ def generate_ch_map(year: int):
         return fig
 
     # Daten aggregieren
-    df_grouped = df_year.groupby(['Jahr', 'Kanton'])['DATA_Bestand'].sum().reset_index()
+    df_grouped = df_year.groupby(['Jahr', 'Kanton'])[data_column].sum().reset_index()
 
     # prepare map
     fig = px.choropleth(
         df_grouped,
         geojson=geojson_data,
-        locations=data_columns[1],
+        locations=data_columns[0],
         featureidkey="properties.NAME_KURZ",
         color=data_column,
         hover_data={data_column: ':.2f'},
@@ -82,7 +94,7 @@ def generate_ch_map(year: int):
     # tooltip setzen
     hovertemplate = (
         "<b>%{location}</b><br>"
-        "%{z:.0f} " + texts['cars'] + "<br>"
+        "%{z:.0f} " + hover_text + "<br>"
         "<extra></extra>"
     )
     fig.update_traces(hovertemplate=hovertemplate)
