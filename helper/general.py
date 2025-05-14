@@ -48,8 +48,6 @@ def normalize_fuel_categories(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
-
-
 # settings
 available_years = list(range(2010,2025,1))
 default_year = available_years[int(len(available_years)/2)]
