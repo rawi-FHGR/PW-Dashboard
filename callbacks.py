@@ -1,9 +1,12 @@
 # callbacks.py
+from helper.general import default_year
 from dash.dependencies import Input, Output
 import plotly.express as px
 import inspect
 import dash.html as html
 import dash.dcc as dcc
+from dash import callback_context
+import dash
 
 import logging
 
@@ -122,19 +125,30 @@ def register_callbacks(app):
         fig = m_map.generate_map_municipality(year=selected_year, canton=canton, is_relative=is_relative)
         return dcc.Graph(figure=fig, style={'height': '100%'})
 
-
-    # hidden callbacks
-    # Callback 1: clickData → Store
     @app.callback(
         Output("selected-canton", "data"),
-        Input("choropleth-map", "clickData")
-    )
-    def extract_kanton(clickData):
-        # if nothing was clicked return CH for different handling
-        if clickData is None:
-            return "CH"
-        # get canton based on clicked position on the CH map and return it
-        return clickData['points'][0]['location']
+        Output("year-slider", "value"),
+        Output("value-mode-toggle", "value"),
+        [Input("choropleth-map", "clickData"),
+         Input("home-button", "n_clicks")],
+        prevent_initial_call=True)
+    
+    def update_canton(clickData, home_clicks):
+        ctx = callback_context
+    
+        if not ctx.triggered:
+            raise dash.exceptions.PreventUpdate
+    
+        trigger_id = ctx.triggered[0]["prop_id"].split(".")[0]
+    
+        if trigger_id == "choropleth-map":
+            if clickData is None:
+                return "CH", dash.no_update, dash.no_update
+            return clickData['points'][0]['location'], dash.no_update, dash.no_update
+    
+        elif trigger_id == "home-button":
+            return "CH", default_year, False
+
 
 
 

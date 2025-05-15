@@ -29,13 +29,13 @@ def generate_ch_map(year: int, is_relative: bool=False):
     log_current_function(level=logging.DEBUG, msg=f"{year} {is_relative}")
 
     if is_relative:
-        title = f'<b>{texts['title']} pro 1000 Einwohner ({year})</b>'
+        title = f'<b>{texts["title"]} pro 1000 Einwohner ({year})</b>'
         data_column = data_columns[2]
-        hover_text = f'{texts['cars']} {texts['relative']} {texts["inhabitant"]}'
+        hover_text = f'{texts["cars"]} {texts["relative"]} {texts["inhabitant"]}'
     else:
-        title = f'<b>{texts['title']} ({year})</b>'
+        title = f'<b>{texts["title"]} ({year})</b>'
         data_column = data_columns[1]
-        hover_text = f'{texts['cars']}'
+        hover_text = f'{texts["cars"]}'
 
     # get only data for the selected year
     df_year = df[df['Jahr'] == year]
@@ -59,7 +59,7 @@ def generate_ch_map(year: int, is_relative: bool=False):
         df_grouped,
         geojson=geojson_data,
         locations=data_columns[0],
-        featureidkey="properties.NAME_KURZ",
+        featureidkey="properties.Kanton",
         color=data_column,
         hover_data={data_column: ':.2f'},
         color_continuous_scale="Viridis",
@@ -103,7 +103,7 @@ def generate_ch_map(year: int, is_relative: bool=False):
 
 # setup data
 # read simplified GeoJSON to work locally
-with open("./data/swiss-cantons.geojson", encoding="utf-8") as f:
+with open("./data/Geodaten_Kantone.geojson", encoding="utf-8") as f:
     geojson_data = json.load(f)
 
 # get statistical data from file or database

@@ -43,10 +43,10 @@ def generate_stacked_bar_fuel_stock(df, year, canton, is_relative: bool=False):
 
     # use the right data depending on the data mode
     if is_relative:
-        title = f'<b>{canton}: {texts.get('title')} {texts.get('relative')} ({year})</b>'
+        title = f'<b>{canton}: {texts.get("title")} {texts.get("relative")} ({year})</b>'
         data_column = data_columns[2]
     else:
-        title = f'<b>{canton}: {texts.get('title')} ({year})</b>'
+        title = f'<b>{canton}: {texts.get("title")} ({year})</b>'
         data_column = data_columns[1]
 
     # only selected canton
@@ -106,10 +106,10 @@ def generate_pie_fuel_stock(df, year, canton, is_relative: bool=False):
 
     # use the right data depending on the data mode
     if is_relative:
-        title = f'<b>{canton}: {texts.get('title')} {texts.get('relative')} ({year})</b>'
+        title = f'<b>{canton}: {texts.get("title")} {texts.get("relative")} ({year})</b>'
         data_column = data_columns[2]
     else:
-        title = f'<b>{canton}: {texts.get('title')} ({year})</b>'
+        title = f'<b>{canton}: {texts.get("title")} ({year})</b>'
         data_column = data_columns[1]
 
         # only selected canton
@@ -145,10 +145,10 @@ def generate_fuel_summary_text(df, year, canton, is_relative: bool=False):
 
     # use the right data depending on the data mode
     if is_relative:
-        title = f'{canton}: {texts.get('title')} {texts.get('relative')} ({year})'
+        title = f'{canton}: {texts.get("title")} {texts.get("relative")} ({year})'
         data_column = data_columns[2]
     else:
-        title = f'{canton}: {texts.get('title')} ({year})'
+        title = f'{canton}: {texts.get("title")} ({year})'
         data_column = data_columns[1]
 
     # only selected canton
