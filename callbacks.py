@@ -71,12 +71,8 @@ def register_callbacks(app):
         :return: figure object
         '''
 
-        # if nothing was clicked (canton=CH) return an empty map
-        if canton == 'CH':
-            return fl.generate_stacked_bar_fuel_stock(fl.df_fuel, selected_year, is_relative)
-
-        # generate and return stacked bar chart for the selected canton
-        return fl.generate_stacked_bar_fuel_stock_canton(fl.df_fuel, selected_year, canton, is_relative)
+        # generate and return stacked bar chart for the selected canton (CH if no canton was selected)
+        return fl.generate_stacked_bar_fuel_stock(fl.df_fuel, selected_year, canton, is_relative)
 
     @app.callback(
         Output('pie-fuel-stock', 'figure'),
@@ -87,12 +83,8 @@ def register_callbacks(app):
     def update_pie_fuel(selected_year, canton, is_relative):
         df_jahr = fl.df_fuel[fl.df_fuel["Jahr"] == selected_year]
 
-        # if nothing was clicked (canton=CH) return an empty map
-        if canton == 'CH':
-            return fl.generate_pie_fuel_stock(df_jahr, selected_year, is_relative)
-
         # generate and return pie chart for the selected canton
-        return fl.generate_pie_fuel_stock_canton(df_jahr, selected_year, canton, is_relative)
+        return fl.generate_pie_fuel_stock(df_jahr, selected_year, canton, is_relative)
 
     @app.callback(
         Output('summary-container', 'children'),
@@ -110,11 +102,7 @@ def register_callbacks(app):
         '''
         df_year = fl.df_fuel[fl.df_fuel["Jahr"] == selected_year]
 
-        if canton == 'CH':
-            return fl.generate_fuel_summary_text_CH(df_year, selected_year, is_relative)
-
-        return fl.generate_fuel_summary_text_canton(df_year, selected_year, canton, is_relative)
-
+        return fl.generate_fuel_summary_text(df_year, selected_year, canton, is_relative)
 
     # callback for handling the upper right field which changes the display type at runtime
     @app.callback(
