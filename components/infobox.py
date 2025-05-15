@@ -22,9 +22,11 @@ def display_info_text():
                 " * Bestand-Daten: Bundesamt für Statistik (BFS)",
                 html.Br(),
                " * Inverkehrsetzungen: Bundesamt für Statistik (BFS)",
-                html.Br()]
-               ),
-        html.P("Bitte wählen Sie einen Kanton auf der Karte aus, um Details anzuzeigen.")]
+                html.Br()],
+               style=text_style),
+        html.P("Bitte wählen Sie einen Kanton auf der Karte aus, um Details anzuzeigen.",
+               style=text_style)
+    ]
 
     return html.Div(text_block, style={
         'padding': '0px',  # kein Innenabstand nötig
