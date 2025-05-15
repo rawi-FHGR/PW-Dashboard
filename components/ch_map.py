@@ -5,43 +5,61 @@ import plotly.express as px
 import pandas as pd
 import json
 
-# varialbles
-texts = {'title':'Fahrzeugbestand CH',
-         'title_colorbar':'Bestand',
-         'inhabitant':'Einwohner',
-         'stock':'DATA_Bestand',
-         'cars':'Personenwagen'}
+from helper.misc import log_current_function
+logger = logging.getLogger(__name__)
 
-data_columns = ['DATA_Bestand', 'Kanton']
+# variables
+texts = {
+    'map.title':'Fahrzeugbestand CH',
+    'relative':'pro 1000',
+    'inhabitant':'Einwohner',
+    'cars': 'Personenwagen',
+    'no_data_available': 'Keine Daten für das ausgewählte Jahr verfügbar',
+    'title_colorbar':'Bestand'
+}
+
+data_columns = ['Kanton', 'DATA_Bestand', 'DATA_Bestand pro 1000']
 
 # functions
-def generate_ch_map(year: int):
+def generate_ch_map(year: int, is_relative: bool=False):
     '''
-    Draws a choropleth map of switzerland with canton specific data
-    :param year:
-    :return: figure object
+    Draws a choropleth map of Switzerland with canton-specific data
+    :param year: selected year
+    :return: Plotly figure object
     '''
+    log_current_function(level=logging.DEBUG, msg=f"{year} {is_relative}")
 
-    title = f'<b>{texts["title"]} {year}</b>'
-    data_column = data_columns[0]
-
-    # tooltip content
-    hovertemplate = (
-        "<b>%{location}</b><br>"
-        "%{z:.0f} " + texts['cars'] + "<br>"
-        "<extra></extra>")
+    if is_relative:
+        title = f'<b>{texts.get('map.title')} {texts.get('relative')} {texts.get("inhabitant")} ({year})</b>'
+        data_column = data_columns[2]
+        hover_text = f'{texts.get('cars')} {texts.get('relative')} {texts.get("inhabitant")}'
+    else:
+        title = f'<b>{texts.get('map.title')} ({year})</b>'
+        data_column = data_columns[1]
+        hover_text = f'{texts.get('cars')}'
 
     # get only data for the selected year
     df_year = df[df['Jahr'] == year]
 
-    # sum car stock per canton
-    df_grouped = df_year.groupby(['Jahr', 'Kanton'])['DATA_Bestand'].sum().reset_index()
+    # Check for empty data
+    if df_year.empty:
+        fig = go.Figure()
+        fig.update_layout(
+            title=f"<b>{texts.get('no_data_available')} ({year})</b>",
+            title_x=0.5,
+            title_font_size=16,
+            margin={"r": 0, "t": 30, "l": 0, "b": 0}
+        )
+        return fig
+
+    # Daten aggregieren
+    df_grouped = df_year.groupby(['Jahr', 'Kanton'])[data_column].sum().reset_index()
 
     # prepare map
     fig = px.choropleth(
         df_grouped,
         geojson=geojson_data,
-        locations=data_columns[1],
+        locations=data_columns[0],
         featureidkey="properties.NAME_KURZ",
         color=data_column,
         hover_data={data_column: ':.2f'},
@@ -59,20 +77,27 @@ def generate_ch_map(year: int):
     fig.update_layout(
         title=title,
         margin={"r": 0, "t": 0, "l": 0, "b": 0},
-        # format colorbar
-        coloraxis_colorbar={"title": texts['title_colorbar'],
-                            "len": 0.75,
-                            "x": 0.85,
-                            "ticks":"outside",
-                            "tickformat":"~s",
-                            "xpad": 0,
-                            "yanchor": "middle",
-                            "xanchor": "left"},
+        coloraxis_colorbar={
+            "title": texts.get('title_colorbar'),
+            "len": 0.75,
+            "x": 0.85,
+            "ticks": "outside",
+            "tickformat": "~s",
+            "xpad": 0,
+            "yanchor": "middle",
+            "xanchor": "left"
+        },
         title_x=0.5,
         title_y=0.97,
-        uirevision="constant")
+        uirevision="constant"
+    )
 
-    # put the tooltip
+    # tooltip setzen
+    hovertemplate = (
+        "<b>%{location}</b><br>"
+        "%{z:.0f} " + hover_text + "<br>"
+        "<extra></extra>"
+    )
     fig.update_traces(hovertemplate=hovertemplate)
 
     return fig
