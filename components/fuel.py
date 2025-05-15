@@ -143,17 +143,17 @@ def generate_fuel_summary_text(df, year, canton, is_relative: bool=False):
     df_grouped = df.groupby('Treibstoff')[data_column].sum().reset_index()
     df_grouped = df_grouped.sort_values(by=data_column, ascending=False)
 
-    # Gesamttotal berechnen
+    # calculate total
     total = df_grouped[data_column].sum()
 
-    # Einheitlicher Textstil (analog Plotly)
+    # uniform text style
     text_style = {
         'fontFamily': 'Arial, sans-serif',  # oder die gleiche wie in deinem Plotly-Layout
         'fontSize': '18px',
         'color': '#000000'
     }
 
-    # Inhalt der Textbox
+    # content of the infobox
     text_block = [
         html.P(f"{title}", style={**text_style, 'fontWeight': 'bold', 'marginTop': '10px', 'fontSize': '20px'}),
         html.Ul([
@@ -170,8 +170,8 @@ def generate_fuel_summary_text(df, year, canton, is_relative: bool=False):
     ]
 
     return html.Div(text_block, style={
-        'padding': '0px',  # kein Innenabstand nötig
-        'border': 'none',  # keine Umrandung
+        'padding': '0px',
+        'border': 'none',
         'backgroundColor': 'transparent'
     })
 
