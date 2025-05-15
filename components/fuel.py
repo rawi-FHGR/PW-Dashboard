@@ -28,7 +28,7 @@ texts = {
     'infobox.title': 'Bestand nach Treibstoffarten ',
 }
 
-data_columns = ['Gemeindename', 'DATA_Bestand', 'DATA_Bestand pro 1000']
+data_columns = ['Kanton', 'DATA_Bestand', 'DATA_Bestand pro 1000']
 
 def generate_stacked_bar_fuel_stock(df, year, canton, is_relative: bool=False):
     '''
@@ -41,15 +41,17 @@ def generate_stacked_bar_fuel_stock(df, year, canton, is_relative: bool=False):
 
     # use the right data depending on the data mode
     if is_relative:
-        title = f'<b>{canton}: {texts.get('stackedbarchart.title')} {texts.get('relative')} ({year})</b>'
+        title = f'<b>{canton}: {texts.get("stackedbarchart.title")} {texts.get("relative")} ({year})</b>'
         data_column = data_columns[2]
     else:
-        title = f'<b>{canton}: {texts.get('stackedbarchart.title')} ({year})</b>'
+        title = f'<b>{canton}: {texts.get("stackedbarchart.title")} ({year})</b>'
         data_column = data_columns[1]
 
     # only selected canton
     if canton != 'CH':
         df = df[df['Kanton'] == canton].copy()
+        
+  
 
     # group data by year and fuel and sum the values
     df_grouped = df.groupby(['Jahr', 'Treibstoff'])[data_column].sum().reset_index()
@@ -97,18 +99,22 @@ def generate_pie_fuel_stock(df, year, canton, is_relative: bool=False):
 
     # use the right data depending on the data mode
     if is_relative:
-        title = f'<b>{canton}: {texts.get('piechart.title')} {texts.get('relative')} ({year})</b>'
+        title = f'<b>{canton}: {texts.get("piechart.title")} {texts.get("relative")} ({year})</b>'
         data_column = data_columns[2]
     else:
-        title = f'<b>{canton}: {texts.get('piechart.title')} ({year})</b>'
+        title = f'<b>{canton}: {texts.get("piechart.title")} ({year})</b>'
         data_column = data_columns[1]
 
         # only selected canton
+        # Pro Jahr filtern, ansonsten Summe über alle Jahre!
+        df = df[df['Jahr'] == year].copy()
         if canton != 'CH':
             df = df[df['Kanton'] == canton].copy()
 
+
+
     # group data by year and fuel and sum the values
-    df_grouped = df.groupby(['Jahr', 'Treibstoff'])[data_column].sum().reset_index()
+    df_grouped = df.groupby(['Treibstoff'])[data_column].sum().reset_index()
 
     fig = px.pie(
         df_grouped,
@@ -129,16 +135,18 @@ def generate_fuel_summary_text(df, year, canton, is_relative: bool=False):
 
     # use the right data depending on the data mode
     if is_relative:
-        title = f'{canton}: {texts.get('infobox.title')} {texts.get('relative')} ({year})'
+        title = f'{canton}: {texts.get("infobox.title")} {texts.get("relative")} ({year})'
         data_column = data_columns[2]
     else:
-        title = f'{canton}: {texts.get('infobox.title')} ({year})'
+        title = f'{canton}: {texts.get("infobox.title")} ({year})'
         data_column = data_columns[1]
 
     # only selected canton
     if canton != 'CH':
         df = df[(df['Kanton'] == canton) & (df['Jahr'] == year)].copy()
 
+
+    
     # Gruppierung und Sortierung nach DATA_Bestand (absteigend)
     df_grouped = df.groupby('Treibstoff')[data_column].sum().reset_index()
     df_grouped = df_grouped.sort_values(by=data_column, ascending=False)

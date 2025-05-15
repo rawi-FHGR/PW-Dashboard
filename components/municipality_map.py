@@ -30,10 +30,10 @@ def generate_map_municipality(year: int, canton: str, is_relative: bool=False):
 
     # use the right data depending on the data mode
     if is_relative:
-        title = f'<b>{canton}: {texts.get('title')} pro 1000 Einwohner ({year})</b>'
+        title = f'<b>{canton}: {texts.get("title")} pro 1000 Einwohner ({year})</b>'
         data_column = data_columns[2]
     else:
-        title = f'<b>{canton}: {texts.get('title')} ({year})</b>'
+        title = f'<b>{canton}: {texts.get("title")} ({year})</b>'
         data_column = data_columns[1]
 
     # aggregate municipality data for the given year and canton

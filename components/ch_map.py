@@ -31,13 +31,13 @@ def generate_ch_map(year: int, is_relative: bool=False):
     log_current_function(level=logging.DEBUG, msg=f"{year} {is_relative}")
 
     if is_relative:
-        title = f'<b>{texts.get('map.title')} {texts.get('relative')} {texts.get("inhabitant")} ({year})</b>'
+        title = f'<b>{texts.get("map.title")} {texts.get("relative")} {texts.get("inhabitant")} ({year})</b>'
         data_column = data_columns[2]
-        hover_text = f'{texts.get('cars')} {texts.get('relative')} {texts.get("inhabitant")}'
+        hover_text = f'{texts.get("cars")} {texts.get("relative")} {texts.get("inhabitant")}'
     else:
-        title = f'<b>{texts.get('map.title')} ({year})</b>'
+        title = f'<b>{texts.get("map.title")} ({year})</b>'
         data_column = data_columns[1]
-        hover_text = f'{texts.get('cars')}'
+        hover_text = f'{texts.get("cars")}'
 
     # get only data for the selected year
     df_year = df[df['Jahr'] == year]

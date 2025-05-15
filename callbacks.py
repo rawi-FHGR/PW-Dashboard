@@ -81,7 +81,7 @@ def register_callbacks(app):
          Input('value-mode-toggle', 'value')]
     )
     def update_pie_fuel(selected_year, canton, is_relative):
-        df_jahr = fl.df_fuel[fl.df_fuel["Jahr"] == selected_year]
+        df_jahr = fl.df_fuel
 
         # generate and return pie chart for the selected canton
         return fl.generate_pie_fuel_stock(df_jahr, selected_year, canton, is_relative)
