@@ -20,7 +20,13 @@ color_fuel= {
 }
 
 # define the texts
-#texts = {}
+texts = {
+    'stackedbarchart.title': 'Verteilung der Treibstoffarten',
+    'relative': 'pro 1000 Einwohner',
+    'stackedbarchart.y_axis': 'Anzahl Bestand',
+    'piechart.title': 'Anteil Treibstoffarten',
+    'infobox.title': 'Bestand nach Treibstoffarten ',
+}
 
 data_columns = ['Gemeindename', 'DATA_Bestand', 'DATA_Bestand pro 1000']
 
@@ -33,20 +39,12 @@ def generate_stacked_bar_fuel_stock(df, year, canton, is_relative: bool=False):
     '''
     log_current_function(level=logging.DEBUG, msg=f"{year} {canton} {is_relative}")
 
-    texts = {'title': 'Verteilung der Treibstoffarten',
-             'title_colorbar': 'Anzahl',
-             'y_axis': 'Anzahl Bestand',
-             'relative':'pro 1000 Einwohner',
-             'inhabitant': 'Einwohner',
-             'stock': 'DATA_Bestand',
-             'cars': 'Personenwagen'}
-
     # use the right data depending on the data mode
     if is_relative:
-        title = f'<b>{canton}: {texts.get('title')} {texts.get('relative')} ({year})</b>'
+        title = f'<b>{canton}: {texts.get('stackedbarchart.title')} {texts.get('relative')} ({year})</b>'
         data_column = data_columns[2]
     else:
-        title = f'<b>{canton}: {texts.get('title')} ({year})</b>'
+        title = f'<b>{canton}: {texts.get('stackedbarchart.title')} ({year})</b>'
         data_column = data_columns[1]
 
     # only selected canton
@@ -70,7 +68,7 @@ def generate_stacked_bar_fuel_stock(df, year, canton, is_relative: bool=False):
     fig.update_layout(title_text=title,
                       font_size=12,
                       xaxis_title="",
-                      yaxis_title=texts.get('y_axis'),
+                      yaxis_title=texts.get('stackedbarchart.y_axis'),
                       xaxis={'type': 'category'})
 
     # place the legend
@@ -97,19 +95,12 @@ def generate_stacked_bar_fuel_stock(df, year, canton, is_relative: bool=False):
 def generate_pie_fuel_stock(df, year, canton, is_relative: bool=False):
     log_current_function(level=logging.DEBUG, msg=f"{year} {canton} {is_relative}")
 
-    texts = {'title': 'Anteil Treibstoffarten',
-             'title_colorbar': 'Anzahl',
-             'inhabitant': 'Einwohner',
-             'relative': 'pro 1000 Einwohner',
-             'stock': 'DATA_Bestand',
-             'cars': 'Personenwagen'}
-
     # use the right data depending on the data mode
     if is_relative:
-        title = f'<b>{canton}: {texts.get('title')} {texts.get('relative')} ({year})</b>'
+        title = f'<b>{canton}: {texts.get('piechart.title')} {texts.get('relative')} ({year})</b>'
         data_column = data_columns[2]
     else:
-        title = f'<b>{canton}: {texts.get('title')} ({year})</b>'
+        title = f'<b>{canton}: {texts.get('piechart.title')} ({year})</b>'
         data_column = data_columns[1]
 
         # only selected canton
@@ -136,19 +127,12 @@ def generate_fuel_summary_text(df, year, canton, is_relative: bool=False):
 
     import dash.html as html
 
-    texts = {'title': 'Bestand nach Treibstoffarten ',
-             'title_colorbar': 'Anzahl',
-             'inhabitant': 'Einwohner',
-             'relative':'pro 1000 Einwohner',
-             'stock': 'DATA_Bestand',
-             'cars': 'Personenwagen'}
-
     # use the right data depending on the data mode
     if is_relative:
-        title = f'{canton}: {texts.get('title')} {texts.get('relative')} ({year})'
+        title = f'{canton}: {texts.get('infobox.title')} {texts.get('relative')} ({year})'
         data_column = data_columns[2]
     else:
-        title = f'{canton}: {texts.get('title')} ({year})'
+        title = f'{canton}: {texts.get('infobox.title')} ({year})'
         data_column = data_columns[1]
 
     # only selected canton
