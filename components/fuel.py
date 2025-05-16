@@ -96,7 +96,10 @@ def generate_stacked_bar_fuel_stock(df, year, canton, is_relative: bool=False):
 
 def generate_pie_fuel_stock(df, year, canton, is_relative: bool=False):
     log_current_function(level=logging.DEBUG, msg=f"{year} {canton} {is_relative}")
-
+    
+    # Pro Jahr filtern, ansonsten Summe über alle Jahre!
+    df = df[df['Jahr'] == year].copy()
+    
     # use the right data depending on the data mode
     if is_relative:
         title = f'<b>{canton}: {texts.get("piechart.title")} {texts.get("relative")} ({year})</b>'
@@ -106,8 +109,6 @@ def generate_pie_fuel_stock(df, year, canton, is_relative: bool=False):
         data_column = data_columns[1]
 
         # only selected canton
-        # Pro Jahr filtern, ansonsten Summe über alle Jahre!
-        df = df[df['Jahr'] == year].copy()
         if canton != 'CH':
             df = df[df['Kanton'] == canton].copy()
 
@@ -127,6 +128,8 @@ def generate_pie_fuel_stock(df, year, canton, is_relative: bool=False):
     fig.update_layout(margin=dict(t=52))
     fig.update_traces(textposition='inside', textinfo='percent+label', showlegend=False )
     return fig
+
+
 
 def generate_fuel_summary_text(df, year, canton, is_relative: bool=False):
     log_current_function(level=logging.DEBUG, msg=f"{year} {canton} {is_relative}")
