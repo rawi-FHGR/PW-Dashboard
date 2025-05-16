@@ -12,9 +12,17 @@ texts = {'page.title':'Personenwagen-Dashboard',
 
 # functions
 def create_layout():
-        return html.Div([
-            html.H1(texts['page.title'], style={'textAlign': 'center'}),
-
+    return html.Div([
+        # Header mit Titel + Schweizerwappen
+        html.Div([
+            html.H1("Personenwagen-Dashboard", style={'margin': 0}),
+        ], style={
+            'display': 'flex',
+            'justifyContent': 'space-between',
+            'alignItems': 'center',
+            'padding': '10px 20px'
+        }),
+            
             # 1st line: CH map and canton / municipality map
             html.Div([
                 dcc.Graph(id='choropleth-map', style={'width': '67%'}),
@@ -29,8 +37,19 @@ def create_layout():
                 'marginBottom': '20px'
             }),
 
-            # 2nd line: year slider
+            # 2nd line: Home-Button, year slider + toggle
             html.Div([
+                html.Img(
+                    id="home-button",
+                    src="/assets/swisscoat.png",
+                    title="Zur Ausgangsansicht zurückkehren",
+                    n_clicks=0,
+                    style={
+                        'height': '40px',
+                        'cursor': 'pointer',
+                        'marginRight': '20px'
+                    }
+                ),
                 html.Div(
                     dcc.Slider(
                         id='year-slider',
@@ -52,7 +71,7 @@ def create_layout():
                         id='value-mode-toggle',
                         label='Relativ',
                         labelPosition='top',
-                        value=False  # False = Absolut, True = Relativ
+                        value=False
                     ),
                     style={'width': '10%', 'textAlign': 'center', 'marginLeft': 'auto'}
                 )
@@ -82,7 +101,7 @@ def create_layout():
 
             # define stores (callback chaining)
             html.Div([
-                dcc.Store(id="selected-canton"),
+                dcc.Store(id="selected-canton", data="CH"),
                 dcc.Store(id="selected-municipality")
             ], id="hidden-stores", style={"display": "none"})
         ])

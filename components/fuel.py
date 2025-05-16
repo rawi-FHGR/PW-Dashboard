@@ -107,12 +107,10 @@ def generate_pie_fuel_stock(df, year, canton, is_relative: bool=False):
     else:
         title = f'<b>{canton}: {texts.get("piechart.title")} ({year})</b>'
         data_column = data_columns[1]
-
-        # only selected canton
-        if canton != 'CH':
-            df = df[df['Kanton'] == canton].copy()
-
-
+    
+    # only selected canton
+    if canton != 'CH':
+      df = df[df['Kanton'] == canton].copy()
 
     # group data by year and fuel and sum the values
     df_grouped = df.groupby(['Treibstoff'])[data_column].sum().reset_index()
