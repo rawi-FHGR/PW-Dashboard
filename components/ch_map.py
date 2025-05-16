@@ -1,6 +1,6 @@
-import logging
 import dash
 import dash_bootstrap_components as dbc
+import logging
 
 import plotly.express as px
 import pandas as pd
@@ -10,12 +10,14 @@ from helper.misc import log_current_function
 logger = logging.getLogger(__name__)
 
 # variables
-texts = {'title':'Fahrzeugbestand CH',
-         'title_colorbar':'Bestand',
-         'inhabitant':'Einwohner',
-         'stock':'DATA_Bestand',
-         'cars':'Personenwagen',
-         'relative':'pro 1000'}
+texts = {
+    'map.title':'Fahrzeugbestand CH',
+    'relative':'pro 1000',
+    'inhabitant':'Einwohner',
+    'cars': 'Personenwagen',
+    'no_data_available': 'Keine Daten für das ausgewählte Jahr verfügbar',
+    'title_colorbar':'Bestand'
+}
 
 data_columns = ['Kanton', 'DATA_Bestand', 'DATA_Bestand pro 1000']
 
@@ -29,13 +31,13 @@ def generate_ch_map(year: int, is_relative: bool=False):
     log_current_function(level=logging.DEBUG, msg=f"{year} {is_relative}")
 
     if is_relative:
-        title = f'<b>{texts["title"]} pro 1000 Einwohner ({year})</b>'
+        title = f'<b>{texts.get("map.title")} {texts.get("relative")} {texts.get("inhabitant")} ({year})</b>'
         data_column = data_columns[2]
-        hover_text = f'{texts["cars"]} {texts["relative"]} {texts["inhabitant"]}'
+        hover_text = f'{texts.get("cars")} {texts.get("relative")} {texts.get("inhabitant")}'
     else:
-        title = f'<b>{texts["title"]} ({year})</b>'
+        title = f'<b>{texts.get("map.title")} ({year})</b>'
         data_column = data_columns[1]
-        hover_text = f'{texts["cars"]}'
+        hover_text = f'{texts.get("cars")}'
 
     # get only data for the selected year
     df_year = df[df['Jahr'] == year]
@@ -44,7 +46,7 @@ def generate_ch_map(year: int, is_relative: bool=False):
     if df_year.empty:
         fig = go.Figure()
         fig.update_layout(
-            title=f"<b>Keine Daten für Jahr {year} verfügbar</b>",
+            title=f"<b>{texts.get('no_data_available')} ({year})</b>",
             title_x=0.5,
             title_font_size=16,
             margin={"r": 0, "t": 30, "l": 0, "b": 0}
@@ -77,7 +79,7 @@ def generate_ch_map(year: int, is_relative: bool=False):
         title=title,
         margin={"r": 0, "t": 0, "l": 0, "b": 0},
         coloraxis_colorbar={
-            "title": texts['title_colorbar'],
+            "title": texts.get('title_colorbar'),
             "len": 0.75,
             "x": 0.85,
             "ticks": "outside",
