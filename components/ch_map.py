@@ -61,7 +61,7 @@ def generate_ch_map(year: int, is_relative: bool=False):
         df_grouped,
         geojson=geojson_data,
         locations=data_columns[0],
-        featureidkey="properties.NAME_KURZ",
+        featureidkey="properties.Kanton",
         color=data_column,
         hover_data={data_column: ':.2f'},
         color_continuous_scale="Viridis",
@@ -105,7 +105,7 @@ def generate_ch_map(year: int, is_relative: bool=False):
 
 # setup data
 # read simplified GeoJSON to work locally
-with open("./data/swiss-cantons.geojson", encoding="utf-8") as f:
+with open("./data/Geodaten_Kantone.geojson", encoding="utf-8") as f:
     geojson_data = json.load(f)
 
 # get statistical data from file or database
