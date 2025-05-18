@@ -19,7 +19,7 @@ texts = {'title':'Fahrzeugbestand pro Gemeinde',
 data_columns = ['Gemeindename', 'DATA_Bestand', 'DATA_Bestand pro 1000']
 
 # functions
-def generate_map_municipality(year: int, canton: str, is_relative: bool=False):
+def generate_map_canton(year: int, canton: str, is_relative: bool=False):
     '''
     Draws a canton outline with municipality data
     :param year:
