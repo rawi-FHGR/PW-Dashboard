@@ -28,8 +28,13 @@ texts = {
     'infobox.title': 'Inverkehrsetzungen nach Treibstoffarten ',
 }
 
-data_columns = ['Kanton', 'DATA_Inverkehrsetzung', 'DATA_Inverkehrsetzung pro 1000']
+annotations = {
+    '2016':'Dieselskandal in der<br>Autoindustrie wird publik.',
+    '2020':'Corona führt zu einem<br>Rückgang der Inverkehrsetzungen'
+}
 
+
+data_columns = ['Kanton', 'DATA_Inverkehrsetzung', 'DATA_Inverkehrsetzung pro 1000']
 
 def generate_stacked_bar_fuel(df, year, canton, is_relative: bool = False):
     '''
@@ -56,8 +61,7 @@ def generate_stacked_bar_fuel(df, year, canton, is_relative: bool = False):
     df_grouped = df.groupby(['Jahr', 'Treibstoff'])[data_column].sum().reset_index()
 
     # convert year to str
-    df_grouped['Jahr'] = df_grouped['Jahr'].astype(int)
-    year = int(year)
+    df_grouped['Jahr'] = df_grouped['Jahr'].astype(str)
 
     # create the stacked bar chart using Plotly Express
     fig = px.bar(df_grouped, x='Jahr',
@@ -88,8 +92,9 @@ def generate_stacked_bar_fuel(df, year, canton, is_relative: bool = False):
     # get the max value for the sum
     max_sum = yearly_sum.max()
 
-    # add year marker
-    add_year_marker(fig, year, max_sum, color=gen.colors['red'])
+    # get, if there are, annotation texts for the selected year
+    annotation_text = annotations.get(str(year)) if annotations else None
+    add_year_marker(fig, year, max_sum, color=gen.colors['red'], annotation=annotation_text)
 
     return fig
 
@@ -185,7 +190,7 @@ def generate_fuel_summary(df, year, canton, is_relative: bool = False):
 #################################################
 ### helper functions
 #################################################
-def add_year_marker(figure, year, y_max, color='red'):
+def add_year_marker(figure, year: int|str, y_max: int, color:str ='red', annotation: str=''):
     """
     Adds a vertical marker (line and point) to a chart (given as figure object).
     Works also with categorical x-axis (strings).
@@ -217,6 +222,23 @@ def add_year_marker(figure, year, y_max, color='red'):
         showlegend=False,
         hoverinfo='skip'
     ))
+
+    # add optional annotation at top of marker line
+    if annotation:
+
+        figure.add_annotation(
+            x=[year_str],
+            y=1.05,
+            xref='x',
+            yref='paper',
+            text=annotation,
+            showarrow=False,
+            font=dict(size=13),
+            bgcolor=gen.hex_to_rgba_value(color, 0.1),    # or: white
+            bordercolor=color,
+            borderwidth=1,
+            align='center'
+        )
 
 
 #################################################
