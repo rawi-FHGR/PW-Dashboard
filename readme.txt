@@ -2,7 +2,7 @@
 PERSONENWAGEN-DASHBOARD
 ************************
 
-Ein interaktives Dashboard zur Visualisierung und Analyse der Bestände und der Inverkehrssetzungen von Personenwagen nach Treibstoffarten. Für alle Gemeinden und Kantone der Schweiz im Zeitraum zwischen 2010 und 2024. Erstellt mit **Python** und **Dash**. 
+Ein interaktives Dashboard zur Visualisierung und Analyse der Bestände und der Inverkehrssetzungen von Personenwagen nach Treibstoffarten, absolut und pro 1000 Personen. Für alle Gemeinden und Kantone der Schweiz im Zeitraum zwischen 2010 und 2024. Erstellt mit **Python** und **Dash**. 
 
 Autoren: Ralph Wildhaber, Lukas Temperli, Raphael Weiss
 
