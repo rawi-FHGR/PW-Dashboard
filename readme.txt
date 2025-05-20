@@ -1,0 +1,136 @@
+************************
+PERSONENWAGEN-DASHBOARD      
+************************
+
+Ein interaktives Dashboard zur Visualisierung und Analyse der Bestände und der Inverkehrssetzungen von Personenwagen nach Treibstoffarten. Für alle Gemeinden und Kantone der Schweiz im Zeitraum zwischen 2010 und 2024. Erstellt mit **Python** und **Dash**. 
+
+Autoren: Ralph Wildhaber, Lukas Temperli, Raphael Weiss
+
+
+## ZIEL DES DASHBOARDS
+
+Das Dashboard richtet sich an Behörden, Forschende, Unternehmen sowie die interessierte Öffentlichkeit. Sie dient der Planung, Analyse und Information in den Bereichen Mobilität, Verkehr, Umwelt und Wirtschaft.
+
+
+## DATENQUELLEN / DATENAUSWAHL
+
+Bundesamt für Statistik, bfs.admin.ch
+- Daten zu den eingelösten Strassenfahrzeugen
+** BFS-Nummer: px-x-1103020100_111 (Bestand), px-x-1103020200_121 (Neue Inverkehrssetzungen) **
+- Basisgeometrien (für Kantons- und Gemeindegrenzen)
+** Link: https://www.bfs.admin.ch/bfs/de/home/statistiken/regionalstatistik/kartengrundlagen/basisgeometrien.html (Kartenset 2024) **
+
+Folgende Daten werden im Dashboard berücksichtigt:
+
+Fahrzeuggruppen nach BFS        | Im Dashboard enthalten
+--------------------------------|-------------------------
+Personenwagen                   | JA 
+Personentransportfahrzeuge      | -
+Sachentransportfahrzeuge        | -
+Landwirtschaftsfahrzeuge        | -
+Industriefahrzeuge              | -
+Motorräder                      | -
+Anhänger                        | -
+
+Personenwagen machen den grössten Teil des Fahrzeugbestands aus und sind für Trends in Motorisierung und Antriebsarten besonders relevant. Daher konzentriert sich das Dashboard auf diese Fahrzeuggruppe.
+
+Treibstoffarten nach BFS:
+Code  | Bezeichnung
+------|----------------------------------------------------
+1     | Andere
+2     | Benzin
+3     | Benzin-elektrisch: Normal-Hybrid
+4     | Benzin-elektrisch: Plug-in-Hybrid
+5     | Diesel
+6     | Diesel-elektrisch: Normal-Hybrid
+7     | Diesel-elektrisch: Plug-in-Hybrid
+8     | Elektrisch
+9     | Gas (mono- und bivalent)
+10    | Ohne Motor
+11    | Wasserstoff
+
+Aggregierte Treibstoffkategorien für Dashboard:
+Kategorie   | Umfassende Codes
+------------|-------------------------
+Benzin      | 2
+Diesel      | 5
+Hybrid      | 3, 4, 6, 7
+Elektrisch  | 8
+Andere      | 1, 9, 10, 11
+
+
+## VISUALISIERUNGEN MIT ZIEL
+
+| Visualisierung                  | Ziel                                                                  |
+|---------------------------------|-----------------------------------------------------------------------|
+| 1) Schweizerkarte               | 1) Übersicht nach Kantonen       			                  |
+| 2) Kantonskarten mit Gemeinden  | 2) Ermöglicht Analyse auf Gemeindeebene                               |
+| 3) Barchart: Anteil Treibstoffe | 3) Zeitlicher Verlauf für die Schweiz bzw. für den ausgewählten Kanton|
+| 4) Piechart: Anteil Treibstoffe | 4) Prozentuale Verteilung nach Treibstoffart für das ausgewählte Jahr |
+| 5) Textblock/Tabelle            | 5) bsolute Werte nach Treibstoffart, inkl. Total                      |
+|---------------------------------|-----------------------------------------------------------------------|
+
+
+## LAYOUT MIT ERLÄUTERUNGEN
+
+| Ebene | Erläuterungen zum Inhalt, inkl. Funktionalitäten					               |   
+|-------|------------------------------------------------------------------------------------------------------|
+| Tab   | Auswahl-Möglichkeit zwischen Bestandeszahlen (Default) oder Zahlen zu den neu Inverkehrssetzungen    |
+|       | Tab 1: Bestand / Tab 2: Inverkehrssetzungen; die beiden Tabs sind identisch aufgebaut.               |
+|	| Dies ermöglicht eine schnelle Orientierung und einfache Vergleichsmöglichkeit.                       |
+|-------|------------------------------------------------------------------------------------------------------|    
+| Oben  | Schweizerkarte mit **Hover- und Klickfunktionalität** und allgemeine Hinweise zur Benutzung          |
+|       | (Default) bzw. Kantonskarte mit Gemeinden mit **Hoverfunktionalität**                	               |
+|-------|------------------------------------------------------------------------------------------------------|   
+| Mitte | Zusätzliche Interaktionsmöglichkeit: Home-Button (Defaulteinstellungen), Jahresslider (Default: 2023)| 
+|       | und Auswahl "absolut" oder "pro 1000 Personen" (Default)                                             |
+|-------|------------------------------------------------------------------------------------------------------|
+| Unten | Diagramme (Barchart): Auffschlüsselung nach Treibstoffart mit **Hoverfunktionalität**                |
+|       | Diagramme (Piechart): Historisch (Default: Schweiz) und für das ausgewählte Jahr (Default: 2024)     |            
+|       | Textblock/Tabelle: Übersicht mit den absolute Werten, inkl. Total (Default: Schweiz)                 |
+|-------|------------------------------------------------------------------------------------------------------|
+
+Dieses Layout führt entsprechend der gewohnten Leserichtung vom Allgemeinen oben links (Schweizerkarte mit Totalwerten nach Kanton) zu den Detaildaten unten (Aufschlüsselung nach Treibstoffarten und Kanton) und seitlich rechts (Aufschlüsselung nach Gemeinden). 
+
+Screenfit mit Overflow: Die meisten Inhalte passen auf die Seite, bei mobilen Geräten aktiviert sich Scrollen
+
+
+## Interaktionen
+- Klickfunktionalität: Schweizerkarte, Homebutton, Umstellung absolut/pro 1000, Tab (Bestand, Inverkehrssetzungen)
+- Hoverfunktionalität: Schweizerkarte, Kantonskarte, Barchart, Piechart
+- Sliderfunktionalität: Jahreszahlen
+
+
+## Farbwahl
+
+- Karten: monochromer Farbskala, sequentielle Daten (Viridis, barrierefrei) 
+- Treibstoff-Diagramme: diskrete Farbskala, kategoriale Daten (barrierefrei??) 
+
+
+## METADATEN IM DASHBOARD
+
+Im Dashboard sind folgende Metainformationen sichtbar:
+- Datenquelle
+- Hinweise zu Auffälligkeiten (Tooltips bei Diagrammen)
+
+
+## Limitationen in der Dateninterpretation
+
+Die Fahrzeugstatistik basiert auf dem sogenannten Halteradressenprinzip. Das Bundesamt für Statistik ordnet ein Fahrzeug der Gemeinde zu, in der die Halterin oder der Halter gemeldet ist. Diese Adresse entspricht nicht zwangsläufig dem tatsächlichen Standort des Fahrzeugs. Gerade bei Unternehmen wird oft der Hauptsitz als Halteradresse erfasst – unabhängig davon, wo die Fahrzeuge tatsächlich unterwegs sind und in welchem Kanton das Kontrollschild ausgestellt wurde.
+
+
+## Technische Limitationen 
+??
+
+
+## Mögliche Ausbauschritte
+
+- Diagramme für jede Gemeinde (untere Ebene): Die Aufschlüsselung nach der Treibstoffart auf Gemeindeebene könnte beispielsweise Unterschiede im Elektrifizierungsgrad nach Siedlungsstruktur aufzeigen.
+- Weitere Fahrzeugkategorien (als zusätzliches Auswahlelement): Allerdings fraglicher Zusatznutzen im Hinblick auf das Ziel des Dashboards (siehe oben) 
+
+
+## Feedback/Verbesserungsideen von der Demo/Tag 7
+
+
+## Umsetzung Feedback von der Demo/Tag 7
+
