@@ -1,5 +1,5 @@
 ************************
-PERSONENWAGEN-DASHBOARD      
+PERSONENWAGEN-DASHBOARD
 ************************
 
 Ein interaktives Dashboard zur Visualisierung und Analyse der Bestände und der Inverkehrssetzungen von Personenwagen nach Treibstoffarten. Für alle Gemeinden und Kantone der Schweiz im Zeitraum zwischen 2010 und 2024. Erstellt mit **Python** und **Dash**. 
@@ -12,13 +12,28 @@ Autoren: Ralph Wildhaber, Lukas Temperli, Raphael Weiss
 Das Dashboard richtet sich an Behörden, Forschende, Unternehmen sowie die interessierte Öffentlichkeit. Sie dient der Planung, Analyse und Information in den Bereichen Mobilität, Verkehr, Umwelt und Wirtschaft.
 
 
-## DATENQUELLEN / DATENAUSWAHL
+## DATENQUELLEN / DATENBERECHNUNG 
 
-Bundesamt für Statistik, bfs.admin.ch
-- Daten zu den eingelösten Strassenfahrzeugen
+Bundesamt für Statistik (BFS), bfs.admin.ch
+1) Daten zu den eingelösten Strassenfahrzeugen, 2010-2024
 ** BFS-Nummer: px-x-1103020100_111 (Bestand), px-x-1103020200_121 (Neue Inverkehrssetzungen) **
-- Basisgeometrien (für Kantons- und Gemeindegrenzen)
+2) Ständige Wohnbevölkerung auf Gemeindeebene, 2010-2023 (!) 
+** BFS-Nummer:px-x-0102010000_101 **
+3) Basisgeometrien (für Kantons- und Gemeindegrenzen)
 ** Link: https://www.bfs.admin.ch/bfs/de/home/statistiken/regionalstatistik/kartengrundlagen/basisgeometrien.html (Kartenset 2024) **
+
+(!) Um die Personenwagendichte zu rechnen, wird die Berechnungsweise vom Bundesamt für Statistik verwendet:
+Die Personenwagendaten (Stand jeweils Ende September) werden mit der letztjährigen ständigen Wohnbevölkerung (Stand jeweils Ende Dezember des Vorjahres) dividiert. 
+
+(!) Folgende Gemeindefusionen von 2024 müssen beim Bevölkerungsdatensatz vorgenommen werden, damit er mit den Personenwagendaten zusammengeführt werden kann:
+- 947 Zwieselberg fusionierte mit 767 Reutigen
+- 2456 Lüterswil-Gächliwil fusionierte mit 2465 Buchegg
+- 4042 Turgi fusionierte mit 4021 Baden
+- 993 Wangenried fusionierte mit 992 Wangen an der Aare
+ -6773 Beurnevésin und 6775 Bonfol fusionierten zur neuen Gemeinde 6812 Basse-Vendline (Jura)
+
+
+## DATENAUSWAHL
 
 Folgende Daten werden im Dashboard berücksichtigt:
 
@@ -63,30 +78,30 @@ Andere      | 1, 9, 10, 11
 
 | Visualisierung                  | Ziel                                                                  |
 |---------------------------------|-----------------------------------------------------------------------|
-| 1) Schweizerkarte               | 1) Übersicht nach Kantonen       			                  |
+| 1) Schweizerkarte               | 1) Übersicht nach Kantonen                                            |
 | 2) Kantonskarten mit Gemeinden  | 2) Ermöglicht Analyse auf Gemeindeebene                               |
 | 3) Barchart: Anteil Treibstoffe | 3) Zeitlicher Verlauf für die Schweiz bzw. für den ausgewählten Kanton|
 | 4) Piechart: Anteil Treibstoffe | 4) Prozentuale Verteilung nach Treibstoffart für das ausgewählte Jahr |
-| 5) Textblock/Tabelle            | 5) bsolute Werte nach Treibstoffart, inkl. Total                      |
+| 5) Textblock/Tabelle            | 5) absolute Werte nach Treibstoffart, inkl. Total                     |
 |---------------------------------|-----------------------------------------------------------------------|
 
 
 ## LAYOUT MIT ERLÄUTERUNGEN
 
-| Ebene | Erläuterungen zum Inhalt, inkl. Funktionalitäten					               |   
+| Ebene | Erläuterungen zum Inhalt, inkl. Funktionalitäten                                                     |
 |-------|------------------------------------------------------------------------------------------------------|
 | Tab   | Auswahl-Möglichkeit zwischen Bestandeszahlen (Default) oder Zahlen zu den neu Inverkehrssetzungen    |
 |       | Tab 1: Bestand / Tab 2: Inverkehrssetzungen; die beiden Tabs sind identisch aufgebaut.               |
-|	| Dies ermöglicht eine schnelle Orientierung und einfache Vergleichsmöglichkeit.                       |
-|-------|------------------------------------------------------------------------------------------------------|    
+|       | Dies ermöglicht eine schnelle Orientierung und einfache Vergleichsmöglichkeit.                       |
+|-------|------------------------------------------------------------------------------------------------------|
 | Oben  | Schweizerkarte mit **Hover- und Klickfunktionalität** und allgemeine Hinweise zur Benutzung          |
 |       | (Default) bzw. Kantonskarte mit Gemeinden mit **Hoverfunktionalität**                	               |
-|-------|------------------------------------------------------------------------------------------------------|   
-| Mitte | Zusätzliche Interaktionsmöglichkeit: Home-Button (Defaulteinstellungen), Jahresslider (Default: 2023)| 
+|-------|------------------------------------------------------------------------------------------------------|
+| Mitte | Zusätzliche Interaktionsmöglichkeit: Home-Button (Defaulteinstellungen), Jahresslider (Default: 2023)|
 |       | und Auswahl "absolut" oder "pro 1000 Personen" (Default)                                             |
 |-------|------------------------------------------------------------------------------------------------------|
 | Unten | Diagramme (Barchart): Auffschlüsselung nach Treibstoffart mit **Hoverfunktionalität**                |
-|       | Diagramme (Piechart): Historisch (Default: Schweiz) und für das ausgewählte Jahr (Default: 2024)     |            
+|       | Diagramme (Piechart): Historisch (Default: Schweiz) und für das ausgewählte Jahr (Default: 2024)     |
 |       | Textblock/Tabelle: Übersicht mit den absolute Werten, inkl. Total (Default: Schweiz)                 |
 |-------|------------------------------------------------------------------------------------------------------|
 
