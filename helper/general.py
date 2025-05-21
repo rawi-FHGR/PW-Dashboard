@@ -116,6 +116,18 @@ def add_year_marker(figure, year, y_max, color='red', annotation: str=''):
             align='center'
         )
 
+
+def get_current_annotations(annotations, canton, year) -> str:
+    annotation_texts = ''
+    # collect all annotation for the current year and canton
+    for annotation in annotations:
+        if annotation['kanton'] == canton:
+            if annotation['jahr_von'] <= year <= annotation['jahr_bis']:
+                annotation_texts += annotation['text'] + '<br>'
+
+    return annotation_texts
+
+
 # settings
 available_years = list(range(2010,2025,1))
 default_year = 2024
