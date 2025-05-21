@@ -104,7 +104,7 @@ def add_year_marker(figure, year, y_max, color='red', annotation: str=''):
     if annotation:
         figure.add_annotation(
             x=[year_str],
-            y=1.05,
+            y=1.08,
             xref='x',
             yref='paper',
             text=annotation,

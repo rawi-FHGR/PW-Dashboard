@@ -97,13 +97,13 @@ def create_layout():
                         ),
                         html.Div(
                             children=[
-                                html.Span("Absolut", style={'margin-right': '10px','fontSize':'1vw'}),
+                                html.Span("absolut", style={'margin-right': '10px','fontSize':'1vw'}),
                                 daq.ToggleSwitch(
                                     id='value-mode-toggle',
                                     value=True,
                                     style={'display': 'inline-block'}
                                 ),
-                                html.Span("Relativ", style={'margin-left': '10px','margin-right': '20px','fontSize':'1vw'}),
+                                html.Span("relativ", style={'margin-left': '10px','margin-right': '20px','fontSize':'1vw'}),
                             ],
                             style={'width': '20%', 'textAlign': 'center','justifyContent': 'center','display':'flex','alignItems': 'center'},
                         ),
@@ -147,7 +147,8 @@ def create_layout():
                             'border-radius': '10px',
                             'overflow': 'hidden',
                             'backgroundColor': 'white',
-                            'padding': '20px',
+                            'padding': '5px',
+                            'paddingLeft':'20px',
                             'height': '38vh',
                         }),
                     ], style={
@@ -256,13 +257,13 @@ def create_layout():
                         ),
                         html.Div(
                             children=[
-                                html.Span("Absolut", style={'margin-right': '10px','fontSize':'1vw'}),
+                                html.Span("absolut", style={'margin-right': '10px','fontSize':'1vw'}),
                                 daq.ToggleSwitch(
                                     id='value-mode-toggle-ivs',
                                     value=True,
                                     style={'display': 'inline-block'}
                                 ),
-                                html.Span("Relativ", style={'margin-left': '10px', 'margin-right': '20px','fontSize':'1vw'}),
+                                html.Span("relativ", style={'margin-left': '10px', 'margin-right': '20px','fontSize':'1vw'}),
                             ],
                             style={'width': '20%', 'textAlign': 'center', 'justifyContent': 'center', 'display': 'flex',
                                    'alignItems': 'center'},
@@ -307,7 +308,8 @@ def create_layout():
                             'border-radius': '10px',
                             'overflow': 'hidden',
                             'backgroundColor': 'white',
-                            'padding': '20px',
+                            'padding': '5px',
+                            'paddingLeft':'20px',
                             'height': '38vh',
                         })
                     ], style={
