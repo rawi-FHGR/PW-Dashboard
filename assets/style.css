@@ -7,7 +7,7 @@ html, body {
 body {
     display: flex;
     flex-direction: column;
-    background-color: #ff6e61;
+    BACKGROUND-COLOR: darkgray;
 }
 
 .dash-app {

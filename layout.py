@@ -34,7 +34,7 @@ def create_layout():
                     html.Div([
                         dcc.Graph(id='choropleth-map', style={
                             'width': '67%',
-                            'border': '1px solid #ff6e61',
+                            'border': '1px solid gray',
                             'border-radius': '10px',
                             'overflow': 'hidden',
                             'margin-left': '10px',
@@ -43,7 +43,7 @@ def create_layout():
                         }),
                         html.Div(id='right-panel', style={
                             'width': '33%',
-                            'border': '1px solid #ff6e61',
+                            'border': '1px solid gray',
                             'border-radius': '10px',
                             'overflow': 'hidden',
                             'margin-right': '10px',
@@ -116,7 +116,7 @@ def create_layout():
                         'margin': '10px',
                         'padding': '10px',
                         'background-color':'white',
-                        'border': '1px solid #ff6e61',
+                        'border': '1px solid gray',
                         'border-radius': '10px',
                         'overflow': 'hidden',
                         'gap': '10px',
@@ -125,7 +125,7 @@ def create_layout():
                     html.Div([
                         html.Div(dcc.Graph(id='stackedbar-fuel-stock-canton', style={'height': '100%'}), style={
                             'width': '33%',
-                            'border': '1px solid #ff6e61',
+                            'border': '1px solid gray',
                             'boxSizing': 'border-box',
                             'border-radius': '10px',
                             'overflow': 'hidden',
@@ -133,7 +133,7 @@ def create_layout():
                         }),
                         html.Div(dcc.Graph(id='pie-fuel-stock', style={'height': '100%'}), style={
                             'width': '33%',
-                            'border': '1px solid #ff6e61',
+                            'border': '1px solid gray',
                             'boxSizing': 'border-box',
                             'border-radius': '10px',
                             'overflow': 'hidden',
@@ -141,7 +141,7 @@ def create_layout():
                         }),
                         html.Div(id='summary-container', style={
                             'width': '33%',
-                            'border': '1px solid #ff6e61',
+                            'border': '1px solid gray',
                             'boxSizing': 'border-box',
                             'border-radius': '10px',
                             'overflow': 'hidden',
@@ -171,27 +171,27 @@ def create_layout():
                     'fontWeight': 'bold',
                     'backgroundColor': 'white',
                     'color': 'black',
-                    'border': '2px solid #ff6e61',
+                    'border': '2px solid gray',
                     'border-top-right-radius': '50px'
                 },
                 selected_style={
                     'padding': '12px',
                     'fontSize': '1.3vw',
                     'fontWeight': 'bold',
-                    'backgroundColor': '#ff6e61',
+                    'backgroundColor': 'darkgray',
                     'color': 'black',
-                    'border': '2px solid #ff6e61',
+                    'border': '2px solid gray',
                     'borderBottom': 'none',
                     'border-top-right-radius': '50px'
                 }
             ),
             dcc.Tab(
-                label='Inverkehrssetzungen',
+                label='Inverkehrsetzungen',
                 children=[
                     html.Div([
                         dcc.Graph(id='choropleth-map-ivs', style={
                             'width': '67%',
-                            'border': '1px solid #ff6e61',
+                            'border': '1px solid gray',
                             'border-radius': '10px',
                             'overflow': 'hidden',
                             'margin-left': '10px',
@@ -200,7 +200,7 @@ def create_layout():
                         }),
                         html.Div(id='right-panel-ivs', style={
                             'width': '33%',
-                            'border': '1px solid #ff6e61',
+                            'border': '1px solid gray',
                             'border-radius': '10px',
                             'overflow': 'hidden',
                             'margin-right': '10px',
@@ -273,7 +273,7 @@ def create_layout():
                         'margin': '10px',
                         'padding': '10px',
                         'background-color': 'white',
-                        'border': '1px solid #ff6e61',
+                        'border': '1px solid gray',
                         'border-radius': '10px',
                         'overflow': 'hidden',
                         'gap': '10px',
@@ -282,7 +282,7 @@ def create_layout():
                     html.Div([
                         html.Div(dcc.Graph(id='stackedbar-fuel-stock-canton-ivs', style={'height': '100%'}), style={
                             'width': '33%',
-                            'border': '1px solid #ff6e61',
+                            'border': '1px solid #gray',
                             'boxSizing': 'border-box',
                             'border-radius': '10px',
                             'overflow': 'hidden',
@@ -290,7 +290,7 @@ def create_layout():
                         }),
                         html.Div(dcc.Graph(id='pie-fuel-stock-ivs', style={'height': '100%'}), style={
                             'width': '33%',
-                            'border': '1px solid #ff6e61',
+                            'border': '1px solid gray',
                             'boxSizing': 'border-box',
                             'border-radius': '10px',
                             'overflow': 'hidden',
@@ -298,7 +298,7 @@ def create_layout():
                         }),
                         html.Div(id='summary-container-ivs', style={
                             'width': '33%',
-                            'border': '1px solid #ff6e61',
+                            'border': '1px solid gray',
                             'boxSizing': 'border-box',
                             'border-radius': '10px',
                             'overflow': 'hidden',
@@ -327,16 +327,16 @@ def create_layout():
                     'fontWeight': 'bold',
                     'backgroundColor': 'white',
                     'color': 'black',
-                    'border': '2px solid #ff6e61',
+                    'border': '2px solid gray',
                     'border-top-left-radius': '50px'
                 },
                 selected_style={
                     'padding': '12px',
                     'fontSize': '1.3vw',
                     'fontWeight': 'bold',
-                    'backgroundColor': '#ff6e61',
+                    'backgroundColor': 'darkgray',
                     'color': 'black',
-                    'border': '2px solid #ff6e61',
+                    'border': '2px solid gray',
                     'borderBottom': 'none',
                     'border-top-left-radius': '50px'
                 }
