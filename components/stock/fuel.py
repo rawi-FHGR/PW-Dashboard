@@ -29,7 +29,11 @@ texts = {
 }
 
 # annotation dictionary format: 'year':'message'
-annotations = {}
+annotations = {
+    '2016':'Dieselskandal in der<br>Autoindustrie wird publik.',
+    '2020':'Corona führt zu einem<br>Rückgang der Inverkehrsetzungen'
+}
+
 
 data_columns = ['Kanton', 'DATA_Bestand', 'DATA_Bestand pro 1000']
 

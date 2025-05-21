@@ -61,7 +61,8 @@ def create_layout():
                         'gap': '10px',
                         'justifyContent': 'center',
                         'alignItems': 'stretch',
-                        'marginBottom': '20px'
+                        'marginBottom': '20px',
+                        'height': '450px'
                     }),
 
                     # 2nd line: Home-Button, year slider + toggle
@@ -100,7 +101,7 @@ def create_layout():
                                 id='value-mode-toggle',
                                 label='Relativ',
                                 labelPosition='top',
-                                value=False
+                                value=True
                             ),
                             style={'width': '10%', 'textAlign': 'center','justifyContent': 'center','display':'flex'}
                         ),
@@ -142,7 +143,8 @@ def create_layout():
                         'alignItems': 'stretch',
                         'width': '100%',
                         'gap': '10px',
-                        'padding': '10px'
+                        'padding': '10px',
+                        'height': '325px'
                     }),
 
                     # define stores (callback chaining)
@@ -215,7 +217,8 @@ def create_layout():
                         'gap': '10px',
                         'justifyContent': 'center',
                         'alignItems': 'stretch',
-                        'marginBottom': '20px'
+                        'marginBottom': '20px',
+                        'height': '450px'
                     }),
 
                     # 2nd line: Home-Button, year slider + toggle
@@ -254,7 +257,7 @@ def create_layout():
                                 id='value-mode-toggle-ivs',
                                 label='Relativ',
                                 labelPosition='top',
-                                value=False
+                                value=True
                             ),
                             style={'width': '10%', 'textAlign': 'center', 'justifyContent': 'center', 'display': 'flex'}
                         ),
@@ -298,7 +301,8 @@ def create_layout():
                         'alignItems': 'stretch',
                         'width': '100%',
                         'gap': '10px',
-                        'padding': '10px'
+                        'padding': '10px',
+                        'height': '325px'
                     }),
 
                     # define stores (callback chaining)

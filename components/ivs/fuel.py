@@ -26,6 +26,7 @@ texts = {
     'stackedbarchart.y_axis': 'Anzahl Bestand',
     'piechart.title': 'Anteil Treibstoffarten',
     'infobox.title': 'Inverkehrsetzungen nach Treibstoffarten ',
+    'cars':'Personenwagen'
 }
 
 annotations = {
@@ -33,8 +34,7 @@ annotations = {
     '2020':'Corona führt zu einem<br>Rückgang der Inverkehrsetzungen'
 }
 
-
-data_columns = ['Kanton', 'DATA_Inverkehrsetzung', 'DATA_Inverkehrsetzung pro 1000']
+data_columns = ['Kanton', 'DATA_Inverkehrsetzung', 'DATA_Inverkehrsetzung pro 1000', 'DATA_Bevölkerung_Vorjahr']
 
 def generate_stacked_bar_fuel(df, year, canton, is_relative: bool = False):
     '''
@@ -86,6 +86,15 @@ def generate_stacked_bar_fuel(df, year, canton, is_relative: bool = False):
                     title=None)
     )
 
+    fig.update_traces(
+        hovertemplate=(
+                "Jahr: %{x}<br>" +
+                "Treibstoff: %{fullData.name}<br>" +
+                "%{y:.0f} Inverkehrsetzungen<br>" +
+                "<extra></extra>"
+        )
+    )
+
     # group by year and sum up the values (Anzahl)
     yearly_sum = df_grouped.groupby('Jahr')[data_column].sum()
 
@@ -119,17 +128,40 @@ def generate_pie_fuel(df, year, canton, is_relative: bool = False):
 
     # group data by year and fuel and sum the values
     df_grouped = df.groupby(['Treibstoff'])[data_column].sum().reset_index()
+    df_grouped['Jahr'] = year # needed vor the tooltip
 
-    fig = px.pie(
-        df_grouped,
-        names="Treibstoff",
-        values=data_column,
-        title=title,
-        color="Treibstoff",
-        color_discrete_map=color_fuel
+    # set chart parameters
+    labels = df_grouped["Treibstoff"]
+    values = df_grouped[data_column]
+    customdata = [[year]] * len(df_grouped)
+    colors = [color_fuel.get(label, "#cccccc") for label in labels]
+
+    # piechart with hovertemplate
+    fig = go.Figure(
+        data=[
+            go.Pie(
+                labels=labels,
+                values=values,
+                customdata=customdata,
+                textinfo='percent+label',
+                textposition='inside',
+                marker=dict(colors=colors),
+                hovertemplate=(
+                    "%{customdata[0]}<br>"
+                    "Treibstoff: %{label}<br>"
+                    "%{value:.0f} Inverkehrsetzungen<br>"
+                    "<extra></extra>"
+                ),
+                showlegend=False
+            )
+        ]
     )
-    fig.update_layout(margin=dict(t=52))
-    fig.update_traces(textposition='inside', textinfo='percent+label', showlegend=False)
+
+    fig.update_layout(
+        title=title,
+        margin=dict(t=52)
+    )
+
     return fig
 
 
@@ -169,13 +201,13 @@ def generate_fuel_summary(df, year, canton, is_relative: bool = False):
         html.P(f"{title}", style={**text_style, 'fontWeight': 'bold', 'marginTop': '10px', 'fontSize': '20px'}),
         html.Ul([
             html.Li(
-                f"{row['Treibstoff']}: {int(row[data_column]):,}".replace(',', "'"),
+                f"{row['Treibstoff']}: {float(row[data_column]):,.0f} {texts.get('cars')}".replace(',', "'"),
                 style=text_style
             )
             for _, row in df_grouped.iterrows()
         ]),
         html.P(
-            f"Total: {int(total):,}".replace(',', "'"),
+            f"Total: {float(total):,.0f} {texts.get('cars')}".replace(',', "'"),
             style={**text_style, 'fontWeight': 'bold', 'marginTop': '10px'}
         )
     ]
@@ -225,10 +257,9 @@ def add_year_marker(figure, year: int|str, y_max: int, color:str ='red', annotat
 
     # add optional annotation at top of marker line
     if annotation:
-
         figure.add_annotation(
             x=[year_str],
-            y=1.05,
+            y=1.15,
             xref='x',
             yref='paper',
             text=annotation,
