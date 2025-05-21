@@ -90,15 +90,15 @@ Andere      | 1, 9, 10, 11
 
 | Ebene | Erläuterungen zum Inhalt, inkl. Funktionalitäten                                                     |
 |-------|------------------------------------------------------------------------------------------------------|
-| Tab   | Auswahl-Möglichkeit zwischen Bestandeszahlen (Default) oder Zahlen zu den neu Inverkehrsetzungen    |
-|       | Tab 1: Bestand / Tab 2: Inverkehrsetzungen; die beiden Tabs sind identisch aufgebaut.               |
+| Tab   | Auswahl-Möglichkeit zwischen Bestandeszahlen (Default) oder Zahlen zu den neu Inverkehrsetzungen     |
+|       | Tab 1: Bestand / Tab 2: Inverkehrsetzungen; die beiden Tabs sind identisch aufgebaut.                |
 |       | Dies ermöglicht eine schnelle Orientierung und einfache Vergleichsmöglichkeit.                       |
 |-------|------------------------------------------------------------------------------------------------------|
 | Oben  | Schweizerkarte mit **Hover- und Klickfunktionalität** und allgemeine Hinweise zur Benutzung          |
 |       | (Default) bzw. Kantonskarte mit Gemeinden mit **Hoverfunktionalität**                	               |
 |-------|------------------------------------------------------------------------------------------------------|
-| Mitte | Zusätzliche Interaktionsmöglichkeit: Home-Button (Defaulteinstellungen), Jahresslider (Default: 2023)|
-|       | und Auswahl "absolut" oder "pro 1000 Personen" (Default)                                             |
+| Mitte | Zusätzliche Interaktionsmöglichkeit: Home-Button (Defaulteinstellungen), Jahresslider (Default: 2024)|
+|       | und Auswahl "absolut" oder "relativ(pro 1000 Personen)" (Default)                                    |
 |-------|------------------------------------------------------------------------------------------------------|
 | Unten | Diagramme (Barchart): Auffschlüsselung nach Treibstoffart mit **Hoverfunktionalität**                |
 |       | Diagramme (Piechart): Historisch (Default: Schweiz) und für das ausgewählte Jahr (Default: 2024)     |
@@ -107,7 +107,8 @@ Andere      | 1, 9, 10, 11
 
 Dieses Layout führt entsprechend der gewohnten Leserichtung vom Allgemeinen oben links (Schweizerkarte mit Totalwerten nach Kanton) zu den Detaildaten unten (Aufschlüsselung nach Treibstoffarten und Kanton) und seitlich rechts (Aufschlüsselung nach Gemeinden). 
 
-Screenfit mit Overflow: Die meisten Inhalte passen auf die Seite, bei mobilen Geräten aktiviert sich Scrollen
+Screenfit mit Overflow: Die meisten Inhalte passen auf die Seite, bei mobilen Geräten aktiviert sich Scrollen??
+
 
 
 ## Interaktionen
@@ -140,7 +141,7 @@ Zudem wäre es in einer weiteren Ausbaustufe sinnvoll, die Quelldaten direkt in 
 
 ## Mögliche Ausbauschritte
 
-- Diagramme für jede Gemeinde (untere Ebene): Die Aufschlüsselung nach der Treibstoffart auf Gemeindeebene könnte beispielsweise Unterschiede im Elektrifizierungsgrad nach Siedlungsstruktur aufzeigen.
+- Diagramme für jede Gemeinde (untere Ebene): Die Aufschlüsselung nach der Treibstoffart auf Gemeindeebene könnte beispielsweise Unterschiede im Elektrifizierungsgrad nach Siedlungsstruktur aufzeigen. 
 - Weitere Fahrzeugkategorien (als zusätzliches Auswahlelement): Allerdings fraglicher Zusatznutzen im Hinblick auf das Ziel des Dashboards (siehe oben) 
 
 
