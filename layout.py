@@ -19,14 +19,21 @@ def create_layout():
         html.Div([
             html.Div(style={'width': '10%'}), # Platz für Logo etc.
             html.H1("Personenwagen-Dashboard", style={'margin': 0}),
-            html.Div(style={'width': '10%'}),  # Platz für Logo etc.
-        ], style={
+            # html.Div(style={'width': '10%'}),  # Platz für Logo etc.
+            # Info-Button mit Bild
+              html.A(
+                  html.Img(
+                      src="/assets/info_icon.png",
+                      style={'height': '50px','cursor': 'pointer','padding': '5px'}),
+                  href="/assets/readme.txt",  # Oder externer Link
+                  target="_blank",
+                  style={'textDecoration': 'none'})], 
+            style={
             'display': 'flex',
             'justifyContent': 'space-between',
             'alignItems': 'center',
             'padding': '10px 20px',
-            'backgroundColor':'white',
-        }),
+            'backgroundColor':'white'}),
         dcc.Tabs([
             dcc.Tab(
                 label='Bestand',
