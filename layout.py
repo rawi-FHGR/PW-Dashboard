@@ -100,7 +100,7 @@ def create_layout():
                                 html.Span("Absolut", style={'margin-right': '10px','fontSize':'1vw'}),
                                 daq.ToggleSwitch(
                                     id='value-mode-toggle',
-                                    value=False,
+                                    value=True,
                                     style={'display': 'inline-block'}
                                 ),
                                 html.Span("Relativ", style={'margin-left': '10px','margin-right': '20px','fontSize':'1vw'}),
@@ -160,6 +160,7 @@ def create_layout():
                         'padding': '10px',
                     }),
 
+                    # define stores (callback chaining)
                     html.Div([
                         dcc.Store(id="selected-canton", data="CH"),
                         dcc.Store(id="selected-municipality")
@@ -185,6 +186,7 @@ def create_layout():
                     'border-top-right-radius': '50px'
                 }
             ),
+            # second tab
             dcc.Tab(
                 label='Inverkehrsetzungen',
                 children=[
@@ -221,6 +223,7 @@ def create_layout():
                         'height': '40vh',
                     }),
 
+                    # 2nd line: Home-Button, year slider + toggle
                     html.Div([
                         html.Div(
                             html.Img(
@@ -256,7 +259,7 @@ def create_layout():
                                 html.Span("Absolut", style={'margin-right': '10px','fontSize':'1vw'}),
                                 daq.ToggleSwitch(
                                     id='value-mode-toggle-ivs',
-                                    value=False,
+                                    value=True,
                                     style={'display': 'inline-block'}
                                 ),
                                 html.Span("Relativ", style={'margin-left': '10px', 'margin-right': '20px','fontSize':'1vw'}),
@@ -279,6 +282,7 @@ def create_layout():
                         'gap': '10px',
                     }),
 
+                    # additional graphs (3 side-by-side)
                     html.Div([
                         html.Div(dcc.Graph(id='stackedbar-fuel-stock-canton-ivs', style={'height': '100%'}), style={
                             'width': '33%',
@@ -313,9 +317,10 @@ def create_layout():
                         'alignItems': 'stretch',
                         'width': '100%',
                         'gap': '10px',
-                        'padding': '10px',
+                        'padding': '10px'
                     }),
 
+                    # define stores (callback chaining)
                     html.Div([
                         dcc.Store(id="selected-canton-ivs", data="CH"),
                         dcc.Store(id="selected-municipality-ivs")

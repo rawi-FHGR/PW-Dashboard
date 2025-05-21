@@ -48,9 +48,20 @@ def normalize_fuel_categories(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+def format_number(value: int, use_separator: bool = True) -> str:
+    '''
+    Converts a number into an appropriate formatted number.
+    :param value:
+    :param use_separator:
+    :return: reformatted number
+    '''
+    if use_separator:
+        return f"{int(value):,}".replace(",", "'")  # CH format
+    return str(int(value))
+
 # settings
 available_years = list(range(2010,2025,1))
-default_year = available_years[int(len(available_years)/2)]
+default_year = 2024
 
 # colormap
 colors = {

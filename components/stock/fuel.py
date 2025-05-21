@@ -1,6 +1,8 @@
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+import dash.html as html
+
 import logging
 
 # import project specific settings and functions
@@ -28,6 +30,12 @@ texts = {
     'infobox.title': 'Bestand nach Treibstoffarten ',
 }
 
+# annotation dictionary format: 'year':'message'
+annotations = {
+    '2016':'Dieselskandal in der<br>Autoindustrie wird publik.',
+    '2020':'Corona führt zu einem<br>Rückgang der Inverkehrsetzungen'
+}
+
 data_columns = ['Kanton', 'DATA_Bestand', 'DATA_Bestand pro 1000']
 
 def generate_stacked_bar_fuel_stock(df, year, canton, is_relative: bool=False):
@@ -50,8 +58,6 @@ def generate_stacked_bar_fuel_stock(df, year, canton, is_relative: bool=False):
     # only selected canton
     if canton != 'CH':
         df = df[df['Kanton'] == canton].copy()
-        
-  
 
     # group data by year and fuel and sum the values
     df_grouped = df.groupby(['Jahr', 'Treibstoff'])[data_column].sum().reset_index()
@@ -99,6 +105,10 @@ def generate_stacked_bar_fuel_stock(df, year, canton, is_relative: bool=False):
     # add year marker
     add_year_marker(fig, year, max_sum, color=gen.colors['red'])
 
+    # get, if there are, annotation texts for the selected year
+    annotation_text = annotations.get(str(year)) if annotations else None
+    add_year_marker(fig, year, max_sum, color=gen.colors['red'], annotation=annotation_text)
+
     return fig
 
 def generate_pie_fuel_stock(df, year, canton, is_relative: bool=False):
@@ -140,12 +150,8 @@ def generate_pie_fuel_stock(df, year, canton, is_relative: bool=False):
     fig.update_traces(textposition='inside', textinfo='percent+label', showlegend=False)
     return fig
 
-
-
 def generate_fuel_summary_text(df, year, canton, is_relative: bool=False):
     log_current_function(level=logging.DEBUG, msg=f"{year} {canton} {is_relative}")
-
-    import dash.html as html
 
     # use the right data depending on the data mode
     if is_relative:
@@ -159,9 +165,7 @@ def generate_fuel_summary_text(df, year, canton, is_relative: bool=False):
     if canton != 'CH':
         df = df[(df['Kanton'] == canton) & (df['Jahr'] == year)].copy()
 
-
-    
-    # Gruppierung und Sortierung nach DATA_Bestand (absteigend)
+    # group and sort the car stock
     df_grouped = df.groupby('Treibstoff')[data_column].sum().reset_index()
     df_grouped = df_grouped.sort_values(by=data_column, ascending=False)
 
@@ -200,7 +204,7 @@ def generate_fuel_summary_text(df, year, canton, is_relative: bool=False):
 #################################################
 ### helper functions
 #################################################
-def add_year_marker(figure, year, y_max, color='red'):
+def add_year_marker(figure, year, y_max, color='red', annotation: str=''):
     """
     Adds a vertical marker (line and point) to a chart (given as figure object).
     Works also with categorical x-axis (strings).
@@ -209,6 +213,7 @@ def add_year_marker(figure, year, y_max, color='red'):
     :param year: year, which will be marked (int or str)
     :param y_max: max y-size (for the vertical line)
     :param color: color of the marker
+    :param annotation: annotation of the marker
     """
     log_current_function(level=logging.DEBUG, msg=f"{year}")
 
@@ -232,6 +237,22 @@ def add_year_marker(figure, year, y_max, color='red'):
         showlegend=False,
         hoverinfo='skip'
     ))
+
+    # add optional annotation at top of marker line
+    if annotation:
+        figure.add_annotation(
+            x=[year_str],
+            y=1.05,
+            xref='x',
+            yref='paper',
+            text=annotation,
+            showarrow=False,
+            font=dict(size=13),
+            bgcolor=gen.hex_to_rgba_value(color, 0.1),    # or: white
+            bordercolor=color,
+            borderwidth=1,
+            align='center'
+        )
 
 #################################################
 ### get and setup data

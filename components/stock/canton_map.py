@@ -3,8 +3,11 @@ import dash_bootstrap_components as dbc
 import logging
 
 import plotly.express as px
+import plotly.graph_objects as go
 import pandas as pd
 import json
+
+import helper.general as gen
 
 from helper.misc import log_current_function
 logger = logging.getLogger(__name__)
@@ -17,6 +20,12 @@ texts = {'title':'Fahrzeugbestand pro Gemeinde',
          'cars':'Personenwagen'}
 
 data_columns = ['Gemeindename', 'DATA_Bestand', 'DATA_Bestand pro 1000']
+
+annotations = [
+    {'kanton': 'BE', 'jahr_von': '2018', 'jahr_bis':'2018', 'text': 'Gründung von Carvolution in Bannwil.'},
+    {'kanton': 'BE', 'jahr_von': '2019', 'jahr_bis': '2024', 'text': 'Carvolution: stetige Zunahme des <br>Fahrzeugbestands in Bannwil'},
+    {'kanton': 'ZG', 'jahr_von': '2018', 'jahr_bis':'2018', 'text': 'Umzug von Mobility Schweiz <br>von Luzern nach Rothkreuz/Risch'},
+]
 
 # functions
 def generate_map_canton(year: int, canton: str, is_relative: bool=False):
@@ -105,7 +114,38 @@ def generate_map_canton(year: int, canton: str, is_relative: bool=False):
         }
     )
 
+    # get annotation for the current year and canton
+    current_annotation = get_annotations(canton, str(year))
+    if len(current_annotation):
+        fig.update_layout(
+            annotations=[
+                dict(
+                    text=current_annotation,
+                    showarrow=False,
+                    align="left",
+                    xref="paper", yref="paper",
+                    x=0.98, y=0.98,
+                    bordercolor="red",
+                    borderwidth=1,
+                    borderpad=4,
+                    bgcolor=gen.hex_to_rgba_value(gen.colors['red'], 0.1),
+                    opacity=0.9,
+                    font=dict(size=12, color="black")
+                )
+            ]
+        )
+
     return fig
+
+def get_annotations(canton, year) -> str:
+    annotation_texts = ''
+    # collect all annotation for the current year and canton
+    for annotation in annotations:
+        if annotation['kanton'] == canton:
+            if annotation['jahr_von'] <= year <= annotation['jahr_bis']:
+                annotation_texts += annotation['text'] + '<br>'
+
+    return annotation_texts
 
 ###############################################################################
 # setup data

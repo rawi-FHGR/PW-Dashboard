@@ -15,6 +15,7 @@ texts = {
     'relative':'pro 1000',
     'inhabitant':'Einwohner',
     'cars': 'Personenwagen',
+    'ivs': 'Inverkehrsetzungen',
     'no_data_available': 'Keine Daten für das ausgewählte Jahr verfügbar',
     'title_colorbar':'Anzahl'
 }
@@ -33,11 +34,11 @@ def generate_ch_map(year: int, is_relative: bool=False):
     if is_relative:
         title = f'<b>{texts.get("map.title")} {texts.get("relative")} {texts.get("inhabitant")} ({year})</b>'
         data_column = data_columns[2]
-        hover_text = f'{texts.get("cars")} {texts.get("relative")} {texts.get("inhabitant")}'
+        hover_text = f'{texts.get("ivs")} {texts.get("relative")} {texts.get("inhabitant")}'
     else:
         title = f'<b>{texts.get("map.title")} ({year})</b>'
         data_column = data_columns[1]
-        hover_text = f'{texts.get("cars")}'
+        hover_text = f'{texts.get("ivs")}'
 
     # get only data for the selected year
     df_year = df[df['Jahr'] == year]
@@ -93,7 +94,7 @@ def generate_ch_map(year: int, is_relative: bool=False):
         uirevision="constant"
     )
 
-    # tooltip setzen
+    # set tooltip
     hovertemplate = (
         "<b>%{location}</b><br>"
         "%{z:.0f} " + hover_text + "<br>"
