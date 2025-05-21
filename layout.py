@@ -10,49 +10,48 @@ import logging
 from helper.misc import log_current_function
 logger = logging.getLogger(__name__)
 
-# keep texts centralized
 texts = {'page.title':'Personenwagen-Dashboard',
          'title_colorbar':'Anzahl'}
 
-# functions
 def create_layout():
     log_current_function(level=logging.INFO, msg=f"{__name__}")
     return html.Div([
+        html.Div([
+            html.Div(style={'width': '10%'}), # Platz für Logo etc.
+            html.H1("Personenwagen-Dashboard", style={'margin': 0}),
+            html.Div(style={'width': '10%'}),  # Platz für Logo etc.
+        ], style={
+            'display': 'flex',
+            'justifyContent': 'space-between',
+            'alignItems': 'center',
+            'padding': '10px 20px',
+            'backgroundColor':'white',
+        }),
         dcc.Tabs([
             dcc.Tab(
                 label='Bestand',
                 children=[
-                   #html.H1(texts['page.title'], style={'textAlign': 'center'}),
-
-                    # Header mit Titel + Schweizerwappen
-                    html.Div([
-                        html.Div(style={'width': '33%'}), #Platz für Logo etc.
-                        html.H1("Personenwagen-Dashboard", style={'margin': 0}),
-                        html.Div(style={'width': '33%'}),  # Platz für Logo etc.
-                    ], style={
-                        'display': 'flex',
-                        'justifyContent': 'space-between',
-                        'alignItems': 'center',
-                        'padding': '10px 20px'
-                    }),
-
-                    # 1st line: CH map and canton / municipality map
                     html.Div([
                         dcc.Graph(id='choropleth-map', style={
                             'width': '67%',
-                            'border': '1px solid black',
+                            'border': '1px solid gray',
                             'border-radius': '10px',
                             'overflow': 'hidden',
-                            'margin-left': '10px'
+                            'margin-left': '10px',
+                            'height': '100%',
+                            'minHeight': '40vh',
                         }),
                         html.Div(id='right-panel', style={
                             'width': '33%',
-                            'border': '1px solid black',
+                            'border': '1px solid gray',
                             'border-radius': '10px',
                             'overflow': 'hidden',
                             'margin-right': '10px',
                             'background-color':'white',
-                            'padding': '10px'
+                            'padding': '20px',
+                            'height': '100%',
+                            'minHeight': '40vh',
+
                         })
                     ], style={
                         'display': 'flex',
@@ -61,10 +60,11 @@ def create_layout():
                         'gap': '10px',
                         'justifyContent': 'center',
                         'alignItems': 'stretch',
-                        'marginBottom': '20px'
+                        'marginBottom': '20px',
+                        'marginTop': '20px',
+                        'height': '40vh',
                     }),
 
-                    # 2nd line: Home-Button, year slider + toggle
                     html.Div([
                         html.Div(
                             html.Img(
@@ -77,7 +77,7 @@ def create_layout():
                                     'cursor': 'pointer',
                                     'marginRight': '20px',
                                 }
-                            ),style={'width': '10%', 'display': 'flex', 'justifyContent': 'center'},
+                            ),style={'width': '20%', 'display': 'flex', 'justifyContent': 'left', 'paddingLeft':'20px'},
                         ),
                         html.Div(
                             dcc.Slider(
@@ -96,13 +96,16 @@ def create_layout():
                             style={'width': '60%'}
                         ),
                         html.Div(
-                            daq.ToggleSwitch(
-                                id='value-mode-toggle',
-                                label='Relativ',
-                                labelPosition='top',
-                                value=False
-                            ),
-                            style={'width': '10%', 'textAlign': 'center','justifyContent': 'center','display':'flex'}
+                            children=[
+                                html.Span("Absolut", style={'margin-right': '10px','fontSize':'1vw'}),
+                                daq.ToggleSwitch(
+                                    id='value-mode-toggle',
+                                    value=False,
+                                    style={'display': 'inline-block'}
+                                ),
+                                html.Span("Relativ", style={'margin-left': '10px','margin-right': '20px','fontSize':'1vw'}),
+                            ],
+                            style={'width': '20%', 'textAlign': 'center','justifyContent': 'center','display':'flex','alignItems': 'center'},
                         ),
                     ], style={
                         'display': 'flex',
@@ -113,28 +116,40 @@ def create_layout():
                         'margin': '10px',
                         'padding': '10px',
                         'background-color':'white',
-                        'border': '1px solid black',
+                        'border': '1px solid gray',
                         'border-radius': '10px',
                         'overflow': 'hidden',
                         'gap': '10px',
                     }),
 
-                    # additional graphs (3 side-by-side)
                     html.Div([
-                        html.Div(dcc.Graph(id='stackedbar-fuel-stock-canton', style={'height': '100%'}), style={'width': '33%','border': '1px solid black',
-                                'boxSizing': 'border-box',
-                                'border-radius': '25px',
-                                'overflow': 'hidden'}),
-                        html.Div(dcc.Graph(id='pie-fuel-stock', style={'height': '100%'}), style={'width': '33%','border': '1px solid black',
-                                'boxSizing': 'border-box',
-                                'border-radius': '25px',
-                                'overflow': 'hidden'}),
-                        html.Div(id='summary-container', style={'width': '33%','border': '1px solid black',
-                                'boxSizing': 'border-box',
-                                'border-radius': '25px',
-                                'overflow': 'hidden',
-                                'backgroundColor': 'white',
-                                'padding': '10px',})
+                        html.Div(dcc.Graph(id='stackedbar-fuel-stock-canton', style={'height': '100%'}), style={
+                            'width': '33%',
+                            'border': '1px solid gray',
+                            'boxSizing': 'border-box',
+                            'border-radius': '10px',
+                            'overflow': 'hidden',
+                            'height': '38vh',
+                        }),
+                        html.Div(dcc.Graph(id='pie-fuel-stock', style={'height': '100%'}), style={
+                            'width': '33%',
+                            'border': '1px solid gray',
+                            'boxSizing': 'border-box',
+                            'border-radius': '10px',
+                            'overflow': 'hidden',
+                            'height': '38vh',
+                        }),
+                        html.Div(id='summary-container', style={
+                            'width': '33%',
+                            'border': '1px solid gray',
+                            'boxSizing': 'border-box',
+                            'border-radius': '10px',
+                            'overflow': 'hidden',
+                            'backgroundColor': 'white',
+                            'padding': '20px',
+                            'height': '38vh',
+
+                        }),
                     ], style={
                         'display': 'flex',
                         'flexDirection': 'row',
@@ -142,71 +157,57 @@ def create_layout():
                         'alignItems': 'stretch',
                         'width': '100%',
                         'gap': '10px',
-                        'padding': '10px'
+                        'padding': '10px',
                     }),
 
-                    # define stores (callback chaining)
                     html.Div([
                         dcc.Store(id="selected-canton", data="CH"),
                         dcc.Store(id="selected-municipality")
                     ], id="hidden-stores", style={"display": "none"})
                 ],
-                # style of the tabs
                 style={
                     'padding': '12px',
-                    'fontSize': '18px',
+                    'fontSize': '1.3vw',
                     'fontWeight': 'bold',
                     'backgroundColor': 'white',
                     'color': 'black',
-                    'border': '2px solid black',
+                    'border': '2px solid gray',
                     'border-top-right-radius': '50px'
                 },
                 selected_style={
                     'padding': '12px',
-                    'fontSize': '18px',
+                    'fontSize': '1.3vw',
                     'fontWeight': 'bold',
-                    'backgroundColor': 'red',
+                    'backgroundColor': 'darkgray',
                     'color': 'black',
-                    'border': '2px solid black',
+                    'border': '2px solid gray',
                     'borderBottom': 'none',
                     'border-top-right-radius': '50px'
                 }
             ),
-            # second tab
             dcc.Tab(
-                label='Inverkehrssetzungen',
+                label='Inverkehrsetzungen',
                 children=[
-                    #html.H1(texts['page.title'], style={'textAlign': 'center'}),
-
-                    # Header mit Titel + Schweizerwappen
-                    html.Div([
-                        html.Div(style={'width': '33%'}),  # Platz für Logo etc.
-                        html.H1("Personenwagen-Dashboard", style={'margin': 0}),
-                        html.Div(style={'width': '33%'}),  # Platz für Logo etc.
-                    ], style={
-                        'display': 'flex',
-                        'justifyContent': 'space-between',
-                        'alignItems': 'center',
-                        'padding': '10px 20px'
-                    }),
-
-                    # 1st line: CH map and canton / municipality map
                     html.Div([
                         dcc.Graph(id='choropleth-map-ivs', style={
                             'width': '67%',
-                            'border': '1px solid black',
+                            'border': '1px solid gray',
                             'border-radius': '10px',
                             'overflow': 'hidden',
-                            'margin-left': '10px'
+                            'margin-left': '10px',
+                            'height': '100%',
+                            'minHeight': '40vh'
                         }),
                         html.Div(id='right-panel-ivs', style={
                             'width': '33%',
-                            'border': '1px solid black',
+                            'border': '1px solid gray',
                             'border-radius': '10px',
                             'overflow': 'hidden',
                             'margin-right': '10px',
                             'background-color': 'white',
-                            'padding': '10px'
+                            'padding': '20px',
+                            'height': '100%',
+                            'minHeight': '40vh'
                         })
                     ], style={
                         'display': 'flex',
@@ -215,10 +216,11 @@ def create_layout():
                         'gap': '10px',
                         'justifyContent': 'center',
                         'alignItems': 'stretch',
-                        'marginBottom': '20px'
+                        'marginBottom': '20px',
+                        'marginTop': '20px',
+                        'height': '40vh',
                     }),
 
-                    # 2nd line: Home-Button, year slider + toggle
                     html.Div([
                         html.Div(
                             html.Img(
@@ -231,7 +233,7 @@ def create_layout():
                                     'cursor': 'pointer',
                                     'marginRight': '20px',
                                 }
-                            ), style={'width': '10%', 'display': 'flex', 'justifyContent': 'center'},
+                            ), style={'width': '20%', 'display': 'flex', 'justifyContent': 'left','paddingLeft':'20px'},
                         ),
                         html.Div(
                             dcc.Slider(
@@ -250,13 +252,17 @@ def create_layout():
                             style={'width': '60%'}
                         ),
                         html.Div(
-                            daq.ToggleSwitch(
-                                id='value-mode-toggle-ivs',
-                                label='Relativ',
-                                labelPosition='top',
-                                value=False
-                            ),
-                            style={'width': '10%', 'textAlign': 'center', 'justifyContent': 'center', 'display': 'flex'}
+                            children=[
+                                html.Span("Absolut", style={'margin-right': '10px','fontSize':'1vw'}),
+                                daq.ToggleSwitch(
+                                    id='value-mode-toggle-ivs',
+                                    value=False,
+                                    style={'display': 'inline-block'}
+                                ),
+                                html.Span("Relativ", style={'margin-left': '10px', 'margin-right': '20px','fontSize':'1vw'}),
+                            ],
+                            style={'width': '20%', 'textAlign': 'center', 'justifyContent': 'center', 'display': 'flex',
+                                   'alignItems': 'center'},
                         ),
                     ], style={
                         'display': 'flex',
@@ -267,30 +273,39 @@ def create_layout():
                         'margin': '10px',
                         'padding': '10px',
                         'background-color': 'white',
-                        'border': '1px solid black',
+                        'border': '1px solid gray',
                         'border-radius': '10px',
                         'overflow': 'hidden',
                         'gap': '10px',
                     }),
 
-                    # additional graphs (3 side-by-side)
                     html.Div([
-                        html.Div(dcc.Graph(id='stackedbar-fuel-stock-canton-ivs', style={'height': '100%'}),
-                                 style={'width': '33%', 'border': '1px solid black',
-                                        'boxSizing': 'border-box',
-                                        'border-radius': '25px',
-                                        'overflow': 'hidden'}),
-                        html.Div(dcc.Graph(id='pie-fuel-stock-ivs', style={'height': '100%'}),
-                                 style={'width': '33%', 'border': '1px solid black',
-                                        'boxSizing': 'border-box',
-                                        'border-radius': '25px',
-                                        'overflow': 'hidden'}),
-                        html.Div(id='summary-container-ivs', style={'width': '33%', 'border': '1px solid black',
-                                                                'boxSizing': 'border-box',
-                                                                'border-radius': '25px',
-                                                                'overflow': 'hidden',
-                                                                'backgroundColor': 'white',
-                                                                'padding': '10px', })
+                        html.Div(dcc.Graph(id='stackedbar-fuel-stock-canton-ivs', style={'height': '100%'}), style={
+                            'width': '33%',
+                            'border': '1px solid #gray',
+                            'boxSizing': 'border-box',
+                            'border-radius': '10px',
+                            'overflow': 'hidden',
+                            'height': '38vh',
+                        }),
+                        html.Div(dcc.Graph(id='pie-fuel-stock-ivs', style={'height': '100%'}), style={
+                            'width': '33%',
+                            'border': '1px solid gray',
+                            'boxSizing': 'border-box',
+                            'border-radius': '10px',
+                            'overflow': 'hidden',
+                            'height': '38vh',
+                        }),
+                        html.Div(id='summary-container-ivs', style={
+                            'width': '33%',
+                            'border': '1px solid gray',
+                            'boxSizing': 'border-box',
+                            'border-radius': '10px',
+                            'overflow': 'hidden',
+                            'backgroundColor': 'white',
+                            'padding': '20px',
+                            'height': '38vh',
+                        })
                     ], style={
                         'display': 'flex',
                         'flexDirection': 'row',
@@ -298,10 +313,9 @@ def create_layout():
                         'alignItems': 'stretch',
                         'width': '100%',
                         'gap': '10px',
-                        'padding': '10px'
+                        'padding': '10px',
                     }),
 
-                    # define stores (callback chaining)
                     html.Div([
                         dcc.Store(id="selected-canton-ivs", data="CH"),
                         dcc.Store(id="selected-municipality-ivs")
@@ -309,22 +323,28 @@ def create_layout():
                 ],
                 style={
                     'padding': '12px',
-                    'fontSize': '18px',
+                    'fontSize': '1.3vw',
                     'fontWeight': 'bold',
                     'backgroundColor': 'white',
                     'color': 'black',
-                    'border': '2px solid black',
+                    'border': '2px solid gray',
                     'border-top-left-radius': '50px'
                 },
                 selected_style={
                     'padding': '12px',
-                    'fontSize': '18px',
+                    'fontSize': '1.3vw',
                     'fontWeight': 'bold',
-                    'backgroundColor': 'red',
+                    'backgroundColor': 'darkgray',
                     'color': 'black',
-                    'border': '2px solid black',
+                    'border': '2px solid gray',
                     'borderBottom': 'none',
                     'border-top-left-radius': '50px'
-                })
-        ], style={'backgroundColor': 'white'})
-    ], style={'backgroundColor': 'red'})
+                }
+            )
+        ], style={
+            'fontWeight': 'bold',
+            'border': 'none',
+            'fontSize': '18px',
+            'backgroundColor': 'white',
+        })
+    ], style={'height': '100vh', 'display': 'flex', 'flexDirection': 'column'})

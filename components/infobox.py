@@ -4,7 +4,7 @@ def display_info_text():
 
     text_style = {
         'fontFamily': 'Arial, sans-serif',  # oder die gleiche wie in deinem Plotly-Layout
-        'fontSize': '18px',
+        'fontSize': '1.1vw',
         'color': '#000000'
     }
 
@@ -14,7 +14,7 @@ def display_info_text():
                style={**text_style,
                       'fontWeight': 'bold',
                       'marginTop': '10px',
-                      'fontSize': '20px'}),
+                      'fontSize': '1.3vw'}),
         html.P(["Darstellung der Bestände bzw. Inverkehrsetzungen von Personenwagen auf Bundes- und Kantonsebene im Zeitraum zwischen 2010 und 2024.",
                 html.Br(),
                "Datenquellen:",
