@@ -63,11 +63,17 @@ def generate_stacked_bar_fuel(df, year, canton, is_relative: bool = False):
     fig = px.bar(df_grouped, x='Jahr',
                  y=data_column,
                  color='Treibstoff',
-                 color_discrete_map=color_fuel,
+                 color_discrete_map={
+                     "Andere": "black",
+                     "Benzin": "orange",
+                     "Diesel": "#fa114f",
+                     "Elektrisch": "#45ddff",
+                     "Hybrid": "#4acf70",
+                 },
                  category_orders={'Jahr': sorted(df_grouped['Jahr'].unique())})
 
     fig.update_layout(title_text=title,
-                      font_size=12,
+                      font_size=18,
                       xaxis_title="",
                       yaxis_title=texts.get('stackedbarchart.y_axis'),
                       xaxis={'type': 'category'})
@@ -76,7 +82,7 @@ def generate_stacked_bar_fuel(df, year, canton, is_relative: bool = False):
     fig.update_layout(
         legend=dict(orientation="h",
                     yanchor="top",
-                    y=-0.05,
+                    y=-0.15,
                     xanchor="center",
                     x=0.5,
                     title=None)
@@ -121,9 +127,15 @@ def generate_pie_fuel(df, year, canton, is_relative: bool = False):
         values=data_column,
         title=title,
         color="Treibstoff",
-        color_discrete_map=color_fuel
+        color_discrete_map={
+            "Andere": "black",
+            "Benzin": "orange",
+            "Diesel": "#fa114f",
+            "Elektrisch": "#45ddff",
+            "Hybrid": "#4acf70",
+        }
     )
-    fig.update_layout(margin=dict(t=52))
+    fig.update_layout(margin=dict(t=52),font_size=18)
     fig.update_traces(textposition='inside', textinfo='percent+label', showlegend=False)
     return fig
 
@@ -155,13 +167,13 @@ def generate_fuel_summary(df, year, canton, is_relative: bool = False):
     # uniform text style
     text_style = {
         'fontFamily': 'Arial, sans-serif',  # oder die gleiche wie in deinem Plotly-Layout
-        'fontSize': '18px',
+        'fontSize': '1.1vw',
         'color': '#000000'
     }
 
     # content of the infobox
     text_block = [
-        html.P(f"{title}", style={**text_style, 'fontWeight': 'bold', 'marginTop': '10px', 'fontSize': '20px'}),
+        html.P(f"{title}", style={**text_style, 'fontWeight': 'bold', 'marginTop': '10px', 'fontSize': '1.2vw'}),
         html.Ul([
             html.Li(
                 f"{row['Treibstoff']}: {int(row[data_column]):,}".replace(',', "'"),
