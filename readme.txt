@@ -2,21 +2,21 @@
 PERSONENWAGEN-DASHBOARD
 ************************
 
-Ein interaktives Dashboard zur Visualisierung und Analyse der Bestände und der Inverkehrssetzungen von Personenwagen nach Treibstoffarten, absolut und pro 1000 Personen. Für alle Gemeinden und Kantone der Schweiz im Zeitraum zwischen 2010 und 2024. Erstellt mit **Python** und **Dash**. 
+Bereitstellung eines interaktiven Dashboards zur Visualisierung und Analyse der Bestände und der Inverkehrsetzungen von Personenwagen nach Treibstoffarten, absolut und pro 1000 Personen. Für alle Gemeinden und Kantone der Schweiz im Zeitraum zwischen 2010 und 2024. Erstellt mit **Python** und **Dash** unter Verwendung von **plotly.express** zur Visualisierung der Daten.
 
 Autoren: Ralph Wildhaber, Lukas Temperli, Raphael Weiss
 
 
 ## ZIEL DES DASHBOARDS
 
-Das Dashboard richtet sich an Behörden, Forschende, Unternehmen sowie die interessierte Öffentlichkeit. Sie dient der Planung, Analyse und Information in den Bereichen Mobilität, Verkehr, Umwelt und Wirtschaft.
+Das Dashboard richtet sich an Behörden, Forschende, Unternehmen sowie die interessierte Öffentlichkeit. Es dient der Planung, Analyse und Information in den Bereichen Mobilität, Verkehr, Umwelt und Wirtschaft.
 
 
 ## DATENQUELLEN / DATENBERECHNUNG 
 
 Bundesamt für Statistik (BFS), bfs.admin.ch
 1) Daten zu den eingelösten Strassenfahrzeugen, 2010-2024
-** BFS-Nummer: px-x-1103020100_111 (Bestand), px-x-1103020200_121 (Neue Inverkehrssetzungen) **
+** BFS-Nummer: px-x-1103020100_111 (Bestand), px-x-1103020200_121 (Neue Inverkehrsetzungen) **
 2) Ständige Wohnbevölkerung auf Gemeindeebene, 2010-2023 (!) 
 ** BFS-Nummer:px-x-0102010000_101 **
 3) Basisgeometrien (für Kantons- und Gemeindegrenzen)
@@ -90,8 +90,8 @@ Andere      | 1, 9, 10, 11
 
 | Ebene | Erläuterungen zum Inhalt, inkl. Funktionalitäten                                                     |
 |-------|------------------------------------------------------------------------------------------------------|
-| Tab   | Auswahl-Möglichkeit zwischen Bestandeszahlen (Default) oder Zahlen zu den neu Inverkehrssetzungen    |
-|       | Tab 1: Bestand / Tab 2: Inverkehrssetzungen; die beiden Tabs sind identisch aufgebaut.               |
+| Tab   | Auswahl-Möglichkeit zwischen Bestandeszahlen (Default) oder Zahlen zu den neu Inverkehrsetzungen    |
+|       | Tab 1: Bestand / Tab 2: Inverkehrsetzungen; die beiden Tabs sind identisch aufgebaut.               |
 |       | Dies ermöglicht eine schnelle Orientierung und einfache Vergleichsmöglichkeit.                       |
 |-------|------------------------------------------------------------------------------------------------------|
 | Oben  | Schweizerkarte mit **Hover- und Klickfunktionalität** und allgemeine Hinweise zur Benutzung          |
@@ -111,7 +111,7 @@ Screenfit mit Overflow: Die meisten Inhalte passen auf die Seite, bei mobilen Ge
 
 
 ## Interaktionen
-- Klickfunktionalität: Schweizerkarte, Homebutton, Umstellung absolut/pro 1000, Tab (Bestand, Inverkehrssetzungen)
+- Klickfunktionalität: Schweizerkarte, Homebutton, Umstellung absolut/relativ (pro 1000 Einwohner), Tab (Bestand, Inverkehrsetzungen)
 - Hoverfunktionalität: Schweizerkarte, Kantonskarte, Barchart, Piechart
 - Sliderfunktionalität: Jahreszahlen
 
@@ -135,8 +135,8 @@ Die Fahrzeugstatistik basiert auf dem sogenannten Halteradressenprinzip. Das Bun
 
 
 ## Technische Limitationen 
-??
-
+Die Quellendaten werden vom BFS als px-Dateien bereitgestellt. Die Überführung in das für die Datenverarbeitung etwas handlichere csv-Format erfolgt ausserhalb des Dashboards.
+Zudem wäre es in einer weiteren Ausbaustufe sinnvoll, die Quelldaten direkt in einer Datenbank abzulegen.
 
 ## Mögliche Ausbauschritte
 
@@ -144,8 +144,8 @@ Die Fahrzeugstatistik basiert auf dem sogenannten Halteradressenprinzip. Das Bun
 - Weitere Fahrzeugkategorien (als zusätzliches Auswahlelement): Allerdings fraglicher Zusatznutzen im Hinblick auf das Ziel des Dashboards (siehe oben) 
 
 
-## Feedback/Verbesserungsideen von der Demo/Tag 7
+## Feedback/Verbesserungsideen aus der Demo/Tag 7
 
 
-## Umsetzung Feedback von der Demo/Tag 7
+## Umsetzung Feedback aus der Demo/Tag 7
 
