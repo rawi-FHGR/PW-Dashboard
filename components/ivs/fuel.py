@@ -1,6 +1,8 @@
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+import dash.html as html
+
 import logging
 
 # import project specific settings and functions
@@ -9,21 +11,21 @@ from helper.misc import log_current_function
 
 logger = logging.getLogger(__name__)
 
-color_fuel = {
-    "Benzin": gen.colors['blue'],
-    "Diesel": gen.colors['orange'],
+color_fuel= {
+    "Benzin": gen.colors['orange'],
+    "Diesel": gen.colors['red'],
     "Hybrid": gen.colors['green'],
-    "Elektrisch": gen.colors['red'],
-    "Andere": gen.colors['purple'],
+    "Elektrisch": gen.colors['cyan'],
+    "Andere": gen.colors['black'],
     "Gas": gen.colors['brown'],
     "Wasserstoff": gen.colors['grey']
 }
 
 # define the texts
 texts = {
-    'stackedbarchart.title': 'Verteilung der Treibstoffarten',
+    'stackedbarchart.title': 'Verteilung Treibstoffarten',
     'relative': 'pro 1000 Einwohner',
-    'stackedbarchart.y_axis': 'Anzahl Bestand',
+    'stackedbarchart.y_axis': 'Anzahl Inverkehrsetzungen',
     'piechart.title': 'Anteil Treibstoffarten',
     'infobox.title': 'Inverkehrsetzungen nach Treibstoffarten ',
     'cars':'Personenwagen'
@@ -71,7 +73,7 @@ def generate_stacked_bar_fuel(df, year, canton, is_relative: bool = False):
                  category_orders={'Jahr': sorted(df_grouped['Jahr'].unique())})
 
     fig.update_layout(title_text=title,
-                      font_size=18,
+                      font_size=12,
                       xaxis_title="",
                       yaxis_title=texts.get('stackedbarchart.y_axis'),
                       xaxis={'type': 'category'})
@@ -85,6 +87,7 @@ def generate_stacked_bar_fuel(df, year, canton, is_relative: bool = False):
                     x=0.5,
                     title=None))
 
+    # add tooltip
     fig.update_traces(
         hovertemplate=(
                 "Jahr: %{x}<br>" +
@@ -100,7 +103,7 @@ def generate_stacked_bar_fuel(df, year, canton, is_relative: bool = False):
 
     # get, if there are, annotation texts for the selected year
     annotation_text = annotations.get(str(year)) if annotations else None
-    add_year_marker(fig, year, max_sum, color=gen.colors['red'], annotation=annotation_text)
+    gen.add_year_marker(fig, year, max_sum, color=gen.colors['purple'], annotation=annotation_text)
 
     return fig
 
@@ -143,7 +146,7 @@ def generate_pie_fuel(df, year, canton, is_relative: bool = False):
                 textposition='inside',
                 marker=dict(colors=colors),
                 hovertemplate=(
-                    "%{customdata[0]}<br>"
+                    "Jahr: %{customdata[0]}<br>"
                     "Treibstoff: %{label}<br>"
                     "%{value:.0f} Inverkehrsetzungen<br>"
                     "<extra></extra>"
@@ -184,14 +187,14 @@ def generate_fuel_summary(df, year, canton, is_relative: bool = False):
 
     # uniform text style
     text_style = {
-        'fontFamily': 'Arial, sans-serif',  # oder die gleiche wie in deinem Plotly-Layout
-        'fontSize': '1.1vw',
-        'color': '#000000'
+        'fontFamily': 'Arial, sans-serif',
+        'fontSize': '1.0vw',
+        'color': '#333333'
     }
 
     # content of the infobox
     text_block = [
-        html.P(f"{title}", style={**text_style, 'fontWeight': 'bold', 'marginTop': '10px', 'fontSize': '1.2vw'}),
+        html.P(f"{title}", style={**text_style, 'fontWeight': 'bold', 'marginTop': '0px', 'fontSize': '0.95vw'}),
         html.Ul([
             html.Li(
                 f"{row['Treibstoff']}: {float(row[data_column]):,.0f} {texts.get('cars')}".replace(',', "'"),
@@ -210,58 +213,6 @@ def generate_fuel_summary(df, year, canton, is_relative: bool = False):
         'border': 'none',
         'backgroundColor': 'transparent'
     })
-
-#################################################
-### helper functions
-#################################################
-def add_year_marker(figure, year: int|str, y_max: int, color:str ='red', annotation: str=''):
-    """
-    Adds a vertical marker (line and point) to a chart (given as figure object).
-    Works also with categorical x-axis (strings).
-
-    :param figure: Plotly figure object (e.g. px.bar)
-    :param year: year, which will be marked (int or str)
-    :param y_max: max y-size (for the vertical line)
-    :param color: color of the marker
-    """
-    log_current_function(level=logging.DEBUG, msg=f"{year}")
-
-    # handle year as string
-    year_str = str(year)
-
-    # add marker circle
-    figure.add_trace(go.Scatter(
-        x=[year_str], y=[0],
-        mode='markers',
-        marker=dict(color=color, size=10, symbol='circle'),
-        showlegend=False
-    ))
-
-    # add vertical marker line
-    figure.add_trace(go.Scatter(
-        x=[year_str, year_str],
-        y=[0, y_max],
-        mode='lines',
-        line=dict(color=color, width=3),
-        showlegend=False,
-        hoverinfo='skip'
-    ))
-
-    # add optional annotation at top of marker line
-    if annotation:
-        figure.add_annotation(
-            x=[year_str],
-            y=1.15,
-            xref='x',
-            yref='paper',
-            text=annotation,
-            showarrow=False,
-            font=dict(size=13),
-            bgcolor=gen.hex_to_rgba_value(color, 0.1),    # or: white
-            bordercolor=color,
-            borderwidth=1,
-            align='center'
-        )
 
 #################################################
 ### get and setup data
