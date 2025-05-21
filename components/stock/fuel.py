@@ -136,8 +136,6 @@ def generate_pie_fuel_stock(df, year, canton, is_relative: bool=False):
     fig.update_traces(textposition='inside', textinfo='percent+label', showlegend=False )
     return fig
 
-
-
 def generate_fuel_summary_text(df, year, canton, is_relative: bool=False):
     log_current_function(level=logging.DEBUG, msg=f"{year} {canton} {is_relative}")
 
