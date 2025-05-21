@@ -64,7 +64,7 @@ def create_layout():
                         'marginTop': '20px',
                         'height': '40vh',
                     }),
-
+                    # second line (navigation)
                     html.Div([
                         html.Div(
                             html.Img(
@@ -122,6 +122,7 @@ def create_layout():
                         'gap': '10px',
                     }),
 
+                    # 3rd row
                     html.Div([
                         html.Div(dcc.Graph(id='stackedbar-fuel-stock-canton', style={'height': '100%'}), style={
                             'width': '33%',
@@ -148,7 +149,6 @@ def create_layout():
                             'backgroundColor': 'white',
                             'padding': '20px',
                             'height': '38vh',
-
                         }),
                     ], style={
                         'display': 'flex',
