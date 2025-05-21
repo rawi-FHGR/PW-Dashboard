@@ -40,7 +40,8 @@ def generate_ch_map(year: int, is_relative: bool=False):
         hover_text = f'{texts.get("cars")}'
 
     # get only data for the selected year
-    df_year = df[df['Jahr'] == year]
+    df_filtered = df[df['Kanton'] != 'CH']
+    df_year = df_filtered[df_filtered['Jahr'] == year]
 
     # Check for empty data
     if df_year.empty:

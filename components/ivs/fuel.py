@@ -56,8 +56,7 @@ def generate_stacked_bar_fuel(df, year, canton, is_relative: bool = False):
         data_column = data_columns[1]
 
     # only selected canton
-    if canton != 'CH':
-        df = df[df['Kanton'] == canton].copy()
+    df = df[df['Kanton'] == canton].copy()
 
     # group data by year and fuel and sum the values
     df_grouped = df.groupby(['Jahr', 'Treibstoff'])[data_column].sum().reset_index()
@@ -111,7 +110,7 @@ def generate_pie_fuel(df, year, canton, is_relative: bool = False):
     log_current_function(level=logging.DEBUG, msg=f"{year} {canton} {is_relative}")
 
     # Pro Jahr filtern, ansonsten Summe über alle Jahre!
-    df = df[df['Jahr'] == year].copy()
+    df = df[(df['Jahr'] == year) & (df['Kanton'] == canton)].copy()
 
     # use the right data depending on the data mode
     if is_relative:
@@ -175,8 +174,7 @@ def generate_fuel_summary(df, year, canton, is_relative: bool = False):
         data_column = data_columns[1]
 
     # only selected canton
-    if canton != 'CH':
-        df = df[(df['Kanton'] == canton) & (df['Jahr'] == year)].copy()
+    df = df[(df['Jahr'] == year) & (df['Kanton'] == canton)].copy()
 
     # Gruppierung und Sortierung nach DATA_Bestand (absteigend)
     df_grouped = df.groupby('Treibstoff')[data_column].sum().reset_index()
