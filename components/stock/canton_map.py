@@ -115,7 +115,7 @@ def generate_map_canton(year: int, canton: str, is_relative: bool=False):
     )
 
     # get annotation for the current year and canton
-    current_annotation = get_annotations(canton, str(year))
+    current_annotation = gen.get_current_annotations(annotations, canton, str(year))
     if len(current_annotation):
         fig.update_layout(
             annotations=[
@@ -125,10 +125,10 @@ def generate_map_canton(year: int, canton: str, is_relative: bool=False):
                     align="left",
                     xref="paper", yref="paper",
                     x=0.98, y=0.98,
-                    bordercolor="red",
+                    bordercolor=gen.colors["purple"],
                     borderwidth=1,
                     borderpad=4,
-                    bgcolor=gen.hex_to_rgba_value(gen.colors['red'], 0.1),
+                    bgcolor=gen.hex_to_rgba_value(gen.colors['purple'], 0.1),
                     opacity=0.9,
                     font=dict(size=12, color="black")
                 )
@@ -136,16 +136,6 @@ def generate_map_canton(year: int, canton: str, is_relative: bool=False):
         )
 
     return fig
-
-def get_annotations(canton, year) -> str:
-    annotation_texts = ''
-    # collect all annotation for the current year and canton
-    for annotation in annotations:
-        if annotation['kanton'] == canton:
-            if annotation['jahr_von'] <= year <= annotation['jahr_bis']:
-                annotation_texts += annotation['text'] + '<br>'
-
-    return annotation_texts
 
 ###############################################################################
 # setup data
