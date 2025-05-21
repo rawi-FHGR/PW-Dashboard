@@ -3,6 +3,8 @@ import plotly.express as px
 import plotly.graph_objects as go
 import logging
 
+import dash.html as html
+
 # import project specific settings and functions
 import helper.general as gen
 from helper.misc import log_current_function
@@ -83,17 +85,14 @@ def generate_stacked_bar_fuel(df, year, canton, is_relative: bool = False):
                     y=-0.05,
                     xanchor="center",
                     x=0.5,
-                    title=None)
-    )
+                    title=None))
 
     fig.update_traces(
         hovertemplate=(
                 "Jahr: %{x}<br>" +
                 "Treibstoff: %{fullData.name}<br>" +
                 "%{y:.0f} Inverkehrsetzungen<br>" +
-                "<extra></extra>"
-        )
-    )
+                "<extra></extra>"))
 
     # group by year and sum up the values (Anzahl)
     yearly_sum = df_grouped.groupby('Jahr')[data_column].sum()
@@ -106,7 +105,6 @@ def generate_stacked_bar_fuel(df, year, canton, is_relative: bool = False):
     add_year_marker(fig, year, max_sum, color=gen.colors['red'], annotation=annotation_text)
 
     return fig
-
 
 def generate_pie_fuel(df, year, canton, is_relative: bool = False):
     log_current_function(level=logging.DEBUG, msg=f"{year} {canton} {is_relative}")
@@ -164,11 +162,8 @@ def generate_pie_fuel(df, year, canton, is_relative: bool = False):
 
     return fig
 
-
 def generate_fuel_summary(df, year, canton, is_relative: bool = False):
     log_current_function(level=logging.DEBUG, msg=f"{year} {canton} {is_relative}")
-
-    import dash.html as html
 
     # use the right data depending on the data mode
     if is_relative:
@@ -217,7 +212,6 @@ def generate_fuel_summary(df, year, canton, is_relative: bool = False):
         'border': 'none',
         'backgroundColor': 'transparent'
     })
-
 
 #################################################
 ### helper functions
@@ -270,7 +264,6 @@ def add_year_marker(figure, year: int|str, y_max: int, color:str ='red', annotat
             borderwidth=1,
             align='center'
         )
-
 
 #################################################
 ### get and setup data

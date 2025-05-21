@@ -1,6 +1,8 @@
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+import dash.html as html
+
 import logging
 
 # import project specific settings and functions
@@ -33,7 +35,6 @@ annotations = {
     '2016':'Dieselskandal in der<br>Autoindustrie wird publik.',
     '2020':'Corona führt zu einem<br>Rückgang der Inverkehrsetzungen'
 }
-
 
 data_columns = ['Kanton', 'DATA_Bestand', 'DATA_Bestand pro 1000']
 
@@ -139,8 +140,6 @@ def generate_pie_fuel_stock(df, year, canton, is_relative: bool=False):
 def generate_fuel_summary_text(df, year, canton, is_relative: bool=False):
     log_current_function(level=logging.DEBUG, msg=f"{year} {canton} {is_relative}")
 
-    import dash.html as html
-
     # use the right data depending on the data mode
     if is_relative:
         title = f'{canton}: {texts.get("infobox.title")} {texts.get("relative")} ({year})'
@@ -153,9 +152,7 @@ def generate_fuel_summary_text(df, year, canton, is_relative: bool=False):
     if canton != 'CH':
         df = df[(df['Kanton'] == canton) & (df['Jahr'] == year)].copy()
 
-
-    
-    # Gruppierung und Sortierung nach DATA_Bestand (absteigend)
+    # group and sort the car stock
     df_grouped = df.groupby('Treibstoff')[data_column].sum().reset_index()
     df_grouped = df_grouped.sort_values(by=data_column, ascending=False)
 
@@ -203,6 +200,7 @@ def add_year_marker(figure, year, y_max, color='red', annotation: str=''):
     :param year: year, which will be marked (int or str)
     :param y_max: max y-size (for the vertical line)
     :param color: color of the marker
+    :param annotation: annotation of the marker
     """
     log_current_function(level=logging.DEBUG, msg=f"{year}")
 
@@ -242,7 +240,6 @@ def add_year_marker(figure, year, y_max, color='red', annotation: str=''):
             borderwidth=1,
             align='center'
         )
-
 
 #################################################
 ### get and setup data
