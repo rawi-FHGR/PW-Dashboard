@@ -61,7 +61,7 @@ def format_number(value: int, use_separator: bool = True) -> str:
 
 # settings
 available_years = list(range(2010,2025,1))
-default_year = available_years[int(len(available_years)/2)]
+default_year = 2024
 
 # colormap
 colors = {
