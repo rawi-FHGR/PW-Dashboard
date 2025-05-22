@@ -55,7 +55,8 @@ def create_layout():
                             'overflow': 'hidden',
                             'margin-right': '10px',
                             'background-color':'white',
-                            'padding': '20px',
+                            'padding': '5px',
+                            'paddingLeft':'20px',
                             'height': '100%',
                             'minHeight': '40vh',
 
@@ -215,7 +216,8 @@ def create_layout():
                             'overflow': 'hidden',
                             'margin-right': '10px',
                             'background-color': 'white',
-                            'padding': '20px',
+                            'padding': '5px',
+                            'paddingLeft':'20px',
                             'height': '100%',
                             'minHeight': '40vh'
                         })

@@ -6,20 +6,12 @@ import dash.html as html
 import logging
 
 # import project specific settings and functions
+import components.common as common
+
 import helper.general as gen
 from helper.misc import log_current_function
 
 logger = logging.getLogger(__name__)
-
-color_fuel= {
-    "Benzin": gen.colors['orange'],
-    "Diesel": gen.colors['red'],
-    "Hybrid": gen.colors['green'],
-    "Elektrisch": gen.colors['cyan'],
-    "Andere": gen.colors['black'],
-    "Gas": gen.colors['brown'],
-    "Wasserstoff": gen.colors['grey']
-}
 
 # define the texts
 texts = {
@@ -68,7 +60,7 @@ def generate_stacked_bar_fuel(df, year, canton, is_relative: bool = False):
     fig = px.bar(df_grouped, x='Jahr',
                  y=data_column,
                  color='Treibstoff',
-                 color_discrete_map=color_fuel,
+                 color_discrete_map=common.color_fuel,
                  category_orders={'Jahr': sorted(df_grouped['Jahr'].unique())})
 
     fig.update_layout(title_text=title,
@@ -102,14 +94,14 @@ def generate_stacked_bar_fuel(df, year, canton, is_relative: bool = False):
 
     # get, if there are, annotation texts for the selected year
     annotation_text = annotations.get(str(year)) if annotations else None
-    gen.add_year_marker(fig, year, max_sum, color=gen.colors['purple'], annotation=annotation_text)
+    common.add_year_marker(fig, year, max_sum, color=gen.colors['purple'], annotation=annotation_text)
 
     return fig
 
 def generate_pie_fuel(df, year, canton, is_relative: bool = False):
     log_current_function(level=logging.DEBUG, msg=f"{year} {canton} {is_relative}")
 
-    # Pro Jahr filtern, ansonsten Summe über alle Jahre!
+    # only selected canton in the selected year
     df = df[(df['Jahr'] == year) & (df['Kanton'] == canton)].copy()
 
     # use the right data depending on the data mode
@@ -132,7 +124,7 @@ def generate_pie_fuel(df, year, canton, is_relative: bool = False):
     labels = df_grouped["Treibstoff"]
     values = df_grouped[data_column]
     customdata = [[year]] * len(df_grouped)
-    colors = [color_fuel.get(label, "#cccccc") for label in labels]
+    colors = [common.color_fuel.get(label, "#cccccc") for label in labels]
 
     # piechart with hovertemplate
     fig = go.Figure(
@@ -173,7 +165,7 @@ def generate_fuel_summary(df, year, canton, is_relative: bool = False):
         title = f'{canton}: {texts.get("infobox.title")} ({year})'
         data_column = data_columns[1]
 
-    # only selected canton
+    # only selected canton in the selected year
     df = df[(df['Jahr'] == year) & (df['Kanton'] == canton)].copy()
 
     # Gruppierung und Sortierung nach DATA_Bestand (absteigend)
@@ -183,26 +175,19 @@ def generate_fuel_summary(df, year, canton, is_relative: bool = False):
     # calculate total
     total = df_grouped[data_column].sum()
 
-    # uniform text style
-    text_style = {
-        'fontFamily': 'Arial, sans-serif',
-        'fontSize': '1.0vw',
-        'color': '#333333'
-    }
-
     # content of the infobox
     text_block = [
-        html.P(f"{title}", style={**text_style, 'fontWeight': 'bold', 'marginTop': '0px', 'fontSize': '0.95vw'}),
+        html.P(f"{title}", style={**common.text_style, 'fontWeight': 'bold', 'marginTop': '0px', 'fontSize': '0.95vw'}),
         html.Ul([
             html.Li(
                 f"{row['Treibstoff']}: {float(row[data_column]):,.0f} {texts.get('cars')}".replace(',', "'"),
-                style=text_style
+                style=common.text_style
             )
             for _, row in df_grouped.iterrows()
         ]),
         html.P(
             f"Total: {float(total):,.0f} {texts.get('cars')}".replace(',', "'"),
-            style={**text_style, 'fontWeight': 'bold', 'marginTop': '10px'}
+            style={**common.text_style, 'fontWeight': 'bold', 'marginTop': '10px'}
         )
     ]
 

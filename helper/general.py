@@ -1,10 +1,7 @@
 import pandas as pd
-import plotly.graph_objects as go
-
 import logging
 
 # import project specific settings and functions
-from helper.misc import log_current_function
 logger = logging.getLogger(__name__)
 
 # general settings and functions
@@ -66,68 +63,6 @@ def format_number(value: int, use_separator: bool = True) -> str:
         return f"{int(value):,}".replace(",", "'")  # CH format
     return str(int(value))
 
-def add_year_marker(figure, year, y_max, color='red', annotation: str=''):
-    """
-    Adds a vertical marker (line and point) to a chart (given as figure object).
-    Works also with categorical x-axis (strings).
-
-    :param figure: Plotly figure object (e.g. px.bar)
-    :param year: year, which will be marked (int or str)
-    :param y_max: max y-size (for the vertical line)
-    :param color: color of the marker
-    :param annotation: annotation of the marker
-    """
-    log_current_function(level=logging.DEBUG, msg=f"{year}")
-
-    # handle year as string
-    year_str = str(year)
-
-    # add marker circle
-    figure.add_trace(go.Scatter(
-        x=[year_str], y=[0],
-        mode='markers',
-        marker=dict(color=color, size=10, symbol='circle'),
-        showlegend=False
-    ))
-
-    # add vertical marker line
-    figure.add_trace(go.Scatter(
-        x=[year_str, year_str],
-        y=[0, y_max],
-        mode='lines',
-        line=dict(color=color, width=3),
-        showlegend=False,
-        hoverinfo='skip'
-    ))
-
-    # add optional annotation at top of marker line
-    if annotation:
-        figure.add_annotation(
-            x=[year_str],
-            y=1.08,
-            xref='x',
-            yref='paper',
-            text=annotation,
-            showarrow=False,
-            font=dict(size=13),
-            bgcolor=hex_to_rgba_value(color, 0.1),    # or: white
-            bordercolor=color,
-            borderwidth=1,
-            align='center'
-        )
-
-
-def get_current_annotations(annotations, canton, year) -> str:
-    annotation_texts = ''
-    # collect all annotation for the current year and canton
-    for annotation in annotations:
-        if annotation['kanton'] == canton:
-            if annotation['jahr_von'] <= year <= annotation['jahr_bis']:
-                annotation_texts += annotation['text'] + '<br>'
-
-    return annotation_texts
-
-
 # settings
 available_years = list(range(2010,2025,1))
 default_year = 2024
@@ -156,7 +91,6 @@ colors = {
     "grey": "#7f7f7f",
     "black": "black"
 }
-
 
 
 if __name__ == "__main__":

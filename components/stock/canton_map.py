@@ -3,21 +3,22 @@ import dash_bootstrap_components as dbc
 import logging
 
 import plotly.express as px
-import plotly.graph_objects as go
 import pandas as pd
 import json
 
 import helper.general as gen
+import components.common as common
 
 from helper.misc import log_current_function
 logger = logging.getLogger(__name__)
 
-# varialbles
+# variables
 texts = {'title':'Fahrzeugbestand pro Gemeinde',
          'title_colorbar':'Anzahl',
          'inhabitant':'Einwohner',
          'stock':'DATA_Bestand',
-         'cars':'Personenwagen'}
+         'cars':'Personenwagen',
+         'relative':'pro 1000 Einwohner'}
 
 data_columns = ['Gemeindename', 'DATA_Bestand', 'DATA_Bestand pro 1000']
 
@@ -39,7 +40,7 @@ def generate_map_canton(year: int, canton: str, is_relative: bool=False):
 
     # use the right data depending on the data mode
     if is_relative:
-        title = f'<b>{canton}: {texts.get("title")} pro 1000 Einwohner ({year})</b>'
+        title = f'<b>{canton}: {texts.get("title")} {texts.get("relative")} ({year})</b>'
         data_column = data_columns[2]
     else:
         title = f'<b>{canton}: {texts.get("title")} ({year})</b>'
@@ -54,7 +55,7 @@ def generate_map_canton(year: int, canton: str, is_relative: bool=False):
 
     # prevent application crash due to missing data
     if df_cant.empty:
-        logger.warning(f'Keine Daten für diesen Kanton und Jahr. {canton}, {year}, {is_relative}')
+        logger.warning(f'Keine Daten für diesen Kanton und Jahr. {canton}, {    year}, {is_relative}')
         return px.scatter_mapbox()
 
     # convert attribute to a string
@@ -115,7 +116,7 @@ def generate_map_canton(year: int, canton: str, is_relative: bool=False):
     )
 
     # get annotation for the current year and canton
-    current_annotation = gen.get_current_annotations(annotations, canton, str(year))
+    current_annotation = common.get_current_annotations(annotations, canton, str(year))
     if len(current_annotation):
         fig.update_layout(
             annotations=[

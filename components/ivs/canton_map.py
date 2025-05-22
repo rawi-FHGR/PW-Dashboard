@@ -7,11 +7,12 @@ import pandas as pd
 import json
 
 import helper.general as gen
+import components.common as common
 
 from helper.misc import log_current_function
 logger = logging.getLogger(__name__)
 
-# varialbles
+# variables
 texts = {'title':'Inverkehrsetzungen pro Gemeinde',
          'title_colorbar':'Anzahl',
          'relativ':'pro 1000 Einwohner',
@@ -113,7 +114,7 @@ def generate_map_canton(year: int, canton: str, is_relative: bool=False):
     )
 
     # get annotation for the current year and canton
-    current_annotation = gen.get_current_annotations(annotations, canton, str(year))
+    current_annotation = common.get_current_annotations(annotations, canton, str(year))
     if len(current_annotation):
         fig.update_layout(
             annotations=[
