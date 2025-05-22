@@ -80,15 +80,15 @@ default_year = 2024
 # }
 
 colors = {
-    "blue": "#1f77b4",
-    "orange": "orange",
-    "green": "#4acf70",
-    "cyan":"#45ddff",
+    "blue": "#09006D",
+    "orange": "#FFCE3A",
+    "green": "#1A4CAF",
+    "cyan":"#4CDCEC",
     "red": "#fa114f",
     "purple": "#9467bd",
     "brown": "#8c564b",
-    "pink": "#e377c2",
-    "grey": "#7f7f7f",
+    "pink": "#FF3B82",
+    "grey": "#A5A5A5",
     "black": "black"
 }
 

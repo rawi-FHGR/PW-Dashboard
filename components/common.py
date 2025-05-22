@@ -17,11 +17,11 @@ logger = logging.getLogger(__name__)
 color_fuel= {
     "Benzin": gen.colors['orange'],
     "Diesel": gen.colors['red'],
-    "Hybrid": gen.colors['green'],
+    "Hybrid": gen.colors['blue'],
     "Elektrisch": gen.colors['cyan'],
-    "Andere": gen.colors['black'],
+    "Andere": gen.colors['grey'],
     "Gas": gen.colors['brown'],
-    "Wasserstoff": gen.colors['grey']
+    "Wasserstoff": gen.colors['blue']
 }
 
 text_style = {

@@ -74,7 +74,7 @@ def create_layout():
                     }),
                     # second line (navigation)
                     html.Div([
-                        html.Div(
+                        html.Div([
                             html.Img(
                                 id="home-button",
                                 src="/assets/swisscoat.png",
@@ -84,8 +84,10 @@ def create_layout():
                                     'height': '40px',
                                     'cursor': 'pointer',
                                     'marginRight': '20px',
-                                }
-                            ),style={'width': '20%', 'display': 'flex', 'justifyContent': 'left', 'paddingLeft':'20px'},
+                                },
+                            ),html.Span("Zur Ausgangsansicht zurückkehren", style={'margin-right': '10px', 'fontSize': '1vw'}
+                                        ),],style={'width': '20%', 'display': 'flex', 'justifyContent': 'left', 'paddingLeft':'20px'},
+
                         ),
                         html.Div(
                             dcc.Slider(
@@ -235,7 +237,7 @@ def create_layout():
 
                     # 2nd line: Home-Button, year slider + toggle
                     html.Div([
-                        html.Div(
+                        html.Div([
                             html.Img(
                                 id="home-button-ivs",
                                 src="/assets/swisscoat.png",
@@ -245,8 +247,12 @@ def create_layout():
                                     'height': '40px',
                                     'cursor': 'pointer',
                                     'marginRight': '20px',
-                                }
-                            ), style={'width': '20%', 'display': 'flex', 'justifyContent': 'left','paddingLeft':'20px'},
+                                },
+                            ), html.Span("Zur Ausgangsansicht zurückkehren",
+                                         style={'margin-right': '10px', 'fontSize': '1vw'}
+                                         ), ],
+                            style={'width': '20%', 'display': 'flex', 'justifyContent': 'left', 'paddingLeft': '20px'},
+
                         ),
                         html.Div(
                             dcc.Slider(
@@ -296,7 +302,7 @@ def create_layout():
                     html.Div([
                         html.Div(dcc.Graph(id='stackedbar-fuel-stock-canton-ivs', style={'height': '100%'}), style={
                             'width': '33%',
-                            'border': '1px solid #gray',
+                            'border': '1px solid gray',
                             'boxSizing': 'border-box',
                             'border-radius': '10px',
                             'overflow': 'hidden',

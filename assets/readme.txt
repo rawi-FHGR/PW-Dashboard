@@ -107,7 +107,7 @@ Andere      | 1, 9, 10, 11
 
 Dieses Layout führt entsprechend der gewohnten Leserichtung vom Allgemeinen oben links (Schweizerkarte mit Totalwerten nach Kanton) zu den Detaildaten unten (Aufschlüsselung nach Treibstoffarten und Kanton) und seitlich rechts (Aufschlüsselung nach Gemeinden). 
 
-Screenfit mit Overflow: Die meisten Inhalte passen auf die Seite, bei mobilen Geräten aktiviert sich Scrollen??
+Das Layout besitzt ein responsive Design, wurde jedoch primär für den Desktop konzipiert.
 
 
 
