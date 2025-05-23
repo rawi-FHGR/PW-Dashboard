@@ -94,3 +94,20 @@ def get_current_annotations(annotations, canton, year) -> str:
                 annotation_texts += annotation['text'] + '<br>'
 
     return annotation_texts
+
+def calculate_zoom_factor(width:float) -> float:
+    zoom_factor = 1.0
+    if width < 0.2:
+        zoom_factor = 10
+    elif width < 0.37:
+        zoom_factor = 9
+    elif width < 0.75:
+        zoom_factor = 7.9
+    elif width < 1:
+        zoom_factor = 7.5
+    elif width < 1.5:
+        zoom_factor = 7
+    else:
+        zoom_factor = 6.9
+
+    return zoom_factor

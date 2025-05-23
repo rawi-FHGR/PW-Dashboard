@@ -13,7 +13,7 @@ from helper.misc import log_current_function
 logger = logging.getLogger(__name__)
 
 # variables
-texts = {'title':'Inverkehrsetzungen pro Gemeinde',
+texts = {'title':'Inverkehrsetzungen',
          'title_colorbar':'Anzahl',
          'relativ':'pro 1000 Einwohner',
          'inhabitant':'Einwohner'}
@@ -90,7 +90,7 @@ def generate_map_canton(year: int, canton: str, is_relative: bool=False):
     minx, miny, maxx, maxy = union_geom.bounds
     center_coords = {"lat": (miny + maxy) / 2, "lon": (minx + maxx) / 2}
     bbox_width = maxx - minx
-    zoom = 9 if bbox_width < 0.5 else 7.9 if bbox_width < 1 else 7
+    zoom = common.calculate_zoom_factor(bbox_width)
 
     # plot canton map and municipality data
     fig = px.choropleth_mapbox(

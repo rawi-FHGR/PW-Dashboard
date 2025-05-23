@@ -85,7 +85,7 @@ def create_layout():
                                     'cursor': 'pointer',
                                     'marginRight': '20px',
                                 },
-                            ),html.Span("Zur Ausgangsansicht zurückkehren", style={'margin-right': '10px', 'fontSize': '1vw'}
+                            ),html.Span("zur Ausgangsansicht", style={'margin-right': '10px', 'fontSize': '1vw'}
                                         ),],style={'width': '20%', 'display': 'flex', 'justifyContent': 'left', 'paddingLeft':'20px'},
 
                         ),
@@ -170,7 +170,7 @@ def create_layout():
                         'alignItems': 'stretch',
                         'width': '100%',
                         'gap': '10px',
-                        'padding': '10px',
+                        'padding': '10px'
                     }),
 
                     # define stores (callback chaining)
@@ -250,7 +250,7 @@ def create_layout():
                                     'cursor': 'pointer',
                                     'marginRight': '20px',
                                 },
-                            ), html.Span("Zur Ausgangsansicht zurückkehren",
+                            ), html.Span("zur Ausgangsansicht",
                                          style={'margin-right': '10px', 'fontSize': '1vw'}
                                          ), ],
                             style={'width': '20%', 'display': 'flex', 'justifyContent': 'left', 'paddingLeft': '20px'},
