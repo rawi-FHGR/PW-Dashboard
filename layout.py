@@ -32,7 +32,7 @@ def create_layout():
             'display': 'flex',
             'justifyContent': 'space-between',
             'alignItems': 'right',
-            'padding': '0px 0px',
+            'padding': '2px 2px',
             'backgroundColor':'white'}),
         dcc.Tabs([
             dcc.Tab(
