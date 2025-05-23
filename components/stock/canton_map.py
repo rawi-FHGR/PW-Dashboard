@@ -25,7 +25,10 @@ data_columns = ['Gemeindename', 'DATA_Bestand', 'DATA_Bestand pro 1000']
 annotations = [
     {'kanton': 'BE', 'jahr_von': '2018', 'jahr_bis':'2018', 'text': 'Gründung von Carvolution in Bannwil.'},
     {'kanton': 'BE', 'jahr_von': '2019', 'jahr_bis': '2024', 'text': 'Carvolution: stetige Zunahme des <br>Fahrzeugbestands in Bannwil'},
-    {'kanton': 'ZG', 'jahr_von': '2018', 'jahr_bis':'2018', 'text': 'Umzug von Mobility Schweiz <br>von Luzern nach Rothkreuz/Risch'},
+    {'kanton': 'ZG', 'jahr_von': '2010', 'jahr_bis':'2019', 'text': 'Stetiger Flottenausbau von Arval (Hauptsitz = Halteradresse)'},
+    {'kanton': 'ZG', 'jahr_von': '2018', 'jahr_bis':'2018', 'text': 'Mobility von Luzern nach Risch  (Hauptsitz = Halteradresse)'},
+    {'kanton': 'ZG', 'jahr_von': '2019', 'jahr_bis':'2019', 'text': 'Arval von Cham nach Risch (Hauptsitz = Halteradresse)'},
+    {'kanton': 'ZG', 'jahr_von': '2020', 'jahr_bis':'2024', 'text': 'Stetiger Flottenausbau von Mobility und Arval (Hauptsitz = Halteradresse)'}
 ]
 
 # functions
