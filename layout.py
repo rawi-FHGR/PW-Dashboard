@@ -180,23 +180,25 @@ def create_layout():
                     ], id="hidden-stores", style={"display": "none"})
                 ],
                 style={
-                    'padding': '12px',
+                    'padding': '3px',
                     'fontSize': '1.3vw',
                     'fontWeight': 'bold',
                     'backgroundColor': 'white',
                     'color': 'black',
                     'border': '2px solid gray',
-                    'border-top-right-radius': '50px'
+                    'border-top-right-radius': '50px',
+                    'height':'3vw'
                 },
                 selected_style={
-                    'padding': '12px',
+                    'padding': '3px',
                     'fontSize': '1.3vw',
                     'fontWeight': 'bold',
                     'backgroundColor': 'darkgray',
                     'color': 'black',
                     'border': '2px solid gray',
                     'borderBottom': 'none',
-                    'border-top-right-radius': '50px'
+                    'border-top-right-radius': '50px',
+                    'height': '3vw'
                 }
             ),
             # second tab
@@ -348,23 +350,25 @@ def create_layout():
                     ], id="hidden-stores-ivs", style={"display": "none"})
                 ],
                 style={
-                    'padding': '12px',
+                    'padding': '3px',
                     'fontSize': '1.3vw',
                     'fontWeight': 'bold',
                     'backgroundColor': 'white',
                     'color': 'black',
                     'border': '2px solid gray',
-                    'border-top-left-radius': '50px'
+                    'border-top-left-radius': '50px',
+                    'height': '3vw'
                 },
                 selected_style={
-                    'padding': '12px',
+                    'padding': '3px',
                     'fontSize': '1.3vw',
                     'fontWeight': 'bold',
                     'backgroundColor': 'darkgray',
                     'color': 'black',
                     'border': '2px solid gray',
                     'borderBottom': 'none',
-                    'border-top-left-radius': '50px'
+                    'border-top-left-radius': '50px',
+                    'height':'3vw'
                 }
             )
         ], style={
