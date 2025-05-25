@@ -6,6 +6,8 @@ import plotly.express as px
 import pandas as pd
 import json
 
+import helper.general as gen
+
 from helper.misc import log_current_function
 logger = logging.getLogger(__name__)
 
@@ -93,6 +95,9 @@ def generate_ch_map(year: int, is_relative: bool=False):
         title_y=0.97,
         uirevision="constant"
     )
+
+    # draw colored outlines
+    fig.update_traces(marker_line_color=gen.colors['lightgrey'], marker_line_width=0.5)
 
     # tooltip setzen
     hovertemplate = (

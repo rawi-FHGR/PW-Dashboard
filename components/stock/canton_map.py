@@ -118,6 +118,9 @@ def generate_map_canton(year: int, canton: str, is_relative: bool=False):
         }
     )
 
+    # draw colored outlines
+    fig.update_traces(marker_line_color=gen.colors['lightgrey'], marker_line_width=0.5)
+
     # get annotation for the current year and canton
     current_annotation = common.get_current_annotations(annotations, canton, str(year))
     if len(current_annotation):

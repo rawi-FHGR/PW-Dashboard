@@ -89,7 +89,8 @@ colors = {
     "brown": "#8c564b",
     "pink": "#FF3B82",
     "grey": "#A5A5A5",
-    "black": "black"
+    "black": "black",
+    "lightgrey":"#cccccc"
 }
 
 
