@@ -146,4 +146,4 @@ def register_callbacks(app):
             return clickData['points'][0]['location'], dash.no_update, dash.no_update
 
         elif trigger_id == "home-button":
-            return "CH", default_year, False
+            return "CH", default_year, True
