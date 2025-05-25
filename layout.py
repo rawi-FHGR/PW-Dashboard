@@ -39,7 +39,8 @@ def create_layout():
                 label='Bestand',
                 children=[
                     html.Div([
-                        dcc.Graph(id='choropleth-map', style={
+                        dcc.Graph(id='choropleth-map',
+                                  config={"scrollZoom":False}, style={
                             'width': '67%',
                             'border': '1px solid gray',
                             'border-radius': '10px',
@@ -206,7 +207,8 @@ def create_layout():
                 label='Inverkehrsetzungen',
                 children=[
                     html.Div([
-                        dcc.Graph(id='choropleth-map-ivs', style={
+                        dcc.Graph(id='choropleth-map-ivs',
+                                  config={"scrollZoom":False}, style={
                             'width': '67%',
                             'border': '1px solid gray',
                             'border-radius': '10px',
