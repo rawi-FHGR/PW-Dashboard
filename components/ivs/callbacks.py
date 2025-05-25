@@ -118,13 +118,13 @@ def register_callbacks(app):
     def update_right_panel(canton, selected_year, is_relative):
         logger.debug(f'right panel update: {canton}, {selected_year}, {is_relative}')
 
-        # no canton seleceted -> show info text
+        # no canton selected -> show info text
         if canton == 'CH' or canton is None:
             return info.display_info_text()
 
         # display the map if a canton was selected
         fig = m_map.generate_map_canton(year=selected_year, canton=canton, is_relative=is_relative)
-        return dcc.Graph(figure=fig, style={'height': '100%'})
+        return dcc.Graph(figure=fig, config={"scrollZoom": True}, style={'height': '100%'})
 
     @app.callback(
         Output("selected-canton-ivs", "data"),
@@ -148,5 +148,5 @@ def register_callbacks(app):
             return clickData['points'][0]['location'], dash.no_update, dash.no_update
 
         elif trigger_id == "home-button-ivs":
-            return "CH", default_year, False
+            return "CH", default_year, True
 

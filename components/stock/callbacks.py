@@ -123,7 +123,7 @@ def register_callbacks(app):
 
         # display the map if a canton was selected
         fig = m_map.generate_map_canton(year=selected_year, canton=canton, is_relative=is_relative)
-        return dcc.Graph(figure=fig, style={'height': '100%'})
+        return dcc.Graph(figure=fig, config={"scrollZoom": True}, style={'height': '100%'})
 
     @app.callback(
         Output("selected-canton", "data"),
