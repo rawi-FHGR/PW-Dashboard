@@ -19,3 +19,20 @@ body {
 .dash-app > div {
     height: 100%;
 }
+
+/* style the year slider a bit */
+.rc-slider-track {
+    background-color: transparent !important;  /* turn off the background coloer */
+}
+
+/* Farbe der aktiven Punkte (links vom aktuellen Wert) */
+.rc-slider-dot-active {
+    background-color: white !important;
+    border-color: #ccc !important;
+}
+
+/* Farbe der inaktiven Punkte (rechts vom aktuellen Wert) */
+.rc-slider-dot {
+    background-color: white !important;
+    border-color: #ccc !important;
+}

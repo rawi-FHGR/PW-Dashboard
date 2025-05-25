@@ -97,10 +97,7 @@ def create_layout():
                                 max=int(max(available_years)),
                                 step=1,
                                 value=int(default_year),
-                                marks={
-                                    int(min(available_years)): str(int(min(available_years))),
-                                    int(max(available_years)): str(int(max(available_years)))
-                                },
+                                marks={int(year): str(year) for year in sorted(available_years)},
                                 tooltip={"placement": "bottom", "always_visible": True},
                                 className='custom-slider'
                             ),
@@ -267,10 +264,7 @@ def create_layout():
                                 max=int(max(available_years)),
                                 step=1,
                                 value=int(default_year),
-                                marks={
-                                    int(min(available_years)): str(int(min(available_years))),
-                                    int(max(available_years)): str(int(max(available_years)))
-                                },
+                                marks={int(year): str(year) for year in sorted(available_years)},
                                 tooltip={"placement": "bottom", "always_visible": True},
                                 className='custom-slider'
                             ),
