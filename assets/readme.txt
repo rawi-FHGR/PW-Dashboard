@@ -95,7 +95,7 @@ Andere      | 1, 9, 10, 11
 |       | Dies ermöglicht eine schnelle Orientierung und einfache Vergleichsmöglichkeit.                       |
 |-------|------------------------------------------------------------------------------------------------------|
 | Oben  | Schweizerkarte mit **Hover- und Klickfunktionalität** und allgemeine Hinweise zur Benutzung          |
-|       | (Default) bzw. Kantonskarte mit Gemeinden mit **Hoverfunktionalität**                	               |
+|       | (Default) bzw. Kantonskarte mit Gemeinden mit **Hoverfunktionalität**, zoombar                	               |
 |-------|------------------------------------------------------------------------------------------------------|
 | Mitte | Zusätzliche Interaktionsmöglichkeit: Home-Button (Defaulteinstellungen), Jahresslider (Default: 2024)|
 |       | und Auswahl "absolut" oder "relativ(pro 1000 Personen)" (Default)                                    |
@@ -110,8 +110,8 @@ Dieses Layout führt entsprechend der gewohnten Leserichtung vom Allgemeinen obe
 Das Layout besitzt ein responsive Design, wurde jedoch primär für den Desktop konzipiert.
 
 
-
 ## Interaktionen
+
 - Klickfunktionalität: Schweizerkarte, Homebutton, Umstellung absolut/relativ (pro 1000 Einwohner), Tab (Bestand, Inverkehrsetzungen)
 - Hoverfunktionalität: Schweizerkarte, Kantonskarte, Barchart, Piechart
 - Sliderfunktionalität: Jahreszahlen
@@ -120,7 +120,7 @@ Das Layout besitzt ein responsive Design, wurde jedoch primär für den Desktop 
 ## Farbwahl
 
 - Karten: monochromer Farbskala, sequentielle Daten (Viridis, barrierefrei) 
-- Treibstoff-Diagramme: diskrete Farbskala, kategoriale Daten (barrierefrei??) 
+- Treibstoff-Diagramme: diskrete Farbskala, kategoriale Daten (barrierefrei) 
 
 
 ## METADATEN IM DASHBOARD
@@ -136,8 +136,9 @@ Die Fahrzeugstatistik basiert auf dem sogenannten Halteradressenprinzip. Das Bun
 
 
 ## Technische Limitationen 
-Die Quellendaten werden vom BFS als px-Dateien bereitgestellt. Die Überführung in das für die Datenverarbeitung etwas handlichere csv-Format erfolgt ausserhalb des Dashboards.
-Zudem wäre es in einer weiteren Ausbaustufe sinnvoll, die Quelldaten direkt in einer Datenbank abzulegen.
+
+Die Quellendaten werden vom BFS als px-Dateien bereitgestellt. Die Überführung in das für die Datenverarbeitung etwas handlichere csv-Format erfolgt ausserhalb des Dashboards. Zudem wäre es in einer weiteren Ausbaustufe sinnvoll, die Quelldaten direkt in einer Datenbank abzulegen.
+
 
 ## Mögliche Ausbauschritte
 
@@ -147,6 +148,26 @@ Zudem wäre es in einer weiteren Ausbaustufe sinnvoll, die Quelldaten direkt in 
 
 ## Feedback/Verbesserungsideen aus der Demo/Tag 7
 
+a) Der Jahresslider zeigte keine Ticks, was die Auswahl eines bestimmten Jahres erschwerte. Zudem erzeugte die farbliche Hervorhebung des linken Bereichs den Eindruck einer kumulierten Darstellung.
+b) Die Kantonskarte war bei vielen Gemeinden zu klein, nicht zoombar, und die Grenzen schwer erkennbar – insbesondere bei ähnlichen Farbwerten.
+c) Die zentrale Platzierung von Home-Button, Jahresslider und der Auswahl „absolut/relativ“ wurde hinterfragt.
+d) Die Farbwahl für Treibstoffe wurde kritisiert: zwar barrierefrei, aber ohne interpretativen Bezug zu den Treibstoffarten.
+e) Texte, inkl. Metainformationen, waren teils zu klein und wenig aussagekräftig.
+f) er verfügbare Platz würde zusätzliche Informationen wie Tendenzen (z. B. mit Pfeilen) erlauben.
+g) Es wurde vorgeschlagen, beim Jahresslider ein individuelles Startjahr wählen zu können.
+
 
 ## Umsetzung Feedback aus der Demo/Tag 7
+
+a) Jahresticks wurden ergänzt und die Flächenfärbung entfernt.
+b) Die Karte ist nun zoombar; Gemeindegrenzen werden durch weisse Linien hervorgehoben.
+c) Die Platzierung wurde beibehalten, da diese Elemente auch als visuelle Trennung zur detaillierten Auswertung nach Treibstoff unten dienen.
+d) Die Farbpalette wurde angepasst, um stärkeren Bezug zu den Treibstoffarten herzustellen:   
+   - Benzin: hellgrau
+   - Diesel: dunkelgrau
+   - Hybrid: hellgrün
+   - Elektro: dunkelgrün
+e) Texte wurden teils vergrössert und inhaltlich präzisiert.
+f) Die Darstellung von Tendenzen wird als klarer Mehrwert gesehen und wäre wünschenswert. Die technische Umsetzung ist jedoch mit grösserem Aufwand verbunden und wurde daher noch nicht realisiert.
+g) Aus Zeitgründen nicht umgesetzt. Zudem ist der Mehrwert begrenzt, da lediglich einzelne Jahre aus der Darstellung ausgeschlossen würden.
 
