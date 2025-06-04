@@ -30,7 +30,7 @@ Die Personenwagendaten (Stand jeweils Ende September) werden mit der letztjähri
 - 2456 Lüterswil-Gächliwil fusionierte mit 2465 Buchegg
 - 4042 Turgi fusionierte mit 4021 Baden
 - 993 Wangenried fusionierte mit 992 Wangen an der Aare
- -6773 Beurnevésin und 6775 Bonfol fusionierten zur neuen Gemeinde 6812 Basse-Vendline (Jura)
+- 6773 Beurnevésin und 6775 Bonfol fusionierten zur neuen Gemeinde 6812 Basse-Vendline (Jura)
 
 
 ## DATENAUSWAHL
@@ -95,7 +95,7 @@ Andere      | 1, 9, 10, 11
 |       | Dies ermöglicht eine schnelle Orientierung und einfache Vergleichsmöglichkeit.                       |
 |-------|------------------------------------------------------------------------------------------------------|
 | Oben  | Schweizerkarte mit **Hover- und Klickfunktionalität** und allgemeine Hinweise zur Benutzung          |
-|       | (Default) bzw. Kantonskarte mit Gemeinden mit **Hoverfunktionalität**, zoombar                	               |
+|       | (Default) bzw. Kantonskarte mit Gemeinden mit **Hoverfunktionalität**, zoombar                       |
 |-------|------------------------------------------------------------------------------------------------------|
 | Mitte | Zusätzliche Interaktionsmöglichkeit: Home-Button (Defaulteinstellungen), Jahresslider (Default: 2024)|
 |       | und Auswahl "absolut" oder "relativ(pro 1000 Personen)" (Default)                                    |
