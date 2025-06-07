@@ -15,11 +15,11 @@ import helper.general as gen
 logger = logging.getLogger(__name__)
 
 color_fuel= {
-    "Benzin": gen.colors['orange'],
-    "Diesel": gen.colors['red'],
-    "Hybrid": gen.colors['blue'],
-    "Elektrisch": gen.colors['cyan'],
-    "Andere": gen.colors['grey'],
+    "Benzin": gen.colors['lightgrey'],
+    "Diesel": gen.colors['brown'],
+    "Hybrid": gen.colors['yellow'],
+    "Elektrisch": gen.colors['teal'],
+    "Andere": gen.colors['blue'],
     "Gas": gen.colors['brown'],
     "Wasserstoff": gen.colors['blue']
 }
