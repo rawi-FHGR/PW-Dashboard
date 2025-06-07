@@ -39,6 +39,66 @@ def create_layout():
                 label='Bestand',
                 children=[
                     html.Div([
+                        html.Div([
+                            html.Img(
+                                id="home-button",
+                                src="/assets/swisscoat.png",
+                                title="Zur Ausgangsansicht zurückkehren",
+                                n_clicks=0,
+                                style={
+                                    'height': '40px',
+                                    'cursor': 'pointer',
+                                    'marginRight': '20px',
+                                },
+                            ), html.Span("zur Ausgangsansicht", style={'margin-right': '10px', 'fontSize': '1vw'}
+                                         ), ],
+                            style={'width': '20%', 'display': 'flex', 'justifyContent': 'left', 'paddingLeft': '20px'},
+
+                        ),
+                        html.Div(
+                            dcc.Slider(
+                                id='year-slider',
+                                min=int(min(available_years)),
+                                max=int(max(available_years)),
+                                step=1,
+                                value=int(default_year),
+                                marks={int(year): str(year) for year in sorted(available_years)},
+                                tooltip={"placement": "bottom", "always_visible": True},
+                                className='custom-slider'
+                            ),
+                            style={'width': '60%'}
+                        ),
+                        html.Div(
+                            children=[
+                                html.Span("absolut", style={'margin-right': '10px', 'fontSize': '1vw'}),
+                                daq.ToggleSwitch(
+                                    id='value-mode-toggle',
+                                    value=True,
+                                    style={'display': 'inline-block'}
+                                ),
+                                html.Span("relativ",
+                                          style={'margin-left': '10px', 'margin-right': '20px', 'fontSize': '1vw'}),
+                            ],
+                            style={'width': '20%', 'textAlign': 'center', 'justifyContent': 'center', 'display': 'flex',
+                                   'alignItems': 'center'},
+                        ),
+                    ], style={
+                        'display': 'flex',
+                        'flexDirection': 'row',
+                        'alignItems': 'center',
+                        'justifyContent': 'space-between',
+                        'width': 'auto',
+                        'marginTop': '10px',
+                        'marginLeft': '10px',
+                        'marginRight': '10px',
+                        'padding': '10px',
+                        'background-color': 'white',
+                        'border': '1px solid gray',
+                        'border-radius': '10px',
+                        'overflow': 'hidden',
+                        'gap': '10px',
+                    }),
+                    html.Div([
                         dcc.Graph(id='choropleth-map',
                                   config={"scrollZoom":False}, style={
                             'width': '67%',
@@ -69,68 +129,12 @@ def create_layout():
                         'gap': '10px',
                         'justifyContent': 'center',
                         'alignItems': 'stretch',
-                        'marginBottom': '10px',
+                        'marginBottom': '0px',
                         'marginTop': '10px',
                         'height': '40vh',
                     }),
                     # second line (navigation)
-                    html.Div([
-                        html.Div([
-                            html.Img(
-                                id="home-button",
-                                src="/assets/swisscoat.png",
-                                title="Zur Ausgangsansicht zurückkehren",
-                                n_clicks=0,
-                                style={
-                                    'height': '40px',
-                                    'cursor': 'pointer',
-                                    'marginRight': '20px',
-                                },
-                            ),html.Span("zur Ausgangsansicht", style={'margin-right': '10px', 'fontSize': '1vw'}
-                                        ),],style={'width': '20%', 'display': 'flex', 'justifyContent': 'left', 'paddingLeft':'20px'},
 
-                        ),
-                        html.Div(
-                            dcc.Slider(
-                                id='year-slider',
-                                min=int(min(available_years)),
-                                max=int(max(available_years)),
-                                step=1,
-                                value=int(default_year),
-                                marks={int(year): str(year) for year in sorted(available_years)},
-                                tooltip={"placement": "bottom", "always_visible": True},
-                                className='custom-slider'
-                            ),
-                            style={'width': '60%'}
-                        ),
-                        html.Div(
-                            children=[
-                                html.Span("absolut", style={'margin-right': '10px','fontSize':'1vw'}),
-                                daq.ToggleSwitch(
-                                    id='value-mode-toggle',
-                                    value=True,
-                                    style={'display': 'inline-block'}
-                                ),
-                                html.Span("relativ", style={'margin-left': '10px','margin-right': '20px','fontSize':'1vw'}),
-                            ],
-                            style={'width': '20%', 'textAlign': 'center','justifyContent': 'center','display':'flex','alignItems': 'center'},
-                        ),
-                    ], style={
-                        'display': 'flex',
-                        'flexDirection': 'row',
-                        'alignItems': 'center',
-                        'justifyContent': 'space-between',
-                        'width': 'auto',
-                        'marginTop': '10px',
-                        'marginLeft': '10px',
-                        'marginRight': '10px',
-                        'padding': '10px',
-                        'background-color':'white',
-                        'border': '1px solid gray',
-                        'border-radius': '10px',
-                        'overflow': 'hidden',
-                        'gap': '10px',
-                    }),
 
                     # 3rd row
                     html.Div([
