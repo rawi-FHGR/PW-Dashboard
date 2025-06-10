@@ -1,13 +1,17 @@
-************************
+*************************************************
 PERSONENWAGEN-DASHBOARD
-************************
+Web: https://pw-dashboard.onrender.com
+Github: https://github.com/rawi-FHGR/PW-Dashboard
+*************************************************
+
+## PROJEKTBESCHREIBUNG
 
 Bereitstellung eines interaktiven Dashboards zur Visualisierung und Analyse der Bestände und der Inverkehrsetzungen von Personenwagen nach Treibstoffarten, absolut und pro 1000 Personen. Für alle Gemeinden und Kantone der Schweiz im Zeitraum zwischen 2010 und 2024. Erstellt mit **Python** und **Dash** unter Verwendung von **plotly.express** zur Visualisierung der Daten.
 
 Autoren: Ralph Wildhaber, Lukas Temperli, Raphael Weiss
 
 
-## ZIEL DES DASHBOARDS
+## ZIELGRUPPE DES DASHBOARDS
 
 Das Dashboard richtet sich an Behörden, Forschende, Unternehmen sowie die interessierte Öffentlichkeit. Es dient der Planung, Analyse und Information in den Bereichen Mobilität, Verkehr, Umwelt und Wirtschaft.
 
@@ -82,7 +86,7 @@ Andere      | 1, 9, 10, 11
 | 2) Kantonskarten mit Gemeinden  | 2) Ermöglicht Analyse auf Gemeindeebene                               |
 | 3) Barchart: Anteil Treibstoffe | 3) Zeitlicher Verlauf für die Schweiz bzw. für den ausgewählten Kanton|
 | 4) Piechart: Anteil Treibstoffe | 4) Prozentuale Verteilung nach Treibstoffart für das ausgewählte Jahr |
-| 5) Textblock/Tabelle            | 5) absolute Werte nach Treibstoffart, inkl. Total                     |
+| 5) Textblock/Tabelle            | 5) Absolute Werte nach Treibstoffart, inkl. Total                     |
 |---------------------------------|-----------------------------------------------------------------------|
 
 
@@ -94,11 +98,11 @@ Andere      | 1, 9, 10, 11
 |       | Tab 1: Bestand / Tab 2: Inverkehrsetzungen; die beiden Tabs sind identisch aufgebaut.                |
 |       | Dies ermöglicht eine schnelle Orientierung und einfache Vergleichsmöglichkeit.                       |
 |-------|------------------------------------------------------------------------------------------------------|
-| Oben  | Schweizerkarte mit **Hover- und Klickfunktionalität** und allgemeine Hinweise zur Benutzung          |
-|       | (Default) bzw. Kantonskarte mit Gemeinden mit **Hoverfunktionalität**, zoombar                       |
-|-------|------------------------------------------------------------------------------------------------------|
-| Mitte | Zusätzliche Interaktionsmöglichkeit: Home-Button (Defaulteinstellungen), Jahresslider (Default: 2024)|
+| Oben 	| Zusätzliche Interaktionsmöglichkeit: Home-Button (Defaulteinstellungen), Jahresslider (Default: 2024)|
 |       | und Auswahl "absolut" oder "relativ(pro 1000 Personen)" (Default)                                    |
+|-------|------------------------------------------------------------------------------------------------------|
+| Mitte | Schweizerkarte mit **Hover- und Klickfunktionalität** und allgemeine Hinweise zur Benutzung          |
+|       | (Default) bzw. Kantonskarte mit Gemeinden mit **Hoverfunktionalität**, zoombar                       |
 |-------|------------------------------------------------------------------------------------------------------|
 | Unten | Diagramme (Barchart): Auffschlüsselung nach Treibstoffart mit **Hoverfunktionalität**                |
 |       | Diagramme (Piechart): Historisch (Default: Schweiz) und für das ausgewählte Jahr (Default: 2024)     |
@@ -149,11 +153,11 @@ Die Quellendaten werden vom BFS als px-Dateien bereitgestellt. Die Überführung
 ## Feedback/Verbesserungsideen aus der Demo/Tag 7
 
 a) Der Jahresslider zeigte keine Ticks, was die Auswahl eines bestimmten Jahres erschwerte. Zudem erzeugte die farbliche Hervorhebung des linken Bereichs den Eindruck einer kumulierten Darstellung.
-b) Die Kantonskarte war bei vielen Gemeinden zu klein, nicht zoombar, und die Grenzen schwer erkennbar – insbesondere bei ähnlichen Farbwerten.
+b) Die Kantonskarte war bei vielen Gemeinden zu klein, nicht zoombar und die Grenzen schwer erkennbar – insbesondere bei ähnlichen Farbwerten.
 c) Die zentrale Platzierung von Home-Button, Jahresslider und der Auswahl „absolut/relativ“ wurde hinterfragt.
-d) Die Farbwahl für Treibstoffe wurde kritisiert: zwar barrierefrei, aber ohne interpretativen Bezug zu den Treibstoffarten.
+d) Die Farbwahl für Treibstoffe wurde kritisiert: Zwar barrierefrei, aber ohne assoziativen Bezug zu den Treibstoffarten.
 e) Texte, inkl. Metainformationen, waren teils zu klein und wenig aussagekräftig.
-f) er verfügbare Platz würde zusätzliche Informationen wie Tendenzen (z. B. mit Pfeilen) erlauben.
+f) Der verfügbare Platz würde zusätzliche Informationen wie Tendenzen (z. B. mit Pfeilen) erlauben.
 g) Es wurde vorgeschlagen, beim Jahresslider ein individuelles Startjahr wählen zu können.
 
 
@@ -161,13 +165,14 @@ g) Es wurde vorgeschlagen, beim Jahresslider ein individuelles Startjahr wählen
 
 a) Jahresticks wurden ergänzt und die Flächenfärbung entfernt.
 b) Die Karte ist nun zoombar; Gemeindegrenzen werden durch weisse Linien hervorgehoben.
-c) Die Platzierung wurde beibehalten, da diese Elemente auch als visuelle Trennung zur detaillierten Auswertung nach Treibstoff unten dienen.
-d) Die Farbpalette wurde angepasst, um stärkeren Bezug zu den Treibstoffarten herzustellen:   
-   - Benzin: hellgrau
-   - Diesel: dunkelgrau
-   - Hybrid: hellgrün
-   - Elektro: dunkelgrün
+c) Eine Platzierung unterhalb der Tabs wurde auf Basis des Feedbacks geprüft und mehrheitlich als intuitiver bewertet. Der zunächst befürchtete Verlust der visuellen Trennung zur detaillierten Treibstoffauswertung hat sich aufgrund der klaren visuellen Struktur als unbegründet erwiesen.
+d) Die Farbpalette wurde angepasst, um stärkeren Bezug zu den Treibstoffarten herzustellen, ohne die Barrierefreiheit aufzugeben:   
+   - Benzin: Hellgrau (Assoziation: Technisch, traditionell, veraltet)
+   - Diesel: Dunkelbraun (Assoziation: Schwer, schmutzig) 
+   - Hybrid: Olivgelb (Assoziation: Mischung aus Grün (Nachhaltigkeit) und Gelb (Vorsicht, nur Teilumstieg)) 
+   - Elektro: Türkis (Assoziation: Mischung aus Blau (Technologie) und Grün (Nachhaltigkeit), frisch, sauber, modern)
+   - Andere: Blau (Assoziation: Wasser, Reinheit, Hightech)
 e) Texte wurden teils vergrössert und inhaltlich präzisiert.
 f) Die Darstellung von Tendenzen wird als klarer Mehrwert gesehen und wäre wünschenswert. Die technische Umsetzung ist jedoch mit grösserem Aufwand verbunden und wurde daher noch nicht realisiert.
-g) Aus Zeitgründen nicht umgesetzt. Zudem ist der Mehrwert begrenzt, da lediglich einzelne Jahre aus der Darstellung ausgeschlossen würden.
+g) Aus Zeitgründen nicht umgesetzt. Zudem ist der Mehrwert begrenzt, da lediglich einzelne Jahre aus der Darstellung ausgeschlossen würden. Nur bei kumulierten Werten über mehrere Jahre ergäbe es einen Mehrwert. Das Dashboard zeigt jedoch nur immer die Daten des aktuellen Jahres.
 
