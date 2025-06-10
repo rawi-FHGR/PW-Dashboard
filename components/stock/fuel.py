@@ -70,7 +70,22 @@ def generate_stacked_bar_fuel_stock(df, year, canton, is_relative: bool=False):
                       xaxis_title="",
                       yaxis_title=texts.get('stackedbarchart.y_axis'),
                       xaxis={'type': 'category'},
+                      plot_bgcolor='white'
                       )
+
+    fig.update_yaxes(
+        mirror=False,
+        ticks='outside',
+        showline=True,
+        linecolor='lightgrey',
+        gridcolor='lightblue'
+    )
+    fig.update_xaxes(
+        mirror=False,
+        ticks='outside',
+        showline=True,
+        linecolor='lightgrey',
+    )
 
     # place the legend
     fig.update_layout(
@@ -151,6 +166,7 @@ def generate_pie_fuel_stock(df, year, canton, is_relative: bool=False):
         title=title,
         margin=dict(t=52)
     )
+
 
     return fig
 

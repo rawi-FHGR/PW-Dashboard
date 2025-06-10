@@ -22,7 +22,7 @@ def create_layout():
             html.Div(html.A(
                   html.Img(
                       src="/assets/info_icon.png",
-                      style={'height': '40px','cursor': 'pointer','padding': '5px'}),
+                      style={'height': '5vh','cursor': 'pointer','padding': '5px'}),
                   href="/assets/readme.txt",  # Oder externer Link
                   target="_blank",
                   style={'textDecoration': 'none'}),style={'width': '5%'}),  # Platz für Logo etc.
@@ -31,49 +31,14 @@ def create_layout():
             style={
             'display': 'flex',
             'justifyContent': 'space-between',
-            'alignItems': 'right',
-            'padding': '2px 2px',
+            'alignItems': 'center',
+            'padding': '20px 2px',
             'backgroundColor':'white'}),
         dcc.Tabs([
             dcc.Tab(
                 label='Bestand',
                 children=[
-                    html.Div([
-                        dcc.Graph(id='choropleth-map',
-                                  config={"scrollZoom":False}, style={
-                            'width': '67%',
-                            'border': '1px solid gray',
-                            'border-radius': '10px',
-                            'overflow': 'hidden',
-                            'margin-left': '10px',
-                            'height': '100%',
-                            'minHeight': '40vh',
-                        }),
-                        html.Div(id='right-panel', style={
-                            'width': '33%',
-                            'border': '1px solid gray',
-                            'border-radius': '10px',
-                            'overflow': 'hidden',
-                            'margin-right': '10px',
-                            'background-color':'white',
-                            'padding': '5px',
-                            'paddingLeft':'20px',
-                            'height': '100%',
-                            'minHeight': '40vh',
-
-                        })
-                    ], style={
-                        'display': 'flex',
-                        'flexDirection': 'row',
-                        'width': '100%',
-                        'gap': '10px',
-                        'justifyContent': 'center',
-                        'alignItems': 'stretch',
-                        'marginBottom': '10px',
-                        'marginTop': '10px',
-                        'height': '40vh',
-                    }),
-                    # second line (navigation)
+                    # first line (navigation)
                     html.Div([
                         html.Div([
                             html.Img(
@@ -86,8 +51,9 @@ def create_layout():
                                     'cursor': 'pointer',
                                     'marginRight': '20px',
                                 },
-                            ),html.Span("zur Ausgangsansicht", style={'margin-right': '10px', 'fontSize': '1vw'}
-                                        ),],style={'width': '20%', 'display': 'flex', 'justifyContent': 'left', 'paddingLeft':'20px'},
+                            ), html.Span("zur Ausgangsansicht", style={'margin-right': '10px', 'fontSize': '1vw'}
+                                         ), ],
+                            style={'width': '20%', 'display': 'flex', 'justifyContent': 'left', 'paddingLeft': '20px'},
 
                         ),
                         html.Div(
@@ -105,15 +71,17 @@ def create_layout():
                         ),
                         html.Div(
                             children=[
-                                html.Span("absolut", style={'margin-right': '10px','fontSize':'1vw'}),
+                                html.Span("absolut", style={'margin-right': '10px', 'fontSize': '1vw'}),
                                 daq.ToggleSwitch(
                                     id='value-mode-toggle',
                                     value=True,
                                     style={'display': 'inline-block'}
                                 ),
-                                html.Span("relativ", style={'margin-left': '10px','margin-right': '20px','fontSize':'1vw'}),
+                                html.Span("relativ",
+                                          style={'margin-left': '10px', 'margin-right': '20px', 'fontSize': '1vw'}),
                             ],
-                            style={'width': '20%', 'textAlign': 'center','justifyContent': 'center','display':'flex','alignItems': 'center'},
+                            style={'width': '20%', 'textAlign': 'center', 'justifyContent': 'center', 'display': 'flex',
+                                   'alignItems': 'center'},
                         ),
                     ], style={
                         'display': 'flex',
@@ -125,17 +93,54 @@ def create_layout():
                         'marginLeft': '10px',
                         'marginRight': '10px',
                         'padding': '10px',
-                        'background-color':'white',
+                        'background-color': 'white',
                         'border': '1px solid gray',
                         'border-radius': '10px',
                         'overflow': 'hidden',
                         'gap': '10px',
                     }),
+                    # second line (map)
+                    html.Div([
+                        dcc.Graph(id='choropleth-map',
+                                  config={"scrollZoom":False}, style={
+                            'flex':'2',
+                            'border': '1px solid gray',
+                            'border-radius': '10px',
+                            'overflow': 'hidden',
+                            'height': '100%',
+                            'minHeight': '40vh',
+                        }),
+                        html.Div(id='right-panel', style={
+                            'flex':'1',
+                            'border': '1px solid gray',
+                            'border-radius': '10px',
+                            'overflow': 'hidden',
+                            'background-color':'white',
+                            'padding': '5px',
+                            'paddingLeft':'20px',
+                            'height': '100%',
+                            'minHeight': '40vh',
 
-                    # 3rd row
+                        })
+                    ], style={
+                        'display': 'flex',
+                        'flexDirection': 'row',
+                        'width': '100%',
+                        'gap': '10px',
+                        'justifyContent': 'center',
+                        'alignItems': 'stretch',
+                        'marginTop': '10px',
+                        'height': '40vh',
+                        'border': '1px solid gray',
+                        'paddingRight': '10px',
+                        'paddingLeft': '10px',
+                    }),
+
+
+                    # 3rd line (additional graphs)
                     html.Div([
                         html.Div(dcc.Graph(id='stackedbar-fuel-stock-canton', style={'height': '100%'}), style={
-                            'width': '33%',
+                            'flex':'1',
                             'border': '1px solid gray',
                             'boxSizing': 'border-box',
                             'border-radius': '10px',
@@ -143,7 +148,7 @@ def create_layout():
                             'height': '38vh',
                         }),
                         html.Div(dcc.Graph(id='pie-fuel-stock', style={'height': '100%'}), style={
-                            'width': '33%',
+                            'flex':'1',
                             'border': '1px solid gray',
                             'boxSizing': 'border-box',
                             'border-radius': '10px',
@@ -151,7 +156,7 @@ def create_layout():
                             'height': '38vh',
                         }),
                         html.Div(id='summary-container', style={
-                            'width': '33%',
+                            'flex':'1',
                             'border': '1px solid gray',
                             'boxSizing': 'border-box',
                             'border-radius': '10px',
@@ -164,11 +169,15 @@ def create_layout():
                     ], style={
                         'display': 'flex',
                         'flexDirection': 'row',
-                        'justifyContent': 'space-between',
-                        'alignItems': 'stretch',
                         'width': '100%',
                         'gap': '10px',
-                        'padding': '10px'
+                        'justifyContent': 'center',
+                        'alignItems': 'stretch',
+                        'marginTop': '10px',
+                        'height': 'auto',
+                        'border': '1px solid gray',
+                        'paddingRight': '10px',
+                        'paddingLeft': '10px',
                     }),
 
                     # define stores (callback chaining)
@@ -203,42 +212,7 @@ def create_layout():
             dcc.Tab(
                 label='Inverkehrsetzungen',
                 children=[
-                    html.Div([
-                        dcc.Graph(id='choropleth-map-ivs',
-                                  config={"scrollZoom":False}, style={
-                            'width': '67%',
-                            'border': '1px solid gray',
-                            'border-radius': '10px',
-                            'overflow': 'hidden',
-                            'margin-left': '10px',
-                            'height': '100%',
-                            'minHeight': '40vh'
-                        }),
-                        html.Div(id='right-panel-ivs', style={
-                            'width': '33%',
-                            'border': '1px solid gray',
-                            'border-radius': '10px',
-                            'overflow': 'hidden',
-                            'margin-right': '10px',
-                            'background-color': 'white',
-                            'padding': '5px',
-                            'paddingLeft':'20px',
-                            'height': '100%',
-                            'minHeight': '40vh'
-                        })
-                    ], style={
-                        'display': 'flex',
-                        'flexDirection': 'row',
-                        'width': '100%',
-                        'gap': '10px',
-                        'justifyContent': 'center',
-                        'alignItems': 'stretch',
-                        'marginBottom': '10px',
-                        'marginTop': '10px',
-                        'height': '40vh',
-                    }),
-
-                    # 2nd line: Home-Button, year slider + toggle
+                    # first line (navigation)
                     html.Div([
                         html.Div([
                             html.Img(
@@ -272,13 +246,14 @@ def create_layout():
                         ),
                         html.Div(
                             children=[
-                                html.Span("absolut", style={'margin-right': '10px','fontSize':'1vw'}),
+                                html.Span("absolut", style={'margin-right': '10px', 'fontSize': '1vw'}),
                                 daq.ToggleSwitch(
                                     id='value-mode-toggle-ivs',
                                     value=True,
                                     style={'display': 'inline-block'}
                                 ),
-                                html.Span("relativ", style={'margin-left': '10px', 'margin-right': '20px','fontSize':'1vw'}),
+                                html.Span("relativ",
+                                          style={'margin-left': '10px', 'margin-right': '20px', 'fontSize': '1vw'}),
                             ],
                             style={'width': '20%', 'textAlign': 'center', 'justifyContent': 'center', 'display': 'flex',
                                    'alignItems': 'center'},
@@ -299,8 +274,44 @@ def create_layout():
                         'overflow': 'hidden',
                         'gap': '10px',
                     }),
+                    # second line (map)
+                    html.Div([
+                        dcc.Graph(id='choropleth-map-ivs',
+                                  config={"scrollZoom":False}, style={
+                            'width': '67%',
+                            'border': '1px solid gray',
+                            'border-radius': '10px',
+                            'overflow': 'hidden',
+                            'margin-left': '10px',
+                            'height': '100%',
+                            'minHeight': '40vh'
+                        }),
+                        html.Div(id='right-panel-ivs', style={
+                            'width': '33%',
+                            'border': '1px solid gray',
+                            'border-radius': '10px',
+                            'overflow': 'hidden',
+                            'margin-right': '10px',
+                            'background-color': 'white',
+                            'padding': '5px',
+                            'paddingLeft':'20px',
+                            'height': '100%',
+                            'minHeight': '40vh'
+                        })
+                    ], style={
+                        'display': 'flex',
+                        'flexDirection': 'row',
+                        'width': '100%',
+                        'gap': '10px',
+                        'justifyContent': 'center',
+                        'alignItems': 'stretch',
+                        'marginTop': '10px',
+                        'height': '40vh',
+                    }),
 
-                    # additional graphs (3 side-by-side)
+
+
+                    # 3rd line (additional graphs)
                     html.Div([
                         html.Div(dcc.Graph(id='stackedbar-fuel-stock-canton-ivs', style={'height': '100%'}), style={
                             'width': '33%',

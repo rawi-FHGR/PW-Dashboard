@@ -67,7 +67,22 @@ def generate_stacked_bar_fuel(df, year, canton, is_relative: bool = False):
                       font_size=12,
                       xaxis_title="",
                       yaxis_title=texts.get('stackedbarchart.y_axis'),
-                      xaxis={'type': 'category'})
+                      xaxis={'type': 'category'},
+                      plot_bgcolor='white',)
+
+    fig.update_yaxes(
+        mirror=False,
+        ticks='outside',
+        showline=True,
+        linecolor='lightgrey',
+        gridcolor='lightblue'
+    )
+    fig.update_xaxes(
+        mirror=False,
+        ticks='outside',
+        showline=True,
+        linecolor='lightgrey',
+    )
 
     # place the legend
     fig.update_layout(
