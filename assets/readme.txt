@@ -4,6 +4,7 @@ Web: https://pw-dashboard.onrender.com
 Github: https://github.com/rawi-FHGR/PW-Dashboard
 *************************************************
 
+
 ## PROJEKTBESCHREIBUNG
 
 Bereitstellung eines interaktiven Dashboards zur Visualisierung und Analyse der Bestände und der Inverkehrsetzungen von Personenwagen nach Treibstoffarten, absolut und pro 1000 Personen. Für alle Gemeinden und Kantone der Schweiz im Zeitraum zwischen 2010 und 2024. Erstellt mit **Python** und **Dash** unter Verwendung von **plotly.express** zur Visualisierung der Daten.
@@ -175,6 +176,7 @@ d) Die Farbpalette wurde angepasst, um stärkeren Bezug zu den Treibstoffarten h
 e) Texte wurden teils vergrössert und inhaltlich präzisiert.
 f) Die Darstellung von Tendenzen wird als klarer Mehrwert gesehen und wäre wünschenswert. Die technische Umsetzung ist jedoch mit grösserem Aufwand verbunden und wurde daher noch nicht realisiert.
 g) Aus Zeitgründen nicht umgesetzt. Zudem ist der Mehrwert begrenzt, da lediglich einzelne Jahre aus der Darstellung ausgeschlossen würden. Nur bei kumulierten Werten über mehrere Jahre ergäbe es einen Mehrwert. Das Dashboard zeigt jedoch nur immer die Daten des aktuellen Jahres.
+
 
 ## Source Code
 Der Source Code für diese Dashboard ist in GitHub verwaltet: https://github.com/rawi-FHGR/PW-Dashboard.git
