@@ -6,7 +6,6 @@ Bereitstellung eines interaktiven Dashboards zur Visualisierung und Analyse der 
 
 Autoren: Ralph Wildhaber, Lukas Temperli, Raphael Weiss
 
-
 ## ZIEL DES DASHBOARDS
 
 Das Dashboard richtet sich an Behörden, Forschende, Unternehmen sowie die interessierte Öffentlichkeit. Es dient der Planung, Analyse und Information in den Bereichen Mobilität, Verkehr, Umwelt und Wirtschaft.
@@ -153,7 +152,7 @@ b) Die Kantonskarte war bei vielen Gemeinden zu klein, nicht zoombar, und die Gr
 c) Die zentrale Platzierung von Home-Button, Jahresslider und der Auswahl „absolut/relativ“ wurde hinterfragt.
 d) Die Farbwahl für Treibstoffe wurde kritisiert: zwar barrierefrei, aber ohne interpretativen Bezug zu den Treibstoffarten.
 e) Texte, inkl. Metainformationen, waren teils zu klein und wenig aussagekräftig.
-f) er verfügbare Platz würde zusätzliche Informationen wie Tendenzen (z. B. mit Pfeilen) erlauben.
+f) Der verfügbare Platz würde zusätzliche Informationen wie Tendenzen (z.B. mit Pfeilen) erlauben.
 g) Es wurde vorgeschlagen, beim Jahresslider ein individuelles Startjahr wählen zu können.
 
 
@@ -161,13 +160,21 @@ g) Es wurde vorgeschlagen, beim Jahresslider ein individuelles Startjahr wählen
 
 a) Jahresticks wurden ergänzt und die Flächenfärbung entfernt.
 b) Die Karte ist nun zoombar; Gemeindegrenzen werden durch weisse Linien hervorgehoben.
-c) Die Platzierung wurde beibehalten, da diese Elemente auch als visuelle Trennung zur detaillierten Auswertung nach Treibstoff unten dienen.
+c) Die Platzierung der Navigationsleiste (Home-Button, Jahresslider und Umschaltung "absolut/relativ") wurde noch oben verschoben.
 d) Die Farbpalette wurde angepasst, um stärkeren Bezug zu den Treibstoffarten herzustellen:   
    - Benzin: hellgrau
    - Diesel: dunkelgrau
    - Hybrid: hellgrün
    - Elektro: dunkelgrün
+   - Andere: blau
 e) Texte wurden teils vergrössert und inhaltlich präzisiert.
 f) Die Darstellung von Tendenzen wird als klarer Mehrwert gesehen und wäre wünschenswert. Die technische Umsetzung ist jedoch mit grösserem Aufwand verbunden und wurde daher noch nicht realisiert.
 g) Aus Zeitgründen nicht umgesetzt. Zudem ist der Mehrwert begrenzt, da lediglich einzelne Jahre aus der Darstellung ausgeschlossen würden.
 
+## Source Code
+Der Source Code für diese Dashboard ist in GitHub verwaltet: https://github.com/rawi-FHGR/PW-Dashboard.git
+
+## Publiziertes Dashboard
+Das Personenwagen-Dashboard wurde publiziert und ist öffentlich zugänglich: https://pw-dashboard.onrender.com/
+
+Viel Spass!
