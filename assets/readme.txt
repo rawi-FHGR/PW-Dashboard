@@ -1,7 +1,7 @@
 *************************************************
 PERSONENWAGEN-DASHBOARD
 Web: https://pw-dashboard.onrender.com
-Github: https://github.com/rawi-FHGR/PW-Dashboard
+Github: https://github.com/rawi-FHGR/PW-Dashboard
 *************************************************
 
 ## PROJEKTBESCHREIBUNG
@@ -98,7 +98,7 @@ Andere      | 1, 9, 10, 11
 |       | Tab 1: Bestand / Tab 2: Inverkehrsetzungen; die beiden Tabs sind identisch aufgebaut.                |
 |       | Dies ermöglicht eine schnelle Orientierung und einfache Vergleichsmöglichkeit.                       |
 |-------|------------------------------------------------------------------------------------------------------|
-| Oben 	| Zusätzliche Interaktionsmöglichkeit: Home-Button (Defaulteinstellungen), Jahresslider (Default: 2024)|
+| Oben  | Zusätzliche Interaktionsmöglichkeit: Home-Button (Defaulteinstellungen), Jahresslider (Default: 2024)|
 |       | und Auswahl "absolut" oder "relativ(pro 1000 Personen)" (Default)                                    |
 |-------|------------------------------------------------------------------------------------------------------|
 | Mitte | Schweizerkarte mit **Hover- und Klickfunktionalität** und allgemeine Hinweise zur Benutzung          |
@@ -157,7 +157,7 @@ b) Die Kantonskarte war bei vielen Gemeinden zu klein, nicht zoombar und die Gre
 c) Die zentrale Platzierung von Home-Button, Jahresslider und der Auswahl „absolut/relativ“ wurde hinterfragt.
 d) Die Farbwahl für Treibstoffe wurde kritisiert: Zwar barrierefrei, aber ohne assoziativen Bezug zu den Treibstoffarten.
 e) Texte, inkl. Metainformationen, waren teils zu klein und wenig aussagekräftig.
-f) Der verfügbare Platz würde zusätzliche Informationen wie Tendenzen (z. B. mit Pfeilen) erlauben.
+f) Der verfügbare Platz würde zusätzliche Informationen wie Tendenzen (z. B. mit Pfeilen) erlauben.
 g) Es wurde vorgeschlagen, beim Jahresslider ein individuelles Startjahr wählen zu können.
 
 
@@ -176,3 +176,10 @@ e) Texte wurden teils vergrössert und inhaltlich präzisiert.
 f) Die Darstellung von Tendenzen wird als klarer Mehrwert gesehen und wäre wünschenswert. Die technische Umsetzung ist jedoch mit grösserem Aufwand verbunden und wurde daher noch nicht realisiert.
 g) Aus Zeitgründen nicht umgesetzt. Zudem ist der Mehrwert begrenzt, da lediglich einzelne Jahre aus der Darstellung ausgeschlossen würden. Nur bei kumulierten Werten über mehrere Jahre ergäbe es einen Mehrwert. Das Dashboard zeigt jedoch nur immer die Daten des aktuellen Jahres.
 
+## Source Code
+Der Source Code für diese Dashboard ist in GitHub verwaltet: https://github.com/rawi-FHGR/PW-Dashboard.git
+
+## Publiziertes Dashboard
+Das Personenwagen-Dashboard wurde publiziert und ist öffentlich zugänglich: https://pw-dashboard.onrender.com/
+
+Viel Spass!
