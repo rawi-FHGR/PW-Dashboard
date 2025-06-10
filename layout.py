@@ -145,7 +145,7 @@ def create_layout():
                             'boxSizing': 'border-box',
                             'border-radius': '10px',
                             'overflow': 'hidden',
-                            'height': '38vh',
+                            'height': '35vh',
                         }),
                         html.Div(dcc.Graph(id='pie-fuel-stock', style={'height': '100%'}), style={
                             'flex':'1',
@@ -153,7 +153,7 @@ def create_layout():
                             'boxSizing': 'border-box',
                             'border-radius': '10px',
                             'overflow': 'hidden',
-                            'height': '38vh',
+                            'height': '35vh',
                         }),
                             ],style={
                             'gap': '10px',
@@ -170,7 +170,7 @@ def create_layout():
                             'backgroundColor': 'white',
                             'padding': '5px',
                             'paddingLeft':'20px',
-                            'height': '38vh',
+                            'height': '35vh',
                         }),
                     ], style={
                         'display': 'flex',
@@ -325,7 +325,7 @@ def create_layout():
                             'boxSizing': 'border-box',
                             'border-radius': '10px',
                             'overflow': 'hidden',
-                            'height': '38vh',
+                            'height': '35vh',
                         }),
                         html.Div(dcc.Graph(id='pie-fuel-stock-ivs', style={'height': '100%'}), style={
                             'flex': '1',
@@ -333,7 +333,7 @@ def create_layout():
                             'boxSizing': 'border-box',
                             'border-radius': '10px',
                             'overflow': 'hidden',
-                            'height': '38vh',
+                            'height': '35vh',
                         }),
                     ], style={
                         'gap': '10px',
@@ -350,7 +350,7 @@ def create_layout():
                             'backgroundColor': 'white',
                             'padding': '5px',
                             'paddingLeft':'20px',
-                            'height': '38vh',
+                            'height': '35vh',
                         })
                     ], style={
                         'display': 'flex',
