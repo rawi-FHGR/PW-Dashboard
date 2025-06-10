@@ -90,7 +90,7 @@ def generate_stacked_bar_fuel(df, year, canton, is_relative: bool = False):
     fig.update_layout(
         legend=dict(orientation="h",
                     yanchor="top",
-                    y=-0.15,
+                    y=-0.2,
                     xanchor="center",
                     x=0.5,
                     title=None))
