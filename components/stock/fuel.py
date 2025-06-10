@@ -59,11 +59,13 @@ def generate_stacked_bar_fuel_stock(df, year, canton, is_relative: bool=False):
     year = int(year)
 
     # create the stacked bar chart using Plotly Express
+    custom_order = ['Benzin', 'Diesel', 'Elektrisch', 'Hybrid','Andere']
+    df_grouped['Treibstoff'] = pd.Categorical(df_grouped['Treibstoff'], categories=custom_order, ordered=True)
     fig = px.bar(df_grouped, x='Jahr',
                  y=data_column,
                  color='Treibstoff',
                  color_discrete_map=common.color_fuel,
-                 category_orders={'Jahr': sorted(df_grouped['Jahr'].unique())})
+                 category_orders={'Treibstoff': custom_order,'Jahr': sorted(df_grouped['Jahr'].unique())})
 
     fig.update_layout(title_text=title,
                       font_size=12,
