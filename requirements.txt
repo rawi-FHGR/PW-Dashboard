@@ -1,5 +1,6 @@
 dash==3.0.3
 dash-bootstrap-components==2.0.2
+dash_daq==0.6.0
 plotly-express==0.4.1
 shapely==2.1.0
 pandas==2.2.3
