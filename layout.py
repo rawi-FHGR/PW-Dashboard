@@ -131,7 +131,6 @@ def create_layout():
                         'alignItems': 'stretch',
                         'marginTop': '10px',
                         'height': '40vh',
-                        'border': '1px solid gray',
                         'paddingRight': '10px',
                         'paddingLeft': '10px',
                     }),
@@ -139,6 +138,7 @@ def create_layout():
 
                     # 3rd line (additional graphs)
                     html.Div([
+                        html.Div([
                         html.Div(dcc.Graph(id='stackedbar-fuel-stock-canton', style={'height': '100%'}), style={
                             'flex':'1',
                             'border': '1px solid gray',
@@ -155,6 +155,12 @@ def create_layout():
                             'overflow': 'hidden',
                             'height': '38vh',
                         }),
+                            ],style={
+                            'gap': '10px',
+                            'flex':'2',
+                            'flexDirection': 'row',
+                            'display': 'flex',
+                        }),
                         html.Div(id='summary-container', style={
                             'flex':'1',
                             'border': '1px solid gray',
@@ -170,14 +176,13 @@ def create_layout():
                         'display': 'flex',
                         'flexDirection': 'row',
                         'width': '100%',
-                        'gap': '10px',
                         'justifyContent': 'center',
                         'alignItems': 'stretch',
                         'marginTop': '10px',
                         'height': 'auto',
-                        'border': '1px solid gray',
                         'paddingRight': '10px',
                         'paddingLeft': '10px',
+                        'gap': '10px',
                     }),
 
                     # define stores (callback chaining)
@@ -278,7 +283,7 @@ def create_layout():
                     html.Div([
                         dcc.Graph(id='choropleth-map-ivs',
                                   config={"scrollZoom":False}, style={
-                            'width': '67%',
+                            'flex':'2',
                             'border': '1px solid gray',
                             'border-radius': '10px',
                             'overflow': 'hidden',
@@ -287,7 +292,7 @@ def create_layout():
                             'minHeight': '40vh'
                         }),
                         html.Div(id='right-panel-ivs', style={
-                            'width': '33%',
+                            'flex':'1',
                             'border': '1px solid gray',
                             'border-radius': '10px',
                             'overflow': 'hidden',
@@ -297,7 +302,7 @@ def create_layout():
                             'paddingLeft':'20px',
                             'height': '100%',
                             'minHeight': '40vh'
-                        })
+                    }),
                     ], style={
                         'display': 'flex',
                         'flexDirection': 'row',
@@ -313,8 +318,9 @@ def create_layout():
 
                     # 3rd line (additional graphs)
                     html.Div([
+                        html.Div([
                         html.Div(dcc.Graph(id='stackedbar-fuel-stock-canton-ivs', style={'height': '100%'}), style={
-                            'width': '33%',
+                            'flex': '1',
                             'border': '1px solid gray',
                             'boxSizing': 'border-box',
                             'border-radius': '10px',
@@ -322,15 +328,21 @@ def create_layout():
                             'height': '38vh',
                         }),
                         html.Div(dcc.Graph(id='pie-fuel-stock-ivs', style={'height': '100%'}), style={
-                            'width': '33%',
+                            'flex': '1',
                             'border': '1px solid gray',
                             'boxSizing': 'border-box',
                             'border-radius': '10px',
                             'overflow': 'hidden',
                             'height': '38vh',
                         }),
+                    ], style={
+                        'gap': '10px',
+                        'flex': '2',
+                        'flexDirection': 'row',
+                        'display': 'flex',
+                    }),
                         html.Div(id='summary-container-ivs', style={
-                            'width': '33%',
+                            'flex':'1',
                             'border': '1px solid gray',
                             'boxSizing': 'border-box',
                             'border-radius': '10px',
@@ -343,11 +355,14 @@ def create_layout():
                     ], style={
                         'display': 'flex',
                         'flexDirection': 'row',
-                        'justifyContent': 'space-between',
-                        'alignItems': 'stretch',
                         'width': '100%',
+                        'justifyContent': 'center',
+                        'alignItems': 'stretch',
+                        'marginTop': '10px',
+                        'height': 'auto',
+                        'paddingRight': '10px',
+                        'paddingLeft': '10px',
                         'gap': '10px',
-                        'padding': '10px'
                     }),
 
                     # define stores (callback chaining)
