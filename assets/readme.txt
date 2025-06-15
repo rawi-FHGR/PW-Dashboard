@@ -179,7 +179,8 @@ g) Aus Zeitgründen nicht umgesetzt. Zudem ist der Mehrwert begrenzt, da ledigli
 
 
 ## Source Code
-Der Source Code für diese Dashboard ist in GitHub verwaltet: https://github.com/rawi-FHGR/PW-Dashboard.git
+Der Source Code für diese Dashboard ist in einem privaten Repository verwaltet: https://github.com/rawi-FHGR/PW-Dashboard.git
+Im Abgabe-Bereich innerhalb des Moodle-Moduls 'Dashboard-Design' wurde der Source-Code in einem zip-Paket hochgeladen.
 
 ## Publiziertes Dashboard
 Das Personenwagen-Dashboard wurde publiziert und ist öffentlich zugänglich: https://pw-dashboard.onrender.com/
